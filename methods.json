@@ -1,0 +1,72 @@
+[
+    {
+        "ID": "UOIF",
+        "Name": "Union des Organisations Islamiques de France",
+        "Fajr": "12°",
+        "Isha": "12°",
+        "Region": "FR"
+    },
+    {
+        "ID": "ISNACA",
+        "Name": "Islamic Society of North America - Canada",
+        "Fajr": "13°",
+        "Isha": "13°",
+        "Region": "CA"
+    },
+    {
+        "ID": "ISNAUS",
+        "Name": "Islamic Society of North America - US",
+        "Fajr": "15°",
+        "Isha": "15°",
+        "Region": "US, UK, AU, NZ"
+    },
+    {
+        "ID": "SAMR",
+        "Name": "Spiritual Administration of Muslims of Russia",
+        "Fajr": "16°",
+        "Isha": "15°",
+        "Region": "RU"
+    },
+    {
+        "ID": "MWL",
+        "Name": "Muslim World League",
+        "Fajr": "18°",
+        "Isha": "17°",
+        "Region": "Most common globally (default)"
+    },
+    {
+        "ID": "DIBT",
+        "Name": "Diyanet İşleri Başkanlığı, Turkey",
+        "Fajr": "18°",
+        "Isha": "17°",
+        "Region": "TR"
+    },
+    {
+        "ID": "Karachi",
+        "Name": "University of Islamic Sciences, Karachi",
+        "Fajr": "18°",
+        "Isha": "18°",
+        "Region": "PK, BD, IN, AF"
+    },
+    {
+        "ID": "UAQ",
+        "Name": "Umm Al-Qura University, Makkah",
+        "Fajr": "18.5°",
+        "Isha": "90 minutes after sunset",
+        "Region": "SA (Gulf States)"
+    },
+    {
+        "ID": "Egypt",
+        "Name": "Egyptian General Authority of Survey",
+        "Fajr": "19.5°",
+        "Isha": "17.5°",
+        "Region": "EG, SY, IQ, LB, surrounding African countries"
+    },
+    {
+        "ID": "MUIS",
+        "Name": "Majlis Ugama Islam Singapura",
+        "Fajr": "20°",
+        "Isha": "18°",
+        "Region": "SG"
+    }
+]
