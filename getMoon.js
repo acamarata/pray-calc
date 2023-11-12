@@ -1,6 +1,6 @@
 const { getEarthSunDistance } = require('./getEarthSunDistance');
 
-function getMoon(date, accurate = false) {
+function getMoon(date, accurate = true) {
     const PI = Math.PI;
     const rad = PI / 180;
     const e = rad * 23.4397; // obliquity of the Earth
@@ -59,3 +59,7 @@ function getMoon(date, accurate = false) {
         angle: angle
     };
 }
+
+module.exports = {
+    getMoon
+};
