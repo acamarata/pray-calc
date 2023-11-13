@@ -21,11 +21,16 @@ function getMoon(date, latitude = 0, longitude = 0, elevation = 50, temp = 15, p
     const position = getMoonPosition(date, latitude, longitude);
     const illumination = getMoonIllumination(date);
 
+    const phaseName = ["New Moon", "Waxing Crescent", "First Quarter", "Waxing Gibbous", "Full Moon", "Waning Gibbous", "Last Quarter", "Waning Crescent"][Math.floor(phase * 8)] || "New Moon";
+    const phaseSymbol = ["🌑", "🌒", "🌓", "🌔", "🌕", "🌖", "🌗", "🌘"][Math.floor(phase * 8)] || "🌑";
+
     // Calculate visibility considering all factors
     const visibility = getMoonVisibility(phase, position, illumination, elevation, temp, pressure, humidity, clouds);
 
     return {
         phase,
+        phaseName,
+        phaseSymbol,
         position,
         illumination,
         visibility
