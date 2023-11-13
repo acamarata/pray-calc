@@ -1,7 +1,7 @@
 const { getSpa, fractalTime } = require('nrel-spa');
 
-function getAsr(solarNoonDate, latitude, longitude, standard = true) {
-    const solarNoonAltitude = getSpa(solarNoonDate, latitude, longitude).zenith;
+function getAsr(solarNoonDate, latitude, longitude, tz, standard = true) {
+    const solarNoonAltitude = getSpa(solarNoonDate, latitude, longitude, tz).zenith;
     const shadowLengthAtNoon = 1 / Math.tan((90 - solarNoonAltitude) * Math.PI / 180);
 
     // For standard method: Shadow length = object height + shadow length at noon
@@ -12,9 +12,8 @@ function getAsr(solarNoonDate, latitude, longitude, standard = true) {
     let asrTime;
     for (let i = 0; i < 720; i++) { // Check next 12 hours
         const testTime = new Date(solarNoonDate.getTime() + i * 60000); // Increment by one minute
-        const currentAltitude = getSpa(testTime, latitude, longitude).zenith;
+        const currentAltitude = getSpa(testTime, latitude, longitude, tz).zenith;
         const currentShadowLength = 1 / Math.tan((90 - currentAltitude) * Math.PI / 180);
-
         if (currentShadowLength >= targetShadowLength) {
             asrTime = testTime;
             break;

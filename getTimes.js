@@ -3,13 +3,13 @@ const { getAngles } = require('./getAngles');
 const { getAsr } = require('./getAsr');
 const { getQiyam } = require('./getQiyam');
 
-function getTimes(date, lat, lng, elevation = 50, temperature = 15, pressure = 1013.25, standard = true) {
+function getTimes(date, lat, lng, tz, elevation = 50, temperature = 15, pressure = 1013.25, standard = true) {
     // Step 1: Get the custom angles
     const { fajrAngle, ishaAngle } = getAngles(elevation, pressure, temperature);
 
     // Step 2: Get SPA data with custom angle for Fajr/Isha
     const spaParams = { elevation, temperature, pressure };
-    const spaData = getSpa(date, lat, lng, spaParams, [fajrAngle+90, ishaAngle+90]);
+    const spaData = getSpa(date, lat, lng, tz, spaParams, [fajrAngle+90, ishaAngle+90]);
 
     // Organize prayer times
     const fajrTime = spaData.angles[0].sunrise; // Lower time from custom angle
@@ -25,7 +25,7 @@ function getTimes(date, lat, lng, elevation = 50, temperature = 15, pressure = 1
     const solarNoonSeconds = Math.floor((spaData.solarNoon * 3600) - (solarNoonHours * 3600) - (solarNoonMinutes * 60));
     const solarNoonDate = new Date(date);
     solarNoonDate.setHours(solarNoonHours, solarNoonMinutes, solarNoonSeconds);
-    const asrPrayerTime = getAsr(solarNoonDate, lat, lng, standard);
+    const asrPrayerTime = getAsr(solarNoonDate, lat, lng, tz, standard);
     
     // Step 4: Calculate Qiyam time
     const qiyamTime = getQiyam(fajrTime, ishaTime);

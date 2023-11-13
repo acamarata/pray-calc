@@ -12,8 +12,8 @@ const { getTimes } = require('./getTimes');
  * @param {number} [pressure=1013.25] - Atmospheric pressure in millibars (default 1013.25).
  * @returns {Object} - Object containing prayer times.
  */
-function calcTimes(date, lat, lng, elevation = 50, temperature = 15, pressure = 1013.25) {
-    let result = getTimes(date, lat, lng, elevation, temperature, pressure);
+function calcTimes(date, lat, lng, tz, elevation = 50, temperature = 15, pressure = 1013.25) {
+    let result = getTimes(date, lat, lng, tz, elevation, temperature, pressure);
 
     // Sort the result object by their values, excluding "Angle"
     let sortedEntries = Object.entries(result)

@@ -1,15 +1,15 @@
-const { getTimes, calcTimesAll } = require('./index');
+const { getSpa, calcSpa } = require('nrel-spa');
 
 const date = new Date();
+console.log(date)
 
 /* NYC - minimum params
 const city = "New York"
 const lat = 40.7128;
 const lng = -74.006;
-const tz = null
-const elevation = null
-const temperature = null
-const pressure = null
+const tz = -5;
+const params = null
+const angles = []
 */
 
 // Jakarta - all params
@@ -20,12 +20,15 @@ const tz = 7
 const elevation = 18
 const temperature = 26.56
 const pressure = 1017
+const params = {elevation, temperature, pressure}
+const angles = [63.435]
+
 
 // Get results
-const get = getTimes(date, lat, lng); // minimal args
-const calc = calcTimesAll(date, lat, lng, tz, elevation, temperature, pressure);
+const get = getSpa(date, lat, lng); // minimal args
+const calc = calcSpa(date, lat, lng, tz, params, angles);
 
 // Print results
 console.log(`\nTest: ${city} with current Date():\n`)
-console.log("getTimes =", get, "\n");
-console.log("calcTimesAll =", calc, "\n");
+console.log("getSpa =", get, "\n");
+console.log("calcSpa =", calc, "\n");

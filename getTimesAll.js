@@ -16,14 +16,14 @@ const methods = [
     {n:'MUIS', f:20, i:18, r:'SG'},
 ];
 
-function getTimesAll(date, lat, lng, elevation = 50, temperature = 15, pressure = 1013.25, standard = true) {
+function getTimesAll(date, lat, lng, tz, elevation = 50, temperature = 15, pressure = 1013.25, standard = true) {
     // Step 1: Get the custom angles
     const { fajrAngle, ishaAngle } = getAngles(elevation, pressure, temperature);
     const methodAngles = methods.map(m => [m.f + 90, m.i + 90]);
 
     // Step 2: Get SPA data with custom angle for Fajr/Isha and other methods
     const spaParams = { elevation, temperature, pressure };
-    const spaData = getSpa(date, lat, lng, spaParams, [fajrAngle + 90, ishaAngle + 90, ...methodAngles.flat()]);
+    const spaData = getSpa(date, lat, lng, tz, spaParams, [fajrAngle + 90, ishaAngle + 90, ...methodAngles.flat()]);
 
     // Organize prayer times
     const fajrTime = spaData.angles[0].sunrise;
@@ -39,7 +39,7 @@ function getTimesAll(date, lat, lng, elevation = 50, temperature = 15, pressure 
     const solarNoonSeconds = Math.floor((spaData.solarNoon * 3600) - (solarNoonHours * 3600) - (solarNoonMinutes * 60));
     const solarNoonDate = new Date(date);
     solarNoonDate.setHours(solarNoonHours, solarNoonMinutes, solarNoonSeconds);
-    const asrPrayerTime = getAsr(solarNoonDate, lat, lng, standard);
+    const asrPrayerTime = getAsr(solarNoonDate, lat, lng, tz, standard);
 
     // Step 4: Calculate Qiyam time
     const qiyamTime = getQiyam(fajrTime, ishaTime);

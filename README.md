@@ -14,15 +14,37 @@ npm install praycalc
 Example of using praycalc to get prayer times:
 
 ```js
-const { calcTimes } = require('./calcTimes');
+const { getTimes, calcTimesAll } = require('praycalc');
 
-const date = new Date();   // Current date
-const latitude = 40.7128;  // Latitude for New York City
-const longitude = -74.006; // Longitude for New York City
-const elevation = 10;      // Elevation for New York City
+const date = new Date();
 
-const prayerTimes = calcTimes(date, latitude, longitude, elevation);
-console.log(prayerTimes);
+/* NYC - minimum params
+const city = "New York"
+const lat = 40.7128;
+const lng = -74.006;
+const tz = null
+const elevation = null
+const temperature = null
+const pressure = null
+*/
+
+// Jakarta - all params
+const city = "Jakarta"
+const lat = -6.2088
+const lng = 106.8456
+const tz = 7
+const elevation = 18
+const temperature = 26.56
+const pressure = 1017
+
+// Get results
+const get = getTimes(date, lat, lng); // minimal args
+const calc = calcTimesAll(date, lat, lng, tz, elevation, temperature, pressure);
+
+// Print results
+console.log(`\nTest: ${city} with current Date():\n`)
+console.log("getTimes =", get, "\n");
+console.log("calcTimesAll =", calc, "\n");
 ```
 
 Exported functions include getTimes, calcTimes, getTimesAll, calcTimesAll where the "get" functions return fractal or decimal times directly from the source nrel-spa calculator and the "calc" functions return formatted times in HH:MM:SS.sss format.  The functions will give results including our custom angle but the "All" functions will include a methods key with all traditional static angle methods (Muslim World League, Egyptian General Authority of Survey, ISNA, etc.) included as well for their Fajr and Isha times.

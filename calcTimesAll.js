@@ -1,8 +1,8 @@
 const { fractalTime } = require('nrel-spa');
 const { getTimesAll } = require('./getTimesAll');
 
-function calcTimesAll(date, lat, lng, elevation = 10, temperature = 15, pressure = 1013.25) {
-    let result = getTimesAll(date, lat, lng, elevation, temperature, pressure);
+function calcTimesAll(date, lat, lng, tz, elevation = 10, temperature = 15, pressure = 1013.25) {
+    let result = getTimesAll(date, lat, lng, tz, elevation, temperature, pressure);
 
     // Sort the methods by Fajr time
     let sortedMethods = Object.entries(result.Methods)
