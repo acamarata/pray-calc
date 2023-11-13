@@ -1,6 +1,6 @@
 {
   "name": "praycalc",
-  "version": "1.2.3",
+  "version": "1.3.0",
   "description": "Prayer times calculator using nrel-spa and custom formula for Fajr and Isha angles (as well as traditional static angle methods in the All function)",
   "main": "index.js",
   "scripts": {
@@ -13,6 +13,7 @@
   "author": "USF",
   "license": "ISC",
   "dependencies": {
-    "nrel-spa": "^1.2.2"
+    "nrel-spa": "^1.2.2",
+    "suncalc": "^1.9.0"
   }
 }

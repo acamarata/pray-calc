@@ -1,65 +1,35 @@
-const { getEarthSunDistance } = require('./getEarthSunDistance');
+const { getMoonPhase } = require('./getMoonPhase');
+const { getMoonPosition } = require('./getMoonPosition');
+const { getMoonIllumination } = require('./getMoonIllumination');
+const { getMoonVisibility } = require('./getMoonVisibility');
 
-function getMoon(date, accurate = true) {
-    const PI = Math.PI;
-    const rad = PI / 180;
-    const e = rad * 23.4397; // obliquity of the Earth
+/**
+ * Calculates detailed moon visibility information.
+ * 
+ * @param {Date} date - The date for which to calculate moon data.
+ * @param {number} [latitude=0] - Observer's latitude in decimal degrees.
+ * @param {number} [longitude=0] - Observer's longitude in decimal degrees.
+ * @param {number} [elevation=50] - Observer's elevation in meters above sea level. Default is 50 meters.
+ * @param {number} [temp=15] - Ambient temperature in degrees Celsius. Default is 15°C.
+ * @param {number} [pressure=1013.25] - Atmospheric pressure in hPa. Default is 1013.25 hPa (average sea level pressure).
+ * @param {number} [humidity=50] - Humidity in percentage. Default is 50%.
+ * @param {number} [clouds=0] - Cloudiness in percentage. Default is 0% (clear sky).
+ * @returns {Object} An object containing moon details: phase, position, illumination, and visibility.
+ */
+function getMoon(date, latitude = 0, longitude = 0, elevation = 50, temp = 15, pressure = 1013.25, humidity = 50, clouds = 0) {
+    const phase = getMoonPhase(date);
+    const position = getMoonPosition(date, latitude, longitude);
+    const illumination = getMoonIllumination(date);
 
-    function toDays(date) {
-        return (date - new Date(2000, 0, 1)) / 86400000;
-    }
-
-    function rightAscension(l, b) {
-        return Math.atan2(Math.sin(l) * Math.cos(e) - Math.tan(b) * Math.sin(e), Math.cos(l));
-    }
-
-    function declination(l, b) {
-        return Math.asin(Math.sin(b) * Math.cos(e) + Math.cos(b) * Math.sin(e) * Math.sin(l));
-    }
-
-    function sunCoords(d) {
-        const M = rad * (357.5291 + 0.98560028 * d);
-        const L = rad * (280.1470 + 360.9856235 * d) + (1.9148 - 0.004817 * d / 36525) * Math.sin(M) + 0.019993 - 0.000101 * d / 36525 * Math.cos(M);
-        return {
-            dec: declination(L, 0),
-            ra: rightAscension(L, 0)
-        };
-    }
-
-    function moonCoords(d) { 
-        const L = rad * (218.316 + 13.176396 * d);
-        const M = rad * (134.963 + 13.064993 * d);
-        const F = rad * (93.272 + 13.229350 * d);
-
-        const l = L + rad * 6.289 * Math.sin(M); // Moon's mean longitude
-        const b = rad * 5.128 * Math.sin(F);     // Moon's mean latitude
-        const dt = 385001 - 20905 * Math.cos(M); // Distance to the moon in km
-
-        return {
-            ra: rightAscension(l, b),
-            dec: declination(l, b),
-            dist: dt
-        };
-    }
-
-    const d = toDays(date);
-    const s = sunCoords(d);
-    const m = moonCoords(d);
-
-    // distance from Earth to Sun in km
-    const sdist = accurate ? getEarthSunDistance(date) : 149598000;
-
-    const phi = Math.acos(Math.sin(s.dec) * Math.sin(m.dec) + Math.cos(s.dec) * Math.cos(m.dec) * Math.cos(s.ra - m.ra));
-    const inc = Math.atan2(sdist * Math.sin(phi), m.dist - sdist * Math.cos(phi));
-    const angle = Math.atan2(Math.cos(s.dec) * Math.sin(s.ra - m.ra), Math.sin(s.dec) * Math.cos(m.dec) - Math.cos(s.dec) * Math.sin(m.dec) * Math.cos(s.ra - m.ra));
+    // Calculate visibility considering all factors
+    const visibility = getMoonVisibility(phase, position, illumination, elevation, temp, pressure, humidity, clouds);
 
     return {
-        fraction: (1 + Math.cos(inc)) / 2,
-        phase: 0.5 + 0.5 * inc * (angle < 0 ? -1 : 1) / Math.PI,
-        angle: angle
+        phase,
+        position,
+        illumination,
+        visibility
     };
 }
 
-module.exports = {
-    getMoon
-};
+module.exports = { getMoon };

@@ -14,3 +14,7 @@ All notable changes to this project will be documented in this file.
 
 - Moved timezone to main args and changed default behavior (major)
 - Updated test cases and readme to reflect new usage (minor)
+
+## [1.3.0] - 2013-11-13
+
+- Major updates to getMoon with own functions
