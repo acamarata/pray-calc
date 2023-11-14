@@ -1,20 +1,20 @@
 
-# praycalc
+# pray-calc
 
 Prayer times calculator using nrel-spa and custom formula for Fajr and Isha angles (as well as traditional static angle methods in the All function).
 
 ## Installation
 
 ```bash
-npm install praycalc
+npm install pray-calc
 ```
 
 ## Usage
 
-Example of using praycalc to get prayer times:
+Example of using pray-calc to get prayer times:
 
 ```js
-const { getTimes, calcTimesAll } = require('praycalc');
+const { getTimes, calcTimesAll } = require('pray-calc');
 
 const date = new Date();
 

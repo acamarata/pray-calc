@@ -1,5 +1,5 @@
 // index.d.ts
-declare module 'praycalc' {
+declare module 'pray-calc' {
     export function getMoon(date: Date, latitude?: number, longitude?: number, elevation?: number, temp?: number, pressure?: number, humidity?: number, clouds?: number): MoonDetails;  
     export function getTimes(date: Date, lat: number, lng: number, tz: number, elevation?: number, temperature?: number, pressure?: number): TimesReturnType;
     export function calcTimes(date: Date, lat: number, lng: number, tz: number, elevation?: number, temperature?: number, pressure?: number): CalcTimesReturnType;

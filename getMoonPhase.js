@@ -4,9 +4,9 @@
  * @returns {number} The moon phase as a fraction from 0 (new moon) to just under 1 (end of lunar cycle).
  */
 function getMoonPhase(date) {
-    const synodicMonth = 29.530588861; // Average length of a synodic month in days
-    // Most recent known new moon: November 13, 2023, 03:27 AM
-    const knownNewMoon = new Date(Date.UTC(2023, 10, 13, 3, 27, 0)); 
+    const synodicMonth = 29.53058821398858; // Average length of a synodic month in days
+    // Most recent known new moon: November 13, 2023, 09:27 AM UTC
+    const knownNewMoon = new Date(Date.UTC(2023, 10, 13, 9, 27, 0)); 
 
     // Convert both dates to the number of milliseconds since Unix Epoch and find the difference
     const diffInMilliseconds = date - knownNewMoon;
