@@ -18,3 +18,8 @@ All notable changes to this project will be documented in this file.
 ## [1.3.2] - 2013-11-13
 
 - Major updates to getMoon with own functions
+
+## [1.4.0] - 2013-11-14
+
+- Renamed to "pray-calc" and removed old package
+- Improved Synodic accuracy slightly and lastKnownMoon
