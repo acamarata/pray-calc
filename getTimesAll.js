@@ -2,6 +2,7 @@ const { getSpa } = require('nrel-spa');
 const { getAngles } = require('./getAngles');
 const { getAsr } = require('./getAsr');
 const { getQiyam } = require('./getQiyam');
+const { getFajr, getIsha } = require('./getMSC');
 
 const methods = [
     {n:'UOIF', f:12, i:12, r:'France'},
@@ -14,6 +15,7 @@ const methods = [
     {n:'UAQ', f:18.5, i:18, r:'SA'},
     {n:'Egypt', f:19.5, i:17.5, r:'Africa, SY, IQ, LB'},
     {n:'MUIS', f:20, i:18, r:'SG'},
+    {n:'MSC', f:null, i:null, r:'Global'},
 ];
 
 function getTimesAll(date, lat, lng, tz, elevation = 50, temperature = 15, pressure = 1013.25, standard = true) {
@@ -69,6 +71,14 @@ function getTimesAll(date, lat, lng, tz, elevation = 50, temperature = 15, press
         // Adjusting Isha time for Umm Al-Qura method
         if (method.n === 'UAQ') {
             ishaMethodTime = spaData.sunset + ((1 / 60) * 90);
+        }
+        else if (method.n === 'MSC') {
+            // Calculate Fajr and Isha for MSC method
+            const fajrMSCMinutes = getFajr(date, lat);
+            const ishaMSCMinutes = getIsha(date, lat);
+
+            fajrMethodTime = spaData.sunrise - ((1 / 60) * fajrMSCMinutes);
+            ishaMethodTime = spaData.sunset + ((1 / 60) * ishaMSCMinutes);
         }
 
         prayerTimes.Methods[method.n] = [fajrMethodTime, ishaMethodTime];

@@ -3,6 +3,14 @@
 
 Prayer times calculator using nrel-spa and custom formula for Fajr and Isha angles (as well as traditional static angle methods in the All function).
 
+## Version 1.5
+
+With the release of version 1.5, we have integrated the MoonSighting (MSC) method. The MSC method is unique in its dynamic adjustment for latitude and seasonal variations, and it is well-researched and widely respected. While our custom method is still in development, the MSC method’s integration marks a significant enhancement.  
+
+Our MSC implementation will have some accuracy improvement though due to using nrel-spa as the base calculations over other the more common but less accurate suncalc package or others.  With that said the MSC method is imported as is and does not account for elevation for angle perspective adjustment (major) nor temperature, pressure, and weather for the atmospheric refraction (minor) variables that we have included.
+
+With some work we can incorporate all improvements from our method along with MSC's logic as well as these additional variables and come to something that is more accurate and more dynamic than currently available online anywhere in future versions, inshaa' Allah.
+
 ## Installation
 
 ```bash
@@ -14,21 +22,21 @@ npm install pray-calc
 Example of using pray-calc to get prayer times:
 
 ```js
-const { getTimes, calcTimesAll } = require('pray-calc');
+const { getTimes, calcTimesAll } = require('./index');
 
-const date = new Date();
+// Manually setting the date to January 1, 2024
+const date = new Date('2024-01-01T00:00:00Z');
 
-/* NYC - minimum params
+// NYC - minimum params
 const city = "New York"
 const lat = 40.7128;
 const lng = -74.006;
-const tz = null
+const tz = -5
 const elevation = null
 const temperature = null
 const pressure = null
-*/
 
-// Jakarta - all params
+/* Jakarta - all params
 const city = "Jakarta"
 const lat = -6.2088
 const lng = 106.8456
@@ -36,6 +44,7 @@ const tz = 7
 const elevation = 18
 const temperature = 26.56
 const pressure = 1017
+*/
 
 // Get results
 const get = getTimes(date, lat, lng); // minimal args
