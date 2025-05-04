@@ -75,4 +75,4 @@ Contributions are welcome!
 
 ## License
 
-ISC License
+MIT License

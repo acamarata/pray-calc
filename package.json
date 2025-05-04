@@ -1,43 +1,45 @@
 {
   "name": "pray-calc",
-  "version": "1.6.0",
-  "description": "Prayer times calculator using nrel-spa and custom formula for Fajr and Isha angles (as well as traditional static angle methods)",
+  "version": "1.6.1",
+  "description": "Accurate prayer times using nrel-spa and moon functions via suncalc",
   "main": "index.js",
-  "scripts": {
-    "test": "node test.js"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/ummeco/pray-calc.git"
-  },
-  "keywords": [
-    "prayer",
-    "islam",
-    "fajr",
-    "dhuhr",
-    "asr",
-    "maghrib",
-    "isha",
-    "nrel-spa",
-    "solar-position"
-  ],
-  "author": "Ummat",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/ummeco/pray-calc/issues"
-  },
-  "homepage": "https://github.com/ummeco/pray-calc#readme",
-  "dependencies": {
-    "nrel-spa": "^1.3.0",
-    "suncalc": "^1.9.0"
-  },
+  "types": "index.d.ts",
   "files": [
     "index.js",
+    "index.d.ts",
     "getTimes.js",
     "getAsr.js",
     "getAngles.js",
+    "calcTimesAll.js",
+    "getQiyam.js",
+    "getMoonPosition.js",
+    "getMoonIllumination.js",
+    "getMoonPhase.js",
+    "getMoonVisibility.js",
+    "getMoon.js",
+    "getEarthSunDistance.js",
+    "methods.json",
     "dist/",
     "README.md",
     "CHANGELOG.md"
-  ]
+  ],
+  "scripts": {
+    "build": "babel src -d dist",
+    "test": "mocha test/*.js",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "prayer-times",
+    "Islam",
+    "nrel-spa",
+    "suncalc",
+    "moon",
+    "qiyam"
+  ],
+  "author": "Your Name <you@example.com>",
+  "license": "MIT",
+  "dependencies": {
+    "nrel-spa": "^1.3.0",
+    "suncalc": "^1.9.0"
+  }
 }

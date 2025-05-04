@@ -15,14 +15,24 @@ All notable changes to this project will be documented in this file.
 - Moved timezone to main args and changed default behavior (major)
 - Updated test cases and readme to reflect new usage (minor)
 
-## [1.3.2] - 2013-11-13
+## [1.3.2] - 2023-11-13
 
 - Major updates to getMoon with own functions
 
-## [1.4.0] - 2013-11-14
+## [1.4.0] - 2023-11-14
 
 - Renamed to "pray-calc" and removed old package
 - Improved Synodic accuracy slightly and lastKnownMoon
 
-## [1.4.1] = 2013-12-01
+## [1.4.1] = 2023-12-01
 - Modified getMoonVisibility to use adjusted moon phase for end of cycle
+
+## [1.6.0] = 2025-05-04
+- Major fixes for core files and calculations
+- Updated to use the new "nrel-spa" v1.3.0
+
+## [1.6.1] - 2025-05-04
+### Fixed
+- Fixed missing modules and types definitions lost in last update
+- Locked `suncalc` dependency to `^1.9.0`
+- Clarified scripts: `build`, `test`, and `prepublishOnly` in `package.json`
