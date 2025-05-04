@@ -1,0 +1,10 @@
+# Ignore Git history
+.git
+# Ignore local dev/test files
+/tests/
+/bin/
+**/*.c
+**/*.h
+getMoonVisibility.js
+getMSC.js
+test*.js

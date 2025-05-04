@@ -1,95 +1,125 @@
 // getMSC.js
+'use strict';
+
+/**
+ * Base class for Moonsighting.com seasonal interpolation algorithm.
+ * Computes a day-of-year offset (dyy) from the nearest solstice and
+ * interpolates minutes for Fajr (before sunrise) or Isha (after sunset).
+ */
 class PrayerTimes {
-    constructor(date, latitude) {
-        this.date = new Date(date);
-        this.latitude = latitude;
-        this.getDyy();
-    }
+  constructor(date, latitude) {
+    this.date = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+    this.latitude = latitude;
+    this.year = this.date.getFullYear();
+    this.daysInYear = isLeapYear(this.year) ? 366 : 365;
+    this.computeDyy();
+  }
 
-    getDyy() {
-        const year = this.date.getFullYear();
-        const northDate = new Date(`${year}-12-21`);
-        const southDate = new Date(`${year}-06-21`);
-        const zeroDate = this.latitude > 0 ? northDate : southDate;
-        this.dyy = Math.floor((this.date - zeroDate) / (1000 * 60 * 60 * 24));
-        if (this.dyy < 0) {
-            this.dyy += 365;
-        }
-    }
+  computeDyy() {
+    // Reference solstice: Dec 21 (Northern Hemisphere) or Jun 21 (Southern)
+    const northSolstice = new Date(this.year, 11, 21);
+    const southSolstice = new Date(this.year, 5, 21);
+    const zeroDate = this.latitude >= 0 ? northSolstice : southSolstice;
 
-    getMinutes() {
-        if (this.dyy < 91)
-            return this.a + ((this.b - this.a) / 91) * this.dyy;
-        if (this.dyy < 137)
-            return this.b + ((this.c - this.b) / 46) * (this.dyy - 91);
-        if (this.dyy < 183)
-            return this.c + ((this.d - this.c) / 46) * (this.dyy - 137);
-        if (this.dyy < 229)
-            return this.d + ((this.c - this.d) / 46) * (this.dyy - 183);
-        if (this.dyy < 275)
-            return this.c + ((this.b - this.c) / 46) * (this.dyy - 229);
-        return this.b + ((this.a - this.b) / 91) * (this.dyy - 275);
+    let diffDays = Math.floor((this.date - zeroDate) / 86400000);
+    if (diffDays < 0) diffDays += this.daysInYear;
+    this.dyy = diffDays;
+  }
+
+  getMinutesSegment() {
+    const { a, b, c, d, dyy, daysInYear } = this;
+
+    if (dyy < 91) {
+      return a + ((b - a) / 91) * dyy;
+    } else if (dyy < 137) {
+      return b + ((c - b) / 46) * (dyy - 91);
+    } else if (dyy < 183) {
+      return c + ((d - c) / 46) * (dyy - 137);
+    } else if (dyy < 229) {
+      return d + ((c - d) / 46) * (dyy - 183);
+    } else if (dyy < 275) {
+      return c + ((b - c) / 46) * (dyy - 229);
+    } else {
+      const len = daysInYear - 275;
+      return b + ((a - b) / len) * (dyy - 275);
     }
+  }
 }
 
+/**
+ * Fajr: returns minutes before sunrise.
+ */
 class Fajr extends PrayerTimes {
-    constructor(date, latitude) {
-        super(date, latitude);
-        this.a = 75 + (28.65 / 55) * Math.abs(latitude);
-        this.b = 75 + (19.44 / 55) * Math.abs(latitude);
-        this.c = 75 + (32.74 / 55) * Math.abs(latitude);
-        this.d = 75 + (48.1 / 55) * Math.abs(latitude);
-    }
+  constructor(date, latitude) {
+    super(date, latitude);
+    const latAbs = Math.abs(latitude);
+    this.a = 75 + (28.65 / 55) * latAbs;
+    this.b = 75 + (19.44 / 55) * latAbs;
+    this.c = 75 + (32.74 / 55) * latAbs;
+    this.d = 75 + (48.10 / 55) * latAbs;
+  }
 
-    getMinutesBeforeSunrise() {
-        return Math.round(this.getMinutes());
-    }
+  getMinutesBeforeSunrise() {
+    return Math.round(this.getMinutesSegment());
+  }
 }
 
+/**
+ * Isha: returns minutes after sunset.
+ */
 class Isha extends PrayerTimes {
-    static SHAFAQ_AHMER = 'ahmer';
-    static SHAFAQ_ABYAD = 'abyad';
-    static SHAFAQ_GENERAL = 'general';
+  static SHAFAQ_GENERAL = 'general';
+  static SHAFAQ_AHMER   = 'ahmer';
+  static SHAFAQ_ABYAD   = 'abyad';
 
-    constructor(date, latitude, shafaq = Isha.SHAFAQ_GENERAL) {
-        super(date, latitude);
-        this.setShafaq(shafaq);
+  constructor(date, latitude, shafaq = Isha.SHAFAQ_GENERAL) {
+    super(date, latitude);
+    this.setShafaq(shafaq);
+  }
+
+  setShafaq(shafaq) {
+    this.shafaq = shafaq;
+    const latAbs = Math.abs(this.latitude);
+
+    switch (shafaq) {
+      case Isha.SHAFAQ_AHMER:
+        this.a = 62 + (17.4  / 55) * latAbs;
+        this.b = 62 - (7.16  / 55) * latAbs;
+        this.c = 62 + (5.12  / 55) * latAbs;
+        this.d = 62 + (19.44 / 55) * latAbs;
+        break;
+
+      case Isha.SHAFAQ_ABYAD:
+        this.a = 75 + (25.6  / 55) * latAbs;
+        this.b = 75 + (7.16  / 55) * latAbs;
+        this.c = 75 + (36.84 / 55) * latAbs;
+        this.d = 75 + (81.84 / 55) * latAbs;
+        break;
+
+      default: // general
+        this.a = 75 + (25.6  / 55) * latAbs;
+        this.b = 75 + (2.05  / 55) * latAbs;
+        this.c = 75 - (9.21  / 55) * latAbs;
+        this.d = 75 + (6.14  / 55) * latAbs;
+        break;
     }
+  }
 
-    setShafaq(shafaq) {
-        this.shafaq = shafaq;
+  getMinutesAfterSunset() {
+    return Math.round(this.getMinutesSegment());
+  }
+}
 
-        if (shafaq === Isha.SHAFAQ_AHMER) {
-            this.a = 62 + (17.4 / 55) * Math.abs(this.latitude);
-            this.b = 62 - (7.16 / 55) * Math.abs(this.latitude);
-            this.c = 62 + (5.12 / 55) * Math.abs(this.latitude);
-            this.d = 62 + (19.44 / 55) * Math.abs(this.latitude);
-        } else if (shafaq === Isha.SHAFAQ_ABYAD) {
-            this.a = 75 + (25.6 / 55) * Math.abs(this.latitude);
-            this.b = 75 + (7.16 / 55) * Math.abs(this.latitude);
-            this.c = 75 + (36.84 / 55) * Math.abs(this.latitude);
-            this.d = 75 + (81.84 / 55) * Math.abs(this.latitude);
-        } else {
-            this.a = 75 + (25.6 / 55) * Math.abs(this.latitude);
-            this.c = 75 - (9.21 / 55) * Math.abs(this.latitude);
-            this.b = 75 + (2.05 / 55) * Math.abs(this.latitude);
-            this.d = 75 + (6.14 / 55) * Math.abs(this.latitude);
-        }
-    }
-
-    getMinutesAfterSunset() {
-        return Math.round(this.getMinutes());
-    }
+function isLeapYear(year) {
+  return (year % 4 === 0 && year % 100 !== 0) || (year % 400 === 0);
 }
 
 function getFajr(date, latitude) {
-    const fajr = new Fajr(date, latitude);
-    return fajr.getMinutesBeforeSunrise();
+  return new Fajr(date, latitude).getMinutesBeforeSunrise();
 }
 
 function getIsha(date, latitude, shafaq = Isha.SHAFAQ_GENERAL) {
-    const isha = new Isha(date, latitude, shafaq);
-    return isha.getMinutesAfterSunset();
+  return new Isha(date, latitude, shafaq).getMinutesAfterSunset();
 }
 
 module.exports = { getFajr, getIsha, Isha, Fajr };

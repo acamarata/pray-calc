@@ -1,13 +1,14 @@
 const { getTimes, calcTimesAll } = require('./index');
 
 // Manually setting the date to January 1, 2024
-const date = new Date('2024-01-01T00:00:00Z');
+//const date = new Date('2024-01-01T00:00:00Z');
+const date = new Date();
 
 // NYC - minimum params
 const city = "New York"
 const lat = 40.7128;
 const lng = -74.006;
-const tz = -5
+const tz = -4
 const elevation = null
 const temperature = null
 const pressure = null

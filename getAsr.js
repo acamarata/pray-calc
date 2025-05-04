@@ -1,28 +1,66 @@
-const { getSpa, fractalTime } = require('nrel-spa');
+// getAsr.js
+'use strict';
 
-function getAsr(solarNoonDate, latitude, longitude, tz, standard = true) {
-    const solarNoonAltitude = getSpa(solarNoonDate, latitude, longitude, tz).zenith;
-    const shadowLengthAtNoon = 1 / Math.tan((90 - solarNoonAltitude) * Math.PI / 180);
+const { SpaData, spa_calculate, SPA_ZA_RTS } = require('nrel-spa/dist/spa');
 
-    // For standard method: Shadow length = object height + shadow length at noon
-    // For Hanafi method: Shadow length = 2 * object height + shadow length at noon
-    const targetShadowLength = standard ? 1 + shadowLengthAtNoon : 2 + shadowLengthAtNoon;
+/**
+ * Compute Asr time (fractional hours) for a given date and location.
+ *
+ * @param {Date}   date       - Local date/time for the calculation.
+ * @param {number} latitude   - Observer latitude in decimal degrees.
+ * @param {number} longitude  - Observer longitude in decimal degrees.
+ * @param {number} timezone   - Timezone offset from UTC in hours (negative west).
+ * @param {boolean}[standard] - true for Shāfiʿī (shadow=1), false for Ḥanafī (shadow=2).
+ * @returns {number|null} Fractional‐hour Asr time (local), or null if unreachable.
+ */
+function getAsr(date, latitude, longitude, timezone, standard = true) {
+  // Load inputs into SPA struct
+  const data = new SpaData();
+  data.year          = date.getFullYear();
+  data.month         = date.getMonth() + 1;
+  data.day           = date.getDate();
+  data.hour          = date.getHours();
+  data.minute        = date.getMinutes();
+  data.second        = date.getSeconds();
+  data.delta_ut1     = 0.0;
+  data.delta_t       = 67.0;
+  data.timezone      = timezone;
+  data.longitude     = longitude;
+  data.latitude      = latitude;
+  data.elevation     = 0.0;
+  data.pressure      = 1013.0;
+  data.temperature   = 15.0;
+  data.slope         = 0.0;
+  data.azm_rotation  = 0.0;
+  data.atmos_refract = 0.5667;
+  data.function      = SPA_ZA_RTS;
 
-    // Increment time from noon to find Asr time
-    let asrTime;
-    for (let i = 0; i < 720; i++) { // Check next 12 hours
-        const testTime = new Date(solarNoonDate.getTime() + i * 60000); // Increment by one minute
-        const currentAltitude = getSpa(testTime, latitude, longitude, tz).zenith;
-        const currentShadowLength = 1 / Math.tan((90 - currentAltitude) * Math.PI / 180);
-        if (currentShadowLength >= targetShadowLength) {
-            asrTime = testTime;
-            break;
-        }
-    }
+  // Perform SPA calculation
+  if (spa_calculate(data) !== 0) return null;
 
-    return asrTime ? asrTime.getHours() + asrTime.getMinutes() / 60 + asrTime.getSeconds() / 3600 : null;
+  // Convert angles to radians
+  const φ       = latitude * Math.PI / 180;
+  const δ       = data.delta * Math.PI / 180;
+  const transit = data.suntransit; // fractional‐hour solar noon
+
+  // Compute required solar elevation A for Asr:
+  const shadowFactor = standard ? 1 : 2;
+  const X            = Math.abs(φ - δ);
+  const opp          = 1;
+  const adj          = shadowFactor + Math.tan(X);
+  const hyp          = Math.hypot(opp, adj);
+  const sinA         = opp / hyp;
+
+  // Solve hour‐angle H0: cos(H0) = (sinA - sinφ·sinδ) / (cosφ·cosδ)
+  const cosH0 = (sinA - Math.sin(φ) * Math.sin(δ)) /
+                (Math.cos(φ) * Math.cos(δ));
+  if (cosH0 < -1 || cosH0 > 1) return null;  // sun never reaches A
+
+  // Convert H0 (rad) to hours
+  const H0h = (Math.acos(cosH0) * 180 / Math.PI) / 15;
+
+  // Asr time = solar noon + H0h
+  return transit + H0h;
 }
 
-module.exports = {
-    getAsr
-};
+module.exports = { getAsr };
