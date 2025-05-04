@@ -20,7 +20,7 @@ const methods = [
 
 function getTimesAll(date, lat, lng, tz, elevation = 50, temperature = 15, pressure = 1013.25, standard = true) {
     // Step 1: Get the custom angles
-    const { fajrAngle, ishaAngle } = getAngles(elevation, pressure, temperature);
+    const { fajrAngle, ishaAngle } = getAngles(date, lat, lng, elevation, temperature, pressure);
     const methodAngles = methods.map(m => [m.f + 90, m.i + 90]);
 
     // Step 2: Get SPA data with custom angle for Fajr/Isha and other methods

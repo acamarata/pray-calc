@@ -32,11 +32,13 @@ All notable changes to this project will be documented in this file.
 - Updated to use the new "nrel-spa" v1.3.0
 
 ## [1.6.1] - 2025-05-04
-### Fixed
 - Fixed missing modules and types definitions lost in last update
 - Locked `suncalc` dependency to `^1.9.0`
 - Clarified scripts: `build`, `test`, and `prepublishOnly` in `package.json`
 
 ## [1.6.2] - 2025-05-04
-### Fixed
-- Package issues
+- Fixed Package issues
+
+## [1.7.0] = 2025-05-04
+- Major update to main algorithm
+- Fixes to syntax and bugs

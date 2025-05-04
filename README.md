@@ -1,15 +1,21 @@
 
 # pray-calc
 
-Prayer times calculator using nrel-spa and custom formula for Fajr and Isha angles (as well as traditional static angle methods in the All function).
+Prayer times calculator using nrel-spa and custom formula for Fajr and Isha angles (as well as traditional static angle methods in the All function).  
 
-## Version 1.5
+See PrayCalc.com for a fully functional implementation of this NPM Package.
 
-With the release of version 1.5, we have integrated the MoonSighting (MSC) method. The MSC method is unique in its dynamic adjustment for latitude and seasonal variations, and it is well-researched and widely respected. While our custom method is still in development, the MSC method’s integration marks a significant enhancement.  
+See PrayCalc.net for our Wiki which goes into depth about what prayer times are, their definitions in Islam, how they are calculated, the explanation of the available legacy prayer time methods (using problematic static angles), issues with these in practice, and some detailed research into how we developed our custom formula for Fajr and Isha angles that should* work for any location or date dynamically with a single always working formula.
 
-Our MSC implementation will have some accuracy improvement though due to using nrel-spa as the base calculations over other the more common but less accurate suncalc package or others.  With that said the MSC method is imported as is and does not account for elevation for angle perspective adjustment (major) nor temperature, pressure, and weather for the atmospheric refraction (minor) variables that we have included.
+* This is still in Beta and actively being developed, inshaa' Allah.
 
-With some work we can incorporate all improvements from our method along with MSC's logic as well as these additional variables and come to something that is more accurate and more dynamic than currently available online anywhere in future versions, inshaa' Allah.
+## Version 1.7
+
+With the release of version 1.6 and 1.7 today many improvements have been implemented.
+
+Firstly, the core nrel-spa npm package implemenation fixed a major bug that made times off by up to a few minutes.  We originally dedicated to making the first JS implementation of this algorithm (NREL-SPA) because it is the golden standard and most accurate algorithm out there but we saw no open-source release (or even references to proprietary) anywhere.  This leads to the assumption that none of the available prayer calculators used this and relied on ones like "suncalc" which could cause errors of up to a few minutes.
+
+Secondly, we completely remade our dynamic custom angle calculation that made it many folds more accurate.  The old formula was a rough approximation offsetting from the base 18° while this new algorithm completely calculates the angle based on scientific formulations refined using ML/AI on real-world data to come to something more ready for the public to review and give feedback on, inshaa' Allah.
 
 ## Installation
 
