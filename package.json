@@ -1,6 +1,6 @@
 {
   "name": "pray-calc",
-  "version": "1.6.1",
+  "version": "1.6.2",
   "description": "Accurate prayer times using nrel-spa and moon functions via suncalc",
   "main": "index.js",
   "types": "index.d.ts",
@@ -19,14 +19,11 @@
     "getMoon.js",
     "getEarthSunDistance.js",
     "methods.json",
-    "dist/",
     "README.md",
     "CHANGELOG.md"
   ],
   "scripts": {
-    "build": "babel src -d dist",
-    "test": "mocha test/*.js",
-    "prepublishOnly": "npm run build"
+    "test": "mocha test/*.js"
   },
   "keywords": [
     "prayer-times",
@@ -43,11 +40,6 @@
     "suncalc": "^1.9.0"
   },
   "devDependencies": {
-    "@babel/cli": "^7.22.0",
-    "@babel/core": "^7.22.0",
-    "@babel/preset-env": "^7.22.0"
-  },
-  "babel": {
-    "presets": ["@babel/preset-env"]
+    "mocha": "^10.2.0"
   }
 }
