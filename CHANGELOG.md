@@ -45,3 +45,6 @@ All notable changes to this project will be documented in this file.
 
 ### [1.7.1] = 2025-05-14
 - Update to package meta and location
+
+### [1.7.2] = 2025-05-14
+- Added tests
