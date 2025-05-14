@@ -1,6 +1,6 @@
 {
   "name": "pray-calc",
-  "version": "1.7.0",
+  "version": "1.7.1",
   "description": "Accurate prayer times using custom algorithm for dynamic angles and nrel-spa for extreme precision",
   "main": "index.js",
   "types": "index.d.ts",
@@ -32,12 +32,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/ummeco/pray-calc.git"
+    "url": "https://github.com/acamarata/pray-calc.git"
   },
   "bugs": {
-    "url": "https://github.com/ummeco/pray-calc/issues"
+    "url": "https://github.com/acamarata/pray-calc/issues"
   },
-  "homepage": "https://github.com/ummeco/pray-calc#readme",
+  "homepage": "https://github.com/acamarata/pray-calc#readme",
   "keywords": [
     "prayer-times",
     "islamic-prayer-times",
