@@ -1,43 +1,39 @@
 {
   "name": "pray-calc",
-  "version": "1.7.2",
-  "description": "Accurate prayer times using custom algorithm for dynamic angles and nrel-spa for extreme precision",
-  "main": "index.js",
-  "types": "index.d.ts",
+  "version": "2.0.0",
+  "description": "Islamic prayer times with a physics-grounded dynamic twilight angle algorithm. Covers Fajr, Sunrise, Dhuhr, Asr, Maghrib, Isha, Qiyam. Includes 14 traditional fixed-angle methods for comparison.",
+  "author": "Aric Camarata",
+  "license": "MIT",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.mts",
+        "default": "./dist/index.mjs"
+      },
+      "require": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.cjs"
+      }
+    }
+  },
+  "sideEffects": false,
   "files": [
-    "index.js",
-    "index.d.ts",
-    "methods.json",
+    "dist/",
+    "src/",
     "README.md",
     "CHANGELOG.md",
-    "calcTimes.js",
-    "calcTimesAll.js",
-    "getAngles.js",
-    "getAsr.js",
-    "getEarthSunDistance.js",
-    "getMoon.js",
-    "getMoonIllumination.js",
-    "getMoonPhase.js",
-    "getMoonPosition.js",
-    "getMoonVisibility.js",
-    "getMSC.js",
-    "getQiyam.js",
-    "getTimes.js",
-    "getTimesAll.js"
+    "LICENSE"
   ],
   "scripts": {
-    "test": "mocha test.js",
-    "lint": "eslint .",
-    "prepare": "npm test"
+    "build": "tsup",
+    "typecheck": "tsc --noEmit",
+    "pretest": "tsup",
+    "test": "node test.mjs && node test-cjs.cjs",
+    "prepublishOnly": "tsup"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/acamarata/pray-calc.git"
-  },
-  "bugs": {
-    "url": "https://github.com/acamarata/pray-calc/issues"
-  },
-  "homepage": "https://github.com/acamarata/pray-calc#readme",
   "keywords": [
     "prayer-times",
     "islamic-prayer-times",
@@ -48,32 +44,36 @@
     "maghrib",
     "isha",
     "qiyam",
-    "iqama",
     "sunrise",
     "sunset",
     "solar-position",
-    "moon-phase",
-    "moon-illumination",
-    "hijri-calendar",
-    "qibla",
-    "shalat",
-    "namaz",
-    "javascript",
-    "nodejs",
+    "twilight",
+    "dynamic-angles",
     "nrel-spa",
-    "suncalc"
+    "javascript",
+    "typescript"
   ],
-  "author": "Ali Camarata",
-  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/acamarata/pray-calc.git"
+  },
+  "homepage": "https://github.com/acamarata/pray-calc#readme",
+  "bugs": {
+    "url": "https://github.com/acamarata/pray-calc/issues"
+  },
   "engines": {
-    "node": ">=12"
+    "node": ">=20"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
   },
   "dependencies": {
-    "nrel-spa": "^1.3.0",
-    "suncalc": "^1.9.0"
+    "nrel-spa": "^2.0.1"
   },
   "devDependencies": {
-    "eslint": "^8.0.0",
-    "mocha": "^10.8.2"
+    "@types/node": "^25.3.0",
+    "tsup": "^8.5.1",
+    "typescript": "^5.9.3"
   }
 }

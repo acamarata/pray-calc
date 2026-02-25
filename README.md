@@ -1,132 +1,207 @@
 # pray-calc
 
-A high-precision prayer times calculator using [NREL-SPA](https://midcdmz.nrel.gov/spa/) (Solar Position Algorithm) and a **dynamic Fajr and Isha angle algorithm**, refined with empirical data and machine learning. Also supports traditional static-angle methods for comparison.
+[![npm version](https://img.shields.io/npm/v/pray-calc)](https://www.npmjs.com/package/pray-calc)
+[![CI](https://github.com/acamarata/pray-calc/actions/workflows/ci.yml/badge.svg)](https://github.com/acamarata/pray-calc/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-**Live Demo**: [PrayCalc.com](https://praycalc.com)  
-**Documentation & Wiki**: [PrayCalc.net](https://praycalc.net)
+Islamic prayer times for any location and date. The primary method uses a physics-grounded dynamic twilight angle algorithm that adjusts Fajr and Isha angles for latitude, season, Earth-Sun distance, and atmospheric conditions. Fourteen traditional fixed-angle methods are included for direct comparison.
 
-> 📌 This library is in active development and is currently in **beta**. Please test and submit feedback or issues, inshaa’ Allah.
-
----
-
-## 🚀 Version 1.7 Highlights
-
-Version 1.7 introduces major improvements:
-
-- ✅ **Fixed a bug in the core NREL-SPA JavaScript implementation** that caused times to be off by up to several minutes.  
-- ✅ **Custom dynamic angle calculation** has been completely rewritten using scientific modeling, atmospheric inputs, and ML-trained empirical data. It now generates Fajr and Isha angles that are accurate across all locations and seasons, instead of a simple offset from 18°.
-
-Traditional calculators (based on `suncalc` or fixed-angle approximations) are known to have timing errors of **2–7 minutes or more**, especially at higher latitudes. Our implementation aims for sub-minute accuracy by default.
-
----
-
-## 📦 Installation
+## Installation
 
 ```bash
-npm install pray-calc
+pnpm add pray-calc   # or npm install pray-calc
 ```
 
----
+## Quick Start
 
-## 🛠️ Usage Example
+```typescript
+import { calcTimes } from 'pray-calc';
 
-```js
-const { getTimes, calcTimesAll } = require('pray-calc');
+const times = calcTimes(
+  new Date('2024-06-21'),
+  40.7128,   // New York latitude
+  -74.0060,  // longitude
+  -4,        // UTC offset (hours)
+);
 
-// Example for New York City (minimal params)
-const date = new Date('2024-01-01T00:00:00Z');
-const city = "New York";
-const lat = 40.7128;
-const lng = -74.006;
-const tz = -5;
-
-// Full example for Jakarta:
-/*
-const city = "Jakarta";
-const lat = -6.2088;
-const lng = 106.8456;
-const tz = 7;
-const elevation = 18;
-const temperature = 26.56;
-const pressure = 1017;
-*/
-
-const get = getTimes(date, lat, lng); // Minimal args
-const calc = calcTimesAll(date, lat, lng, tz); // Full formatting
-
-console.log(`\nTest: ${city} on ${date.toISOString()}:\n`);
-console.log("getTimes =", get, "\n");
-console.log("calcTimesAll =", calc, "\n");
+console.log(times.Fajr);    // "03:51:24"
+console.log(times.Sunrise); // "05:25:08"
+console.log(times.Dhuhr);   // "13:01:17"
+console.log(times.Asr);     // "17:02:43"
+console.log(times.Maghrib); // "20:31:17"
+console.log(times.Isha);    // "22:07:43"
+console.log(times.angles);  // { fajrAngle: 14.8, ishaAngle: 14.6 }
 ```
 
----
+### CJS
 
-## 🔧 Functions Overview
+```javascript
+const { calcTimes } = require('pray-calc');
+```
 
-### `getTimes(date, lat, lng, tz?, elevation?, temperature?, pressure?, standard?)`
-Returns prayer times as **decimal/fractional hours** using dynamic twilight angles.
+### Compare all methods
 
-### `calcTimesAll(date, lat, lng, tz?, elevation?, temperature?, pressure?)`
-Returns prayer times as **formatted HH:MM:SS** and includes traditional methods under a `.methods` key.
+```typescript
+import { calcTimesAll } from 'pray-calc';
 
-### `getMoon(date, accuracy = false)`
-Returns:
-- `fraction` – moon illumination (0–1)
-- `phase` – moon phase (e.g., Full Moon)
-- `angle` – angle from the sun (for visibility estimation)
+const all = calcTimesAll(new Date('2024-06-21'), 40.7128, -74.0060, -4);
 
-Helpful for determining moon visibility after Maghrib.
+// Dynamic primary times
+console.log(all.Fajr);   // "03:51:24"
 
----
+// Traditional method comparison
+console.log(all.Methods.ISNA);    // ["03:57:12", "22:22:18"]  [fajr, isha]
+console.log(all.Methods.MWL);     // ["03:25:08", "22:40:31"]
+console.log(all.Methods.MSC);     // ["03:53:41", "22:09:12"]
+```
 
-## 🔢 Parameters
+## API
 
-- `date`: JavaScript `Date` object
-- `lat`: Latitude (decimal degrees)
-- `lng`: Longitude (decimal degrees)
-- `tz`: Timezone offset from UTC (optional, defaults to `Date` object)
-- `elevation`: Meters above sea level (default: 50)
-- `temperature`: Ambient °C (default: 15)
-- `pressure`: mbar / hPa (default: 1013.25)
-- `standard`: true = Shāfiʿī (Asr shadow = 1), false = Ḥanafī (shadow = 2)
+### `getTimes(date, lat, lng, tz?, elevation?, temperature?, pressure?, hanafi?)`
 
----
+Returns raw fractional-hour prayer times using the dynamic method.
 
-## 📚 Static vs. Dynamic Methods
+| Parameter | Type | Default | Description |
+| --------- | ---- | ------- | ----------- |
+| `date` | `Date` | required | Observer's local date |
+| `lat` | `number` | required | Latitude, decimal degrees |
+| `lng` | `number` | required | Longitude, decimal degrees |
+| `tz` | `number` | system offset | UTC offset in hours |
+| `elevation` | `number` | `0` | Meters above sea level |
+| `temperature` | `number` | `15` | Ambient temperature, °C |
+| `pressure` | `number` | `1013.25` | Atmospheric pressure, mbar |
+| `hanafi` | `boolean` | `false` | Asr convention: false = Shafi'i, true = Hanafi |
 
-The `All` functions return both:
+Returns `PrayerTimes`: `{ Qiyam, Fajr, Sunrise, Noon, Dhuhr, Asr, Maghrib, Isha, angles }`.
+All times are fractional hours in local time (e.g., `5.5` = 05:30:00). `NaN` when an event
+cannot be computed (polar night, etc.).
 
-- The **custom dynamic method** (default)
-- Multiple **legacy methods**:
-  - Muslim World League (MWL)
-  - Egyptian General Authority of Survey (EGAS)
-  - ISNA, Umm al-Qura, Gulf, etc.
+### `calcTimes(date, lat, lng, tz?, elevation?, temperature?, pressure?, hanafi?)`
 
-This lets developers compare traditional fixed-angle results to the more accurate dynamic calculation.
+Same as `getTimes`, formatted as `HH:MM:SS` strings. Returns `"N/A"` for unavailable times.
 
----
+### `getTimesAll(...)`
 
-## 🤝 Contributing
+Same signature. Returns `PrayerTimesAll`: extends `PrayerTimes` with `Methods`, a record
+mapping each of the 14 method IDs to `[fajrTime, ishaTime]` as fractional hours.
 
-Contributions, observations, and validations are welcome!
+### `calcTimesAll(...)`
 
-- GitHub: [acamarata/pray-calc](https://github.com/acamarata/pray-calc)
-- NREL-SPA JS Engine: [acamarata/nrel-spa](https://github.com/acamarata/nrel-spa)
+Same as `getTimesAll`, fully formatted. `Methods` values are `[fajrString, ishaString]`.
 
----
+### `getAngles(date, lat, lng, elevation?, temperature?, pressure?)`
 
-## 🧪 Accuracy Notes
+Returns `{ fajrAngle, ishaAngle }` in degrees (positive = below horizon).
 
-This package is built for high-precision use cases:
+### `getAsr(solarNoon, latitude, declination, hanafi?)`
 
-- Real-time applications (e.g., adhan clocks)
-- Scientific Islamic astronomy
-- High-latitude and seasonal edge-case handling
+Computes Asr from solar noon time, latitude, and solar declination. Returns fractional hours.
 
-All core calculations use **NREL-SPA** and angles dynamically generated to match observable twilight.
+### `getQiyam(fajrTime, ishaTime)`
 
----
+Returns the start of the last third of the night as fractional hours.
 
-## 📄 License
+### `getMscFajr(date, latitude)` / `getMscIsha(date, latitude, shafaq?)`
 
-[MIT License](./LICENSE)
+Moonsighting Committee Worldwide minute offsets: minutes before sunrise (Fajr) and
+minutes after sunset (Isha). `shafaq` controls which twilight phase is used for Isha:
+`'general'` (default), `'ahmer'` (red glow), or `'abyad'` (white glow).
+
+### `METHODS`
+
+Exported array of all 14 `MethodDefinition` objects.
+
+## Supported Methods
+
+| ID | Name | Fajr | Isha | Region |
+| -- | ---- | ---- | ---- | ------ |
+| `UOIF` | Union des Organisations Islamiques de France | 12° | 12° | France |
+| `ISNACA` | IQNA / Islamic Council of North America | 13° | 13° | Canada |
+| `ISNA` | FCNA / Islamic Society of North America | 15° | 15° | US, UK, AU, NZ |
+| `SAMR` | Spiritual Administration of Muslims of Russia | 16° | 15° | Russia |
+| `IGUT` | Institute of Geophysics, Univ. of Tehran | 17.7° | 14° | Iran |
+| `MWL` | Muslim World League | 18° | 17° | Global |
+| `DIBT` | Diyanet, Turkey | 18° | 17° | Turkey |
+| `Karachi` | Univ. of Islamic Sciences, Karachi | 18° | 18° | PK, BD, IN, AF |
+| `Kuwait` | Kuwait Ministry of Islamic Affairs | 18° | 17.5° | Kuwait |
+| `UAQ` | Umm Al-Qura Univ., Makkah | 18.5° | +90 min | Saudi Arabia |
+| `Qatar` | Qatar / Gulf Standard | 18° | +90 min | Qatar, Gulf |
+| `Egypt` | Egyptian General Authority of Survey | 19.5° | 17.5° | EG, SY, IQ, LB |
+| `MUIS` | Majlis Ugama Islam Singapura | 20° | 18° | Singapore |
+| `MSC` | Moonsighting Committee Worldwide | seasonal | seasonal | Global |
+
+## Dynamic Method
+
+Standard prayer time libraries use a fixed angle (e.g., MWL: 18°) applied globally.
+This works near the equator but fails at higher latitudes: above 48.5°N in summer, the
+Sun never reaches 18° depression, so a 18°-everywhere library produces missing Isha
+times. Observational campaigns also show that at mid-latitudes, true dawn appears when
+the Sun is around 14–16° below the horizon, not 18°.
+
+The dynamic method computes the angle in three layers:
+
+1. **MSC seasonal base** — Khalid Shaukat's piecewise model, calibrated against field
+   observations across latitudes 0°–55°N/S. Returns minutes before/after sunrise/sunset,
+   converted to depression degrees via spherical trigonometry.
+
+2. **Physics corrections** — Earth-Sun distance (r via Jean Meeus elliptical orbit),
+   Fourier harmonic smoothing, atmospheric refraction at the computed altitude, and
+   elevation horizon dip.
+
+3. **Physical bounds** — clipped to [10°, 22°].
+
+At the equator the result converges to approximately 18°, consistent with historical
+usage. At 50–55°N in summer it falls to 12–14°, matching empirical UK observations.
+
+Full detail: [Dynamic Algorithm wiki page](https://github.com/acamarata/pray-calc/wiki/Dynamic-Algorithm)
+
+## Architecture
+
+- Only runtime dependency: `nrel-spa` (NREL Solar Position Algorithm)
+- `getSolarEphemeris` — Jean Meeus Ch. 25: declination, Earth-Sun distance, ecliptic lon
+- `getTimesAll` — single batch SPA call for all 14×2 + 2 dynamic zenith angles
+
+Full detail: [Architecture wiki page](https://github.com/acamarata/pray-calc/wiki/Architecture)
+
+## Compatibility
+
+- Node.js >= 20
+- ESM and CJS builds included
+- TypeScript types bundled
+- No browser-incompatible APIs
+
+## TypeScript
+
+```typescript
+import type {
+  PrayerTimes,
+  FormattedPrayerTimes,
+  PrayerTimesAll,
+  FormattedPrayerTimesAll,
+  TwilightAngles,
+  MethodDefinition,
+} from 'pray-calc';
+```
+
+## Documentation
+
+Full documentation: [GitHub Wiki](https://github.com/acamarata/pray-calc/wiki)
+
+- [API Reference](https://github.com/acamarata/pray-calc/wiki/API-Reference)
+- [Dynamic Algorithm](https://github.com/acamarata/pray-calc/wiki/Dynamic-Algorithm)
+- [Traditional Methods](https://github.com/acamarata/pray-calc/wiki/Traditional-Methods)
+- [Architecture](https://github.com/acamarata/pray-calc/wiki/Architecture)
+- [Twilight Physics](https://github.com/acamarata/pray-calc/wiki/Twilight-Physics)
+- [High-Latitude Handling](https://github.com/acamarata/pray-calc/wiki/High-Latitude)
+
+## Related
+
+- [nrel-spa](https://github.com/acamarata/nrel-spa) — NREL Solar Position Algorithm
+- [luxon-hijri](https://github.com/acamarata/luxon-hijri) — Hijri/Gregorian calendar
+- [moon-sighting](https://github.com/acamarata/moon-sighting) — Crescent visibility
+
+## License
+
+MIT. Copyright (c) 2023-2026 Aric Camarata.
+
+See [LICENSE](LICENSE) for full terms.
