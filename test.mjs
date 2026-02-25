@@ -309,7 +309,9 @@ test('getTimes returns all required fields', () => {
 });
 
 test('getTimes chronological order', () => {
-  const t = getTimes(new Date('2024-06-21'), 40.7, -74.0);
+  // Use explicit tz=-4 (EDT) so CI (UTC) and local machines give identical results.
+  // Without it, NY's Maghrib falls past UTC midnight, wrapping to ~0.5h < Asr(~21h).
+  const t = getTimes(new Date('2024-06-21'), 40.7, -74.0, -4);
   // Fajr < Sunrise < Noon < Dhuhr ≈ Noon < Asr < Maghrib < Isha
   assert(t.Fajr < t.Sunrise, `Fajr(${t.Fajr}) < Sunrise(${t.Sunrise})`);
   assert(t.Sunrise < t.Noon, `Sunrise(${t.Sunrise}) < Noon(${t.Noon})`);
