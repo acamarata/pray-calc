@@ -79,4 +79,7 @@ jobs:
           grep "dist/index.mjs" pack-output.txt
           grep "dist/index.d.ts" pack-output.txt
           grep "dist/index.d.mts" pack-output.txt
+          grep "README.md" pack-output.txt
+          grep "CHANGELOG.md" pack-output.txt
+          grep "LICENSE" pack-output.txt
           echo "Pack check passed"

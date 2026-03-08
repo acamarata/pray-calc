@@ -200,6 +200,14 @@ Full documentation: [GitHub Wiki](https://github.com/acamarata/pray-calc/wiki)
 - [luxon-hijri](https://github.com/acamarata/luxon-hijri) — Hijri/Gregorian calendar
 - [moon-sighting](https://github.com/acamarata/moon-sighting) — Crescent visibility
 
+## Acknowledgments
+
+The solar position calculations use [nrel-spa](https://github.com/acamarata/nrel-spa), a pure JavaScript port of the Solar Position Algorithm (SPA) developed by Ibrahim Reda and Afshin Andreas at the National Renewable Energy Laboratory (NREL):
+
+> Reda, I., Andreas, A. (2004). "Solar Position Algorithm for Solar Radiation Applications." Solar Energy, 76(5), 577-589. <https://doi.org/10.1016/j.solener.2003.12.003>
+
+The seasonal twilight model builds on the work of Khalid Shaukat (Moonsighting Committee Worldwide).
+
 ## License
 
 MIT. Copyright (c) 2023-2026 Aric Camarata.
