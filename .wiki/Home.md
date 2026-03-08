@@ -7,27 +7,27 @@ fixed-angle methods are included for comparison.
 
 ## Pages
 
-| Page | Description |
-|------|-------------|
-| [API Reference](API-Reference) | Full function signatures, parameters, return types |
-| [Dynamic Algorithm](Dynamic-Algorithm) | How Fajr/Isha angles are computed dynamically |
-| [Traditional Methods](Traditional-Methods) | All 14 supported methods and their parameters |
-| [Architecture](Architecture) | Module structure, data flow, design decisions |
-| [High-Latitude Handling](High-Latitude) | MSC rules for latitudes above 55° |
-| [Twilight Physics](Twilight-Physics) | Astronomical and atmospheric background |
-| [Asr Calculation](Asr-Calculation) | Shadow-ratio math, Shafi'i vs Hanafi |
-| [Moon Migration](Moon-Migration) | Moon functions moved to moon-sighting (v2 migration guide) |
-| [Changelog](Changelog) | Version history |
+| Page                                       | Description                                                |
+| ------------------------------------------ | ---------------------------------------------------------- |
+| [API Reference](API-Reference)             | Full function signatures, parameters, return types         |
+| [Dynamic Algorithm](Dynamic-Algorithm)     | How Fajr/Isha angles are computed dynamically              |
+| [Traditional Methods](Traditional-Methods) | All 14 supported methods and their parameters              |
+| [Architecture](Architecture)               | Module structure, data flow, design decisions              |
+| [High-Latitude Handling](High-Latitude)    | MSC rules for latitudes above 55°                          |
+| [Twilight Physics](Twilight-Physics)       | Astronomical and atmospheric background                    |
+| [Asr Calculation](Asr-Calculation)         | Shadow-ratio math, Shafi'i vs Hanafi                       |
+| [Moon Migration](Moon-Migration)           | Moon functions moved to moon-sighting (v2 migration guide) |
+| [Changelog](Changelog)                     | Version history                                            |
 
 ## Research & Accuracy
 
-| Page | Description |
-| --- | --- |
-| [Research Overview](Research) | Study summary, headline results, PCD algorithm description |
-| [Methodology](Research-Methodology) | Reference standard, measurement approach, test infrastructure |
-| [Global Accuracy Study](Research-Global-Study) | 18-city comparison across latitudes 6°S–51.5°N and all seasons |
-| [Home-Territory Study](Research-Home-Territory) | Each method tested at its own calibration city: PCD wins 13/14 |
-| [Observational Evidence](Research-Observational-Evidence) | Field observations, published studies, academic literature |
+| Page                                                           | Description                                                           |
+| -------------------------------------------------------------- | --------------------------------------------------------------------- |
+| [Research Overview](Research)                                  | Study summary, headline results, PCD algorithm description            |
+| [Methodology](Research-Methodology)                            | Reference standard, measurement approach, test infrastructure         |
+| [Global Accuracy Study](Research-Global-Study)                 | 18-city comparison across latitudes 6°S–51.5°N and all seasons        |
+| [Home-Territory Study](Research-Home-Territory)                | Each method tested at its own calibration city: PCD wins 13/14        |
+| [Observational Evidence](Research-Observational-Evidence)      | Field observations, published studies, academic literature            |
 | [Field Observation Comparison](Research-Verified-Observations) | Systematic comparison of PCD vs real-world verified Fajr measurements |
 
 ## Quick Start
@@ -43,15 +43,15 @@ import { calcTimes } from 'pray-calc';
 
 const times = calcTimes(
   new Date('2024-06-21'),
-  40.7128,   // New York
-  -74.0060,
+  40.7128, // New York
+  -74.006,
 );
 
-console.log(times.Fajr);    // "03:51:24"
+console.log(times.Fajr); // "03:51:24"
 console.log(times.Sunrise); // "05:25:08"
 console.log(times.Maghrib); // "20:31:17"
-console.log(times.Isha);    // "22:07:43"
-console.log(times.angles);  // { fajrAngle: 14.8, ishaAngle: 14.6 }
+console.log(times.Isha); // "22:07:43"
+console.log(times.angles); // { fajrAngle: 14.8, ishaAngle: 14.6 }
 ```
 
 ### CJS
@@ -85,4 +85,4 @@ never produces the "Isha never ends" failure that 18°-everywhere causes above 5
 
 ---
 
-*[Back to Repository](https://github.com/acamarata/pray-calc)*
+_[Back to Repository](https://github.com/acamarata/pray-calc)_

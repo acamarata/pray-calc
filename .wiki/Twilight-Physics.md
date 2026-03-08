@@ -7,13 +7,13 @@ evaluating any prayer time calculation.
 
 Neither the Quran nor Hadith specifies a numeric angle. The required criteria are:
 
-- **Fajr**: The appearance of *Subh Sadiq* (true dawn): a broad, horizontal
+- **Fajr**: The appearance of _Subh Sadiq_ (true dawn): a broad, horizontal
   whitening of the eastern sky that stretches from north to south. Distinguished from
-  *Subh Kadhib* (false dawn), which is a vertical column of zodiacal light that
+  _Subh Kadhib_ (false dawn), which is a vertical column of zodiacal light that
   appears and then vanishes before true dawn.
-- **Isha**: The disappearance of *Shafaq*: the twilight glow remaining in the western
-  sky after sunset. Classical scholars disagreed on which glow: *shafaq ahmer* (red
-  glow, which fades first) or *shafaq abyad* (white glow, which persists longer).
+- **Isha**: The disappearance of _Shafaq_: the twilight glow remaining in the western
+  sky after sunset. Classical scholars disagreed on which glow: _shafaq ahmer_ (red
+  glow, which fades first) or _shafaq abyad_ (white glow, which persists longer).
   Shia tradition and the IGUT/Tehran method use shafaq ahmer; Sunni tradition generally
   uses shafaq abyad.
 
@@ -23,12 +23,12 @@ Any calculation must reproduce these observable cues as closely as possible.
 
 Astronomers define twilight by the Sun's depression angle below the true horizon:
 
-| Stage | Sun Depression | Sky Condition |
-|-------|---------------|---------------|
-| Civil | 0–6° | Horizon clearly visible; enough light for outdoor work |
-| Nautical | 6–12° | Horizon visible at sea; brightest stars visible |
-| Astronomical | 12–18° | Sky nearly dark; all but faintest objects visible |
-| True night | > 18° | Sky fully dark by most definitions |
+| Stage        | Sun Depression | Sky Condition                                          |
+| ------------ | -------------- | ------------------------------------------------------ |
+| Civil        | 0–6°           | Horizon clearly visible; enough light for outdoor work |
+| Nautical     | 6–12°          | Horizon visible at sea; brightest stars visible        |
+| Astronomical | 12–18°         | Sky nearly dark; all but faintest objects visible      |
+| True night   | > 18°          | Sky fully dark by most definitions                     |
 
 Fajr roughly corresponds to the end of astronomical night (transition from true night
 to astronomical twilight). Isha roughly corresponds to the end of nautical or
@@ -86,12 +86,12 @@ at most latitudes: the visual threshold for dawn is reached at a lesser depressi
 
 Several major observational campaigns have mapped true Fajr/Isha angles:
 
-| Location | Latitude | Fajr Angle (observed) | Source |
-|----------|----------|----------------------|--------|
-| Indonesia (multiple sites) | ~6°S–7°S | 16.5° | National Observatory Study |
-| Saudi Arabia (desert) | ~27.5°N | 14.0° avg | Hail Campaign |
-| Egypt (multiple sites) | ~26–30°N | 14.56° avg | 2015–2019 photometric study |
-| UK observations | ~51–53°N | 12–14° (seasonal) | Local community data |
+| Location                   | Latitude | Fajr Angle (observed) | Source                      |
+| -------------------------- | -------- | --------------------- | --------------------------- |
+| Indonesia (multiple sites) | ~6°S–7°S | 16.5°                 | National Observatory Study  |
+| Saudi Arabia (desert)      | ~27.5°N  | 14.0° avg             | Hail Campaign               |
+| Egypt (multiple sites)     | ~26–30°N | 14.56° avg            | 2015–2019 photometric study |
+| UK observations            | ~51–53°N | 12–14° (seasonal)     | Local community data        |
 
 The pattern is clear: the angle decreases as latitude increases, and the equatorial
 18° is not universal. At mid-latitudes, empirical Fajr is consistently around 14–15°.
@@ -105,7 +105,7 @@ horizon after evening twilight, or from the eastern horizon before dawn. It is m
 prominent at equatorial latitudes in spring (evening) and autumn (morning), and
 requires very dark skies to see.
 
-False dawn (*Subh Kadhib*) is the zodiacal light seen in the east before true dawn.
+False dawn (_Subh Kadhib_) is the zodiacal light seen in the east before true dawn.
 Observers have reported it disappearing by around 15–16° Sun depression, after which
 the genuine horizontal twilight takes over. The distinction matters for Fajr timing:
 Subh Sadiq (true dawn) is later than any zodiacal light brightening.
@@ -138,4 +138,4 @@ MSC "general" shafaq mode.
 
 ---
 
-*[Back to Home](Home) | [Dynamic Algorithm](Dynamic-Algorithm) | [High-Latitude Handling](High-Latitude)*
+_[Back to Home](Home) | [Dynamic Algorithm](Dynamic-Algorithm) | [High-Latitude Handling](High-Latitude)_

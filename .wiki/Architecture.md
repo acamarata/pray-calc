@@ -69,7 +69,7 @@ covers dates from -2000 to +6000.
 
 ## Solar Ephemeris
 
-`getSolarEphemeris` implements Jean Meeus, *Astronomical Algorithms* (2nd ed.),
+`getSolarEphemeris` implements Jean Meeus, _Astronomical Algorithms_ (2nd ed.),
 Chapter 25. This provides:
 
 - Solar declination (δ): accurate to ~0.01°
@@ -128,4 +128,4 @@ Source maps are included. `sideEffects: false` allows tree-shaking.
 
 ---
 
-*[Back to Home](Home) | [API Reference](API-Reference) | [Dynamic Algorithm](Dynamic-Algorithm)*
+_[Back to Home](Home) | [API Reference](API-Reference) | [Dynamic Algorithm](Dynamic-Algorithm)_

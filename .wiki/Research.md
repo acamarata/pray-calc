@@ -8,15 +8,15 @@ The methodology, data, and conclusions here are reproducible. All computations w
 
 ## Key Findings
 
-| Metric | PCD (Dynamic) | Best Fixed Method | All Methods Avg |
-| --- | --- | --- | --- |
-| Global MAE: Fajr | **0.64 min** | 10.21 min (Qatar) | 18.6 min |
-| Global MAE: Isha | **1.30 min** | 10.22 min (Qatar/UAQ) | 18.8 min |
-| Global MAE: Combined | **0.97 min** | 10.21 min (Qatar) | 18.7 min |
-| Home-territory MAE: Fajr | **0.65 min** | 4.24 min (MUIS) | 8.69 min |
-| Home-territory MAE: Combined | **0.64 min** | 4.24 min (MUIS) | 8.69 min |
-| Win rate at method's own home city | **13 / 14** |: |: |
-| High-latitude Isha availability (London, June) | **Valid** | N/A for 6 methods | N/A for 6 methods |
+| Metric                                         | PCD (Dynamic) | Best Fixed Method     | All Methods Avg   |
+| ---------------------------------------------- | ------------- | --------------------- | ----------------- |
+| Global MAE: Fajr                               | **0.64 min**  | 10.21 min (Qatar)     | 18.6 min          |
+| Global MAE: Isha                               | **1.30 min**  | 10.22 min (Qatar/UAQ) | 18.8 min          |
+| Global MAE: Combined                           | **0.97 min**  | 10.21 min (Qatar)     | 18.7 min          |
+| Home-territory MAE: Fajr                       | **0.65 min**  | 4.24 min (MUIS)       | 8.69 min          |
+| Home-territory MAE: Combined                   | **0.64 min**  | 4.24 min (MUIS)       | 8.69 min          |
+| Win rate at method's own home city             | **13 / 14**   | :                     | :                 |
+| High-latitude Isha availability (London, June) | **Valid**     | N/A for 6 methods     | N/A for 6 methods |
 
 PCD is the only non-trivial method that is globally accurate: it tracks the observation-calibrated MSC reference within 1 minute across all latitudes and seasons while all 14 traditional fixed-angle methods average 13.5× more error even at their own calibration cities.
 
@@ -24,11 +24,11 @@ PCD is the only non-trivial method that is globally accurate: it tracks the obse
 
 ## Research Pages
 
-| Page | Description |
-| --- | --- |
-| [Methodology](Research-Methodology) | Reference standard, measurement approach, test infrastructure |
-| [Global Accuracy Study](Research-Global-Study) | 18-city comparison across all latitudes and seasons |
-| [Home-Territory Study](Research-Home-Territory) | Each method tested at the city and season it was designed for |
+| Page                                                      | Description                                                       |
+| --------------------------------------------------------- | ----------------------------------------------------------------- |
+| [Methodology](Research-Methodology)                       | Reference standard, measurement approach, test infrastructure     |
+| [Global Accuracy Study](Research-Global-Study)            | 18-city comparison across all latitudes and seasons               |
+| [Home-Territory Study](Research-Home-Territory)           | Each method tested at the city and season it was designed for     |
 | [Observational Evidence](Research-Observational-Evidence) | Field observation records, published studies, academic literature |
 
 ---
@@ -51,12 +51,12 @@ where `H` is the hour angle, `a` is the target altitude, `φ` is latitude, and `
 
 Four corrections are applied to the base angle:
 
-| Correction | Formula | Effect |
-| --- | --- | --- |
-| Earth-Sun distance | `Δr = −0.5 × ln(r)` where `r` is in AU | ±0.015° over the year |
-| Fourier harmonic | `0.1·(|φ|/45)·sin(θ) + 0.05·(|φ|/45)·sin(2θ)` | ±0.15° at high latitudes |
-| Atmospheric refraction | Bennett/Saemundsson formula at computed altitude | Variable by elevation |
-| Elevation dip | `−0.3 × 1.06 × √(h/1000)` degrees | Negative for elevated sites |
+| Correction             | Formula                                          | Effect                      |
+| ---------------------- | ------------------------------------------------ | --------------------------- | -------------------- | --- | ------------- | ------------------------ |
+| Earth-Sun distance     | `Δr = −0.5 × ln(r)` where `r` is in AU           | ±0.015° over the year       |
+| Fourier harmonic       | `0.1·(                                           | φ                           | /45)·sin(θ) + 0.05·( | φ   | /45)·sin(2θ)` | ±0.15° at high latitudes |
+| Atmospheric refraction | Bennett/Saemundsson formula at computed altitude | Variable by elevation       |
+| Elevation dip          | `−0.3 × 1.06 × √(h/1000)` degrees                | Negative for elevated sites |
 
 **Layer 3: Physical Bounds**
 
@@ -79,4 +79,4 @@ These corrections are small individually (each < 0.2°) but compound to produce 
 
 ---
 
-*[Home](Home) | [API Reference](API-Reference) | [Dynamic Algorithm](Dynamic-Algorithm) | [Traditional Methods](Traditional-Methods)*
+_[Home](Home) | [API Reference](API-Reference) | [Dynamic Algorithm](Dynamic-Algorithm) | [Traditional Methods](Traditional-Methods)_

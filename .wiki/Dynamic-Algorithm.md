@@ -148,4 +148,4 @@ piecewise model is in [src/getMSC.ts](../src/getMSC.ts). The solar ephemeris
 
 ---
 
-*[Back to Home](Home) | [Traditional Methods](Traditional-Methods) | [Twilight Physics](Twilight-Physics)*
+_[Back to Home](Home) | [Traditional Methods](Traditional-Methods) | [Twilight Physics](Twilight-Physics)_

@@ -24,17 +24,17 @@ Khalid Shaukat conducted and compiled field observations of Fajr and Isha across
 
 Selected reference values from Shaukat's seasonal tables:
 
-| Latitude band | Month | Fajr (min before sunrise) | Isha (min after sunset) |
-| --- | --- | --- | --- |
-| 0–10°N | All months | ~108 | ~108 |
-| 20–25°N | Jun | ~88–93 | ~82–87 |
-| 20–25°N | Dec | ~100–104 | ~94–98 |
-| 30–35°N | Jun | ~83–89 | ~78–82 |
-| 30–35°N | Dec | ~91–95 | ~89–93 |
-| 40–45°N | Jun | ~73–84 | ~67–80 |
-| 40–45°N | Dec | ~87–96 | ~80–94 |
-| 50–55°N | Jun | ~68–79 | ~63–81 |
-| 50–55°N | Dec | ~102–110 | ~99–107 |
+| Latitude band | Month      | Fajr (min before sunrise) | Isha (min after sunset) |
+| ------------- | ---------- | ------------------------- | ----------------------- |
+| 0–10°N        | All months | ~108                      | ~108                    |
+| 20–25°N       | Jun        | ~88–93                    | ~82–87                  |
+| 20–25°N       | Dec        | ~100–104                  | ~94–98                  |
+| 30–35°N       | Jun        | ~83–89                    | ~78–82                  |
+| 30–35°N       | Dec        | ~91–95                    | ~89–93                  |
+| 40–45°N       | Jun        | ~73–84                    | ~67–80                  |
+| 40–45°N       | Dec        | ~87–96                    | ~80–94                  |
+| 50–55°N       | Jun        | ~68–79                    | ~63–81                  |
+| 50–55°N       | Dec        | ~102–110                  | ~99–107                 |
 
 Key conclusions from Shaukat's work:
 
@@ -102,6 +102,7 @@ The HMNAO publishes detailed astronomical twilight tables for UK cities. For Lon
 - This means no fixed-angle method above 11.8° can compute an Isha time for London in June.
 
 UK Islamic scholars and the Muslim Council of Britain have noted that:
+
 - True Fajr at London in summer corresponds to approximately **12–13°** solar depression.
 - Methods using 18° (MWL) or higher are unusable for London in summer: they produce times before midnight or N/A.
 - The MSC model (which PCD implements) yields 120 minutes before sunrise at London in June, corresponding to approximately 12°: matching these observations.
@@ -124,16 +125,16 @@ The 17.7° Fajr angle for Tehran (35.7°N, 1191m elevation) was derived from obs
 
 Compiled from the published studies cited on this page and the automated comparison study. See [Verified Observations](Research-Verified-Observations) for the full comparison matrix including computed errors for all methods.
 
-| Latitude band | Season | Observed Fajr° | PCD output | Fixed 18° (MWL) | Fixed 15° (ISNA) |
-| --- | --- | --- | --- | --- | --- |
-| 0–6°S (Jakarta) | Jun | 13–19°† | **18.72°** | 18° ≈ | 15° ✗ |
-| 1–2°N (Singapore) | Dec | ~18° | **18.23°** | 18° ✓ | 15° ✗ |
-| 21–30°N (Egypt, Arabia) | Annual | ~13–15°‡ | **19.4–19.8°** | 18° ✗✗ | 15° ≈ |
-| 30–35°N (Cairo/Tehran) | Annual | ~14–17°‡ | **17.95–18.77°** | 18° ✗ | 15° ✗ |
-| 36–40°N (Istanbul/NY) | Jun | 14–16° | **16.21–16.28°** | 18° ✗ (too early) | 15° ~ |
-| 40–45°N (Toronto/Ottawa) | Jun | 13–15° | **14.61–15.31°** | 18° ✗✗ | 15° ≈ |
-| 48–52°N (Paris/London) | Jun | 11–13° | **11.88–13.14°** | N/A | N/A |
-| 55°N (Moscow) | Jun | ~10–11° | **10.00°** | N/A | N/A |
+| Latitude band            | Season | Observed Fajr° | PCD output       | Fixed 18° (MWL)   | Fixed 15° (ISNA) |
+| ------------------------ | ------ | -------------- | ---------------- | ----------------- | ---------------- |
+| 0–6°S (Jakarta)          | Jun    | 13–19°†        | **18.72°**       | 18° ≈             | 15° ✗            |
+| 1–2°N (Singapore)        | Dec    | ~18°           | **18.23°**       | 18° ✓             | 15° ✗            |
+| 21–30°N (Egypt, Arabia)  | Annual | ~13–15°‡       | **19.4–19.8°**   | 18° ✗✗            | 15° ≈            |
+| 30–35°N (Cairo/Tehran)   | Annual | ~14–17°‡       | **17.95–18.77°** | 18° ✗             | 15° ✗            |
+| 36–40°N (Istanbul/NY)    | Jun    | 14–16°         | **16.21–16.28°** | 18° ✗ (too early) | 15° ~            |
+| 40–45°N (Toronto/Ottawa) | Jun    | 13–15°         | **14.61–15.31°** | 18° ✗✗            | 15° ≈            |
+| 48–52°N (Paris/London)   | Jun    | 11–13°         | **11.88–13.14°** | N/A               | N/A              |
+| 55°N (Moscow)            | Jun    | ~10–11°        | **10.00°**       | N/A               | N/A              |
 
 Legend: ✓ = within 0.5° of observed, ≈ = within 1°, ✗ = 1–3° off, ✗✗ = >3° off or N/A
 
@@ -198,4 +199,4 @@ The full validation scripts are in the repository under `scripts/validate-real-w
 
 ---
 
-*[Research](Research) | [Methodology](Research-Methodology) | [Global Study](Research-Global-Study) | [Home-Territory Study](Research-Home-Territory)*
+_[Research](Research) | [Methodology](Research-Methodology) | [Global Study](Research-Global-Study) | [Home-Territory Study](Research-Home-Territory)_

@@ -19,4 +19,4 @@ CommonJS, JavaScript source, 10 traditional methods, suncalc for moon data.
 
 ---
 
-*[Back to Home](Home)*
+_[Back to Home](Home)_

@@ -9,7 +9,7 @@ a sunrise before Fajr, or other nonsensical results.
 
 Even at latitudes where the Sun does reach 18°, the resulting times can be extreme.
 At 52°N in summer, a 15° Isha occurs around 2–3 AM, making a 4 AM Fajr effectively
-continuous with Isha. Islamic jurisprudence recognizes this as hardship (*haraj*)
+continuous with Isha. Islamic jurisprudence recognizes this as hardship (_haraj_)
 and provides accommodations.
 
 ## The MSC Approach
@@ -52,23 +52,28 @@ there.
 Islamic scholars have proposed several approaches for high-latitude regions:
 
 ### Nearest Latitude (Aqrab al-Bilad)
+
 Use the prayer times of the nearest city where the Sun does reach the required
 angle, scaled to local midnight.
 
 ### Nearest Day (Aqrab al-Ayyam)
+
 Use the prayer times from the nearest date in the year when the Sun does reach
 the required angle at the same location.
 
 ### Seventh of Night (Sab'u lail)
+
 Divide the 24-hour period (from midnight to midnight, or from Maghrib to Fajr)
 into 7 equal parts. Isha begins at the end of the first seventh; Fajr begins at
 the start of the last seventh.
 
 ### Specific Latitude Cutoff
+
 Many North American institutions use the rule: above 48.5°N, compute times as
 if the latitude were 48.5°N. This is simple and avoids discontinuities.
 
 ### Makkah Time
+
 A minority position: use Makkah's times globally. Not widely adopted outside
 of specific communities.
 
@@ -84,4 +89,4 @@ are inapplicable and apply their own high-latitude policy.
 
 ---
 
-*[Back to Home](Home) | [Twilight Physics](Twilight-Physics) | [Dynamic Algorithm](Dynamic-Algorithm)*
+_[Back to Home](Home) | [Twilight Physics](Twilight-Physics) | [Dynamic Algorithm](Dynamic-Algorithm)_

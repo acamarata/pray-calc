@@ -5,22 +5,22 @@ field returned by `getTimesAll` and `calcTimesAll`. Each entry is `[fajrTime, is
 
 ## Method Table
 
-| ID | Name | Fajr | Isha | Region |
-|----|------|------|------|--------|
-| `UOIF` | Union des Organisations Islamiques de France | 12° | 12° | France |
-| `ISNACA` | IQNA / Islamic Council of North America | 13° | 13° | Canada |
-| `ISNA` | FCNA / Islamic Society of North America | 15° | 15° | US, UK, AU, NZ |
-| `SAMR` | Spiritual Administration of Muslims of Russia | 16° | 15° | Russia |
-| `IGUT` | Institute of Geophysics, University of Tehran | 17.7° | 14° | Iran, Shia use |
-| `MWL` | Muslim World League | 18° | 17° | Global default |
-| `DIBT` | Diyanet İşleri Başkanlığı, Turkey | 18° | 17° | Turkey |
-| `Karachi` | University of Islamic Sciences, Karachi | 18° | 18° | PK, BD, IN, AF |
-| `Kuwait` | Kuwait Ministry of Islamic Affairs | 18° | 17.5° | Kuwait |
-| `UAQ` | Umm Al-Qura University, Makkah | 18.5° | +90 min | Saudi Arabia |
-| `Qatar` | Qatar / Gulf Standard | 18° | +90 min | Qatar, Gulf |
-| `Egypt` | Egyptian General Authority of Survey | 19.5° | 17.5° | EG, SY, IQ, LB |
-| `MUIS` | Majlis Ugama Islam Singapura | 20° | 18° | Singapore |
-| `MSC` | Moonsighting Committee Worldwide | seasonal | seasonal | Global |
+| ID        | Name                                          | Fajr     | Isha     | Region         |
+| --------- | --------------------------------------------- | -------- | -------- | -------------- |
+| `UOIF`    | Union des Organisations Islamiques de France  | 12°      | 12°      | France         |
+| `ISNACA`  | IQNA / Islamic Council of North America       | 13°      | 13°      | Canada         |
+| `ISNA`    | FCNA / Islamic Society of North America       | 15°      | 15°      | US, UK, AU, NZ |
+| `SAMR`    | Spiritual Administration of Muslims of Russia | 16°      | 15°      | Russia         |
+| `IGUT`    | Institute of Geophysics, University of Tehran | 17.7°    | 14°      | Iran, Shia use |
+| `MWL`     | Muslim World League                           | 18°      | 17°      | Global default |
+| `DIBT`    | Diyanet İşleri Başkanlığı, Turkey             | 18°      | 17°      | Turkey         |
+| `Karachi` | University of Islamic Sciences, Karachi       | 18°      | 18°      | PK, BD, IN, AF |
+| `Kuwait`  | Kuwait Ministry of Islamic Affairs            | 18°      | 17.5°    | Kuwait         |
+| `UAQ`     | Umm Al-Qura University, Makkah                | 18.5°    | +90 min  | Saudi Arabia   |
+| `Qatar`   | Qatar / Gulf Standard                         | 18°      | +90 min  | Qatar, Gulf    |
+| `Egypt`   | Egyptian General Authority of Survey          | 19.5°    | 17.5°    | EG, SY, IQ, LB |
+| `MUIS`    | Majlis Ugama Islam Singapura                  | 20°      | 18°      | Singapore      |
+| `MSC`     | Moonsighting Committee Worldwide              | seasonal | seasonal | Global         |
 
 ## Method Notes
 
@@ -142,4 +142,4 @@ offsets from `getMscFajr` / `getMscIsha`.
 
 ---
 
-*[Back to Home](Home) | [Dynamic Algorithm](Dynamic-Algorithm) | [API Reference](API-Reference)*
+_[Back to Home](Home) | [Dynamic Algorithm](Dynamic-Algorithm) | [API Reference](API-Reference)_

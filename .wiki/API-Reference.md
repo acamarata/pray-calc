@@ -9,27 +9,27 @@ function getTimes(
   date: Date,
   lat: number,
   lng: number,
-  tz?: number,           // default: system UTC offset
-  elevation?: number,    // meters above sea level, default 0
-  temperature?: number,  // °C, default 15
-  pressure?: number,     // mbar, default 1013.25
-  hanafi?: boolean,      // Asr convention, default false (Shafi'i)
-): PrayerTimes
+  tz?: number, // default: system UTC offset
+  elevation?: number, // meters above sea level, default 0
+  temperature?: number, // °C, default 15
+  pressure?: number, // mbar, default 1013.25
+  hanafi?: boolean, // Asr convention, default false (Shafi'i)
+): PrayerTimes;
 ```
 
 ### PrayerTimes
 
-| Field | Type | Description |
-|-------|------|-------------|
-| `Qiyam` | `number` | Start of the last third of the night (Qiyam al-Layl) |
-| `Fajr` | `number` | True dawn (Subh Sadiq) |
-| `Sunrise` | `number` | Astronomical sunrise |
-| `Noon` | `number` | Solar noon (exact geometric transit) |
-| `Dhuhr` | `number` | 2.5 minutes after solar noon |
-| `Asr` | `number` | Asr (Shafi'i or Hanafi shadow ratio) |
-| `Maghrib` | `number` | Astronomical sunset |
-| `Isha` | `number` | Nightfall (end of shafaq) |
-| `angles` | `TwilightAngles` | Dynamic depression angles used |
+| Field     | Type             | Description                                          |
+| --------- | ---------------- | ---------------------------------------------------- |
+| `Qiyam`   | `number`         | Start of the last third of the night (Qiyam al-Layl) |
+| `Fajr`    | `number`         | True dawn (Subh Sadiq)                               |
+| `Sunrise` | `number`         | Astronomical sunrise                                 |
+| `Noon`    | `number`         | Solar noon (exact geometric transit)                 |
+| `Dhuhr`   | `number`         | 2.5 minutes after solar noon                         |
+| `Asr`     | `number`         | Asr (Shafi'i or Hanafi shadow ratio)                 |
+| `Maghrib` | `number`         | Astronomical sunset                                  |
+| `Isha`    | `number`         | Nightfall (end of shafaq)                            |
+| `angles`  | `TwilightAngles` | Dynamic depression angles used                       |
 
 All times are fractional hours in local time (e.g., `5.5` = 05:30:00). `NaN` means
 the event cannot be computed for this date/location (polar night, etc.).
@@ -50,7 +50,7 @@ function calcTimes(
   temperature?: number,
   pressure?: number,
   hanafi?: boolean,
-): FormattedPrayerTimes
+): FormattedPrayerTimes;
 ```
 
 Returns `"N/A"` for any time that cannot be computed.
@@ -71,15 +71,15 @@ function getTimesAll(
   temperature?: number,
   pressure?: number,
   hanafi?: boolean,
-): PrayerTimesAll
+): PrayerTimesAll;
 ```
 
 ### PrayerTimesAll
 
 Extends `PrayerTimes` with:
 
-| Field | Type | Description |
-|-------|------|-------------|
+| Field     | Type                               | Description                          |
+| --------- | ---------------------------------- | ------------------------------------ |
 | `Methods` | `Record<string, [number, number]>` | `[fajrTime, ishaTime]` per method ID |
 
 Method IDs: `UOIF`, `ISNACA`, `ISNA`, `SAMR`, `IGUT`, `MWL`, `DIBT`, `Karachi`,
@@ -101,7 +101,7 @@ function calcTimesAll(
   temperature?: number,
   pressure?: number,
   hanafi?: boolean,
-): FormattedPrayerTimesAll
+): FormattedPrayerTimesAll;
 ```
 
 ---
@@ -118,7 +118,7 @@ function getAngles(
   elevation?: number,
   temperature?: number,
   pressure?: number,
-): TwilightAngles
+): TwilightAngles;
 ```
 
 Returns `{ fajrAngle: number, ishaAngle: number }` in degrees (positive = below horizon).
@@ -131,11 +131,11 @@ Compute Asr time from known solar noon and solar declination.
 
 ```typescript
 function getAsr(
-  solarNoon: number,    // fractional hours (local time)
-  latitude: number,     // decimal degrees
-  declination: number,  // solar declination in degrees
-  hanafi?: boolean,     // default false (Shafi'i, shadowFactor=1)
-): number
+  solarNoon: number, // fractional hours (local time)
+  latitude: number, // decimal degrees
+  declination: number, // solar declination in degrees
+  hanafi?: boolean, // default false (Shafi'i, shadowFactor=1)
+): number;
 ```
 
 Returns Asr as fractional hours, or `NaN` if the sun never reaches the required altitude.
@@ -150,9 +150,9 @@ Compute start of the last third of the night.
 
 ```typescript
 function getQiyam(
-  fajrTime: number,  // fractional hours
-  ishaTime: number,  // fractional hours
-): number
+  fajrTime: number, // fractional hours
+  ishaTime: number, // fractional hours
+): number;
 ```
 
 Returns fractional hours. The night is divided from Isha to Fajr; Qiyam starts at the
@@ -165,14 +165,14 @@ Returns fractional hours. The night is divided from Isha to Fajr; Qiyam starts a
 Compute the Moonsighting Committee Worldwide seasonal time offsets.
 
 ```typescript
-function getMscFajr(date: Date, latitude: number): number
+function getMscFajr(date: Date, latitude: number): number;
 // Returns minutes before astronomical sunrise for Fajr
 
 function getMscIsha(
   date: Date,
   latitude: number,
-  shafaq?: ShafaqMode,  // 'general' | 'ahmer' | 'abyad', default 'general'
-): number
+  shafaq?: ShafaqMode, // 'general' | 'ahmer' | 'abyad', default 'general'
+): number;
 // Returns minutes after astronomical sunset for Isha
 ```
 
@@ -183,16 +183,16 @@ You rarely need to call them directly.
 
 ## solarEphemeris / toJulianDate
 
-Jean Meeus solar ephemeris (Chapter 25 of *Astronomical Algorithms*, 2nd ed.).
+Jean Meeus solar ephemeris (Chapter 25 of _Astronomical Algorithms_, 2nd ed.).
 
 ```typescript
-function toJulianDate(date: Date): number
+function toJulianDate(date: Date): number;
 
 function solarEphemeris(jd: number): {
-  decl: number;    // solar declination, degrees
-  r: number;       // Earth-Sun distance, AU
-  eclLon: number;  // apparent ecliptic longitude, degrees
-}
+  decl: number; // solar declination, degrees
+  r: number; // Earth-Sun distance, AU
+  eclLon: number; // apparent ecliptic longitude, degrees
+};
 ```
 
 Accuracy: declination within ~0.01°, r within ~0.0001 AU. These are used internally
@@ -205,7 +205,7 @@ to drive the physics corrections in `getAngles`.
 Exported array of all 14 `MethodDefinition` objects for documentation/tooling use.
 
 ```typescript
-const METHODS: MethodDefinition[]
+const METHODS: MethodDefinition[];
 
 interface MethodDefinition {
   id: string;
@@ -213,8 +213,8 @@ interface MethodDefinition {
   region: string;
   fajrAngle: number | null;
   ishaAngle: number | null;
-  ishaMinutes?: number;   // UAQ and Qatar: 90 minutes after sunset
-  useMSC?: boolean;       // MSC seasonal method
+  ishaMinutes?: number; // UAQ and Qatar: 90 minutes after sunset
+  useMSC?: boolean; // MSC seasonal method
 }
 ```
 
@@ -253,4 +253,4 @@ See [Moon Migration](Moon-Migration) for the full migration guide and function m
 
 ---
 
-*[Back to Home](Home) | [Dynamic Algorithm](Dynamic-Algorithm) | [Traditional Methods](Traditional-Methods)*
+_[Back to Home](Home) | [Dynamic Algorithm](Dynamic-Algorithm) | [Traditional Methods](Traditional-Methods)_

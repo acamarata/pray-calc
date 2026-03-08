@@ -42,6 +42,7 @@ node home-territory.mjs
 ```
 
 Computations use:
+
 - `getTimesAll()` for raw fractional-hour times across all 14 methods + dynamic simultaneously
 - `getAngles()` for the PCD-computed depression angles
 - `getMscFajr(date, lat)` / `getMscIsha(date, lat, 'general')` for the MSC minute reference
@@ -74,14 +75,14 @@ Tests across diverse latitudes, longitudes, elevations, and seasons. See [Global
 
 **Coverage:**
 
-| Region | Cities | Latitude range |
-| --- | --- | --- |
-| North America | New York (×3), Toronto | 40.7°N – 43.7°N |
-| Europe | London (×2), Istanbul | 41.0°N – 51.5°N |
-| Middle East | Makkah (×2), Tehran, Kuwait City, Riyadh | 21.4°N – 35.7°N |
-| Africa | Cairo (×2) | 30.1°N |
-| South/Southeast Asia | Karachi, Dhaka, Jakarta, Singapore | 6.2°S – 24.9°N |
-| Central Asia | Almaty | 43.2°N |
+| Region               | Cities                                   | Latitude range  |
+| -------------------- | ---------------------------------------- | --------------- |
+| North America        | New York (×3), Toronto                   | 40.7°N – 43.7°N |
+| Europe               | London (×2), Istanbul                    | 41.0°N – 51.5°N |
+| Middle East          | Makkah (×2), Tehran, Kuwait City, Riyadh | 21.4°N – 35.7°N |
+| Africa               | Cairo (×2)                               | 30.1°N          |
+| South/Southeast Asia | Karachi, Dhaka, Jakarta, Singapore       | 6.2°S – 24.9°N  |
+| Central Asia         | Almaty                                   | 43.2°N          |
 
 **Seasons covered:** Summer solstice, winter solstice, spring/autumn equinoxes.
 
@@ -107,4 +108,4 @@ Each method tested at the specific city and seasons for which it was designed. T
 
 ---
 
-*[Research](Research) | [Global Study](Research-Global-Study) | [Home-Territory Study](Research-Home-Territory) | [Observational Evidence](Research-Observational-Evidence)*
+_[Research](Research) | [Global Study](Research-Global-Study) | [Home-Territory Study](Research-Home-Territory) | [Observational Evidence](Research-Observational-Evidence)_

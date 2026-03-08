@@ -22,26 +22,26 @@ Both study types test the same question: does the calculated Fajr time match whe
 
 ### Angle-Based Field Studies
 
-| ID | Location | Latitude | Elevation | Period | N | Instrument | Observed° | Source |
-| --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| TUB-S | Tubruq, Libya: sea horizon | 32.1°N | 25 m | 2000–2003 | 429 | Naked eye | **13.48°** | Odeh 2004 |
-| TUB-D | Tubruq, Libya: desert horizon | 32.1°N | 25 m | 2000–2003 | 623 | Naked eye | **13.14°** | Odeh 2004 |
-| EGY | Egypt multi-site (4 cities) | 24–31°N | 10–95 m | 1984–1987 |: | Photometric + naked eye | **14.7°** mean | ENRIA 1987 |
-| HAI | Hail, Saudi Arabia | 27.5°N | 990 m | 2014–2015 | 365 | Naked eye | **14.01° ± 0.32°** | Al-Shehri 2017 |
-| FAY | Fayum, Egypt | 29.3°N | 29 m | 2018–2019 |: | Photometric | **14.4°** [14–14.8°] | AAAS 2019 |
-| BLK-S | Blackburn, UK: summer | 53.8°N | 75 m | 1987–1988 |: | Naked eye | **12°** | Duff & Duff 1989 |
-| BLK-W | Blackburn, UK: winter | 53.8°N | 75 m | 1987–1988 |: | Naked eye | **18°** | Duff & Duff 1989 |
-| CHI | Chicago, USA: summer | 41.9°N | 181 m | 1985 |: | Naked eye | **14°** [13–15°] | Shaukat 1985 |
-| LAP | Indonesia: 6 LAPAN stations | 6.5°S–1.5°N | 50–350 m | 2016–2017 |: | Sky brightness | **16.51°** mean | LAPAN 2017 |
-| MYS | Malaysia/Indonesia: DSLR | 2–7°N | 50–250 m | 2017 | 64 nights | DSLR photometry | **16.67°** [15.8–17.2°] | Zambri & Anwar 2017 |
+| ID    | Location                      | Latitude    | Elevation | Period    | N         | Instrument              | Observed°               | Source              |
+| ----- | ----------------------------- | ----------- | --------- | --------- | --------- | ----------------------- | ----------------------- | ------------------- |
+| TUB-S | Tubruq, Libya: sea horizon    | 32.1°N      | 25 m      | 2000–2003 | 429       | Naked eye               | **13.48°**              | Odeh 2004           |
+| TUB-D | Tubruq, Libya: desert horizon | 32.1°N      | 25 m      | 2000–2003 | 623       | Naked eye               | **13.14°**              | Odeh 2004           |
+| EGY   | Egypt multi-site (4 cities)   | 24–31°N     | 10–95 m   | 1984–1987 | :         | Photometric + naked eye | **14.7°** mean          | ENRIA 1987          |
+| HAI   | Hail, Saudi Arabia            | 27.5°N      | 990 m     | 2014–2015 | 365       | Naked eye               | **14.01° ± 0.32°**      | Al-Shehri 2017      |
+| FAY   | Fayum, Egypt                  | 29.3°N      | 29 m      | 2018–2019 | :         | Photometric             | **14.4°** [14–14.8°]    | AAAS 2019           |
+| BLK-S | Blackburn, UK: summer         | 53.8°N      | 75 m      | 1987–1988 | :         | Naked eye               | **12°**                 | Duff & Duff 1989    |
+| BLK-W | Blackburn, UK: winter         | 53.8°N      | 75 m      | 1987–1988 | :         | Naked eye               | **18°**                 | Duff & Duff 1989    |
+| CHI   | Chicago, USA: summer          | 41.9°N      | 181 m     | 1985      | :         | Naked eye               | **14°** [13–15°]        | Shaukat 1985        |
+| LAP   | Indonesia: 6 LAPAN stations   | 6.5°S–1.5°N | 50–350 m  | 2016–2017 | :         | Sky brightness          | **16.51°** mean         | LAPAN 2017          |
+| MYS   | Malaysia/Indonesia: DSLR      | 2–7°N       | 50–250 m  | 2017      | 64 nights | DSLR photometry         | **16.67°** [15.8–17.2°] | Zambri & Anwar 2017 |
 
 ### Time-Based Verification Points
 
-| ID | Location | Latitude | Date | Observed Fajr | Observer | Source |
-| --- | --- | --- | --- | --- | --- | --- |
-| MIA | Miami Beach, FL, USA | 25.8°N | Dec 3, 2000 | 5:45 AM EST | Khalid Shaukat + 4 co-observers | moonsighting.com |
-| PAM | Pampigny, Switzerland | 46.6°N | Jun 23, 2016 | 3:56 AM CEST | Khalid Shaukat | moonsighting.com |
-| JKT | Jakarta, Indonesia | 6.2°S | May 8, 2019 | 5:01 AM WIB | Community observers (multiple) | Indonesian Islamic astronomy forums |
+| ID  | Location              | Latitude | Date         | Observed Fajr | Observer                        | Source                              |
+| --- | --------------------- | -------- | ------------ | ------------- | ------------------------------- | ----------------------------------- |
+| MIA | Miami Beach, FL, USA  | 25.8°N   | Dec 3, 2000  | 5:45 AM EST   | Khalid Shaukat + 4 co-observers | moonsighting.com                    |
+| PAM | Pampigny, Switzerland | 46.6°N   | Jun 23, 2016 | 3:56 AM CEST  | Khalid Shaukat                  | moonsighting.com                    |
+| JKT | Jakarta, Indonesia    | 6.2°S    | May 8, 2019  | 5:01 AM WIB   | Community observers (multiple)  | Indonesian Islamic astronomy forums |
 
 ---
 
@@ -64,15 +64,15 @@ For time-based points, `getTimesAll(date, lat, lng, tz, elev)` was used to obtai
 
 Each study location was assigned the regional method most likely in use there:
 
-| Location | Regional method | Angle |
-| --- | --- | --- |
-| Libya / Egypt | Egypt (ENRIA) | 19.5° |
-| Saudi Arabia | Umm Al-Qura (UAQ) | 18.5° |
-| UK | MWL | 18° |
-| USA (Chicago) | ISNA | 15° |
-| USA (Miami) | ISNA | 15° |
-| Indonesia | MUIS | 20° |
-| Switzerland | UOIF | 12° |
+| Location      | Regional method   | Angle |
+| ------------- | ----------------- | ----- |
+| Libya / Egypt | Egypt (ENRIA)     | 19.5° |
+| Saudi Arabia  | Umm Al-Qura (UAQ) | 18.5° |
+| UK            | MWL               | 18°   |
+| USA (Chicago) | ISNA              | 15°   |
+| USA (Miami)   | ISNA              | 15°   |
+| Indonesia     | MUIS              | 20°   |
+| Switzerland   | UOIF              | 12°   |
 
 ---
 
@@ -82,27 +82,27 @@ Each study location was assigned the regional method most likely in use there:
 
 For each study: observed depression angle, PCD computed mean angle over study months, equivalent MSC angle, and the regional fixed-angle method. Errors are absolute differences in degrees.
 
-| Study | Obs° | PCD° | PCD err | MSC° | MSC err | Regional | Reg° | Reg err | Winner |
-| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| TUB-S Tubruq sea (32.1°N, Oct–Dec) | 13.48 | 19.17 | 5.69° | 18.92 | 5.44° | Egypt | 19.5 | 6.02° | MSC |
-| TUB-D Tubruq desert (32.1°N, Oct–Dec) | 13.14 | 19.17 | 6.03° | 18.92 | 5.78° | Egypt | 19.5 | 6.36° | MSC |
-| EGY Egypt multi-site (28°N mean, annual) | 14.70 | 19.37 | 4.67° | 19.30 | 4.60° | Egypt | 19.5 | 4.80° | MSC |
-| HAI Hail, Saudi Arabia (27.5°N, annual) | 14.01 | 19.66 | 5.65° | 19.34 | 5.33° | UAQ | 18.5 | 4.49° | UAQ |
-| FAY Fayum, Egypt (29.3°N, annual) | 14.40 | 19.23 | 4.83° | 19.17 | 4.77° | Egypt | 19.5 | 5.10° | MSC |
-| BLK-S Blackburn summer (53.75°N, May–Aug) | 12.00 | **11.87** | **0.13°** | 12.06 | 0.05° | MWL | 18.0 | 6.00° | MSC |
-| BLK-W Blackburn winter (53.75°N, Nov–Feb) | 18.00 | 14.35 | 3.65° | 14.32 | 3.68° | MWL | **18.0** | **0.00°** | MWL |
-| CHI Chicago summer (41.85°N, May–Aug) | 14.00 | 16.31 | 2.31° | 16.37 | 2.37° | ISNA | **15.0** | **1.00°** | ISNA |
-| LAP Indonesia 6 stations (2.5°S, annual) | 16.51 | 19.21 | 2.70° | 19.06 | 2.55° | MUIS | 20.0 | 3.49° | MSC |
-| MYS Malaysia DSLR (4°N, annual) | 16.67 | 19.35 | 2.68° | 19.24 | 2.57° | MUIS | 20.0 | 3.33° | MSC |
+| Study                                     | Obs°  | PCD°      | PCD err   | MSC°  | MSC err | Regional | Reg°     | Reg err   | Winner |
+| ----------------------------------------- | ----- | --------- | --------- | ----- | ------- | -------- | -------- | --------- | ------ |
+| TUB-S Tubruq sea (32.1°N, Oct–Dec)        | 13.48 | 19.17     | 5.69°     | 18.92 | 5.44°   | Egypt    | 19.5     | 6.02°     | MSC    |
+| TUB-D Tubruq desert (32.1°N, Oct–Dec)     | 13.14 | 19.17     | 6.03°     | 18.92 | 5.78°   | Egypt    | 19.5     | 6.36°     | MSC    |
+| EGY Egypt multi-site (28°N mean, annual)  | 14.70 | 19.37     | 4.67°     | 19.30 | 4.60°   | Egypt    | 19.5     | 4.80°     | MSC    |
+| HAI Hail, Saudi Arabia (27.5°N, annual)   | 14.01 | 19.66     | 5.65°     | 19.34 | 5.33°   | UAQ      | 18.5     | 4.49°     | UAQ    |
+| FAY Fayum, Egypt (29.3°N, annual)         | 14.40 | 19.23     | 4.83°     | 19.17 | 4.77°   | Egypt    | 19.5     | 5.10°     | MSC    |
+| BLK-S Blackburn summer (53.75°N, May–Aug) | 12.00 | **11.87** | **0.13°** | 12.06 | 0.05°   | MWL      | 18.0     | 6.00°     | MSC    |
+| BLK-W Blackburn winter (53.75°N, Nov–Feb) | 18.00 | 14.35     | 3.65°     | 14.32 | 3.68°   | MWL      | **18.0** | **0.00°** | MWL    |
+| CHI Chicago summer (41.85°N, May–Aug)     | 14.00 | 16.31     | 2.31°     | 16.37 | 2.37°   | ISNA     | **15.0** | **1.00°** | ISNA   |
+| LAP Indonesia 6 stations (2.5°S, annual)  | 16.51 | 19.21     | 2.70°     | 19.06 | 2.55°   | MUIS     | 20.0     | 3.49°     | MSC    |
+| MYS Malaysia DSLR (4°N, annual)           | 16.67 | 19.35     | 2.68°     | 19.24 | 2.57°   | MUIS     | 20.0     | 3.33°     | MSC    |
 
 ### Mean Absolute Error
 
-| Method | MAE (angle studies) | Studies won |
-| --- | --- | --- |
-| MSC (seasonal model) | **3.71°** | 6/10 |
-| PCD (dynamic) | 3.83° | 0/10 |
-| Regional fixed-angle | 4.06° | 2/10 (Hail-UAQ, Blackburn winter-MWL) |
-| ISNA 15° | 3.00° | 1/10 (Chicago summer) |
+| Method               | MAE (angle studies) | Studies won                           |
+| -------------------- | ------------------- | ------------------------------------- |
+| MSC (seasonal model) | **3.71°**           | 6/10                                  |
+| PCD (dynamic)        | 3.83°               | 0/10                                  |
+| Regional fixed-angle | 4.06°               | 2/10 (Hail-UAQ, Blackburn winter-MWL) |
+| ISNA 15°             | 3.00°               | 1/10 (Chicago summer)                 |
 
 ---
 
@@ -116,13 +116,13 @@ For each study: observed depression angle, PCD computed mean angle over study mo
 
 **Computed results:**
 
-| Method | Fajr time | Error vs observed | Angle used |
-| --- | --- | --- | --- |
-| Observed | 05:45:00 |: | 14.75° |
-| PCD | 05:23:42 | **-21.3 min early** | 19.46° |
-| MSC reference | 05:23:48 | -21.2 min early | 19.5° (equiv) |
-| ISNA (15°) | 05:44:24 | **-0.6 min** | 15° |
-| MWL (18°) | 05:09:48 | -35.2 min early | 18° |
+| Method        | Fajr time | Error vs observed   | Angle used    |
+| ------------- | --------- | ------------------- | ------------- |
+| Observed      | 05:45:00  | :                   | 14.75°        |
+| PCD           | 05:23:42  | **-21.3 min early** | 19.46°        |
+| MSC reference | 05:23:48  | -21.2 min early     | 19.5° (equiv) |
+| ISNA (15°)    | 05:44:24  | **-0.6 min**        | 15°           |
+| MWL (18°)     | 05:09:48  | -35.2 min early     | 18°           |
 
 Sunrise: 06:51:48 EST. The observation places Fajr at 66.8 minutes before sunrise.
 
@@ -138,13 +138,13 @@ Sunrise: 06:51:48 EST. The observation places Fajr at 66.8 minutes before sunris
 
 **Computed results:**
 
-| Method | Fajr time | Error vs observed | Angle used |
-| --- | --- | --- | --- |
-| Observed | 03:56:00 |: | 13.39° |
-| PCD | 03:43:21 | **-12.6 min early** | 14.28° |
-| MSC reference | 03:45:57 | -10.1 min early |: |
-| UOIF (12°) | 04:08:00 | **+12.0 min late** | 12° |
-| MWL (18°) | N/A |: | 18° (sun never reaches 18°) |
+| Method        | Fajr time | Error vs observed   | Angle used                  |
+| ------------- | --------- | ------------------- | --------------------------- |
+| Observed      | 03:56:00  | :                   | 13.39°                      |
+| PCD           | 03:43:21  | **-12.6 min early** | 14.28°                      |
+| MSC reference | 03:45:57  | -10.1 min early     | :                           |
+| UOIF (12°)    | 04:08:00  | **+12.0 min late**  | 12°                         |
+| MWL (18°)     | N/A       | :                   | 18° (sun never reaches 18°) |
 
 Sunrise: 05:40:57 CEST. The observation places Fajr at 104.9 minutes before sunrise.
 
@@ -160,13 +160,13 @@ Sunrise: 05:40:57 CEST. The observation places Fajr at 104.9 minutes before sunr
 
 **Computed results:**
 
-| Method | Fajr time | Error vs observed | Angle used |
-| --- | --- | --- | --- |
-| Observed | 05:01:00 |: | 13.13° |
-| PCD | 04:35:11 | **-25.8 min early** | 19.49° |
-| MSC reference | 04:35:27 | -25.6 min early |: |
-| MUIS (20°) | 04:33:03 | -28.0 min early | 20° |
-| ISNA (15°) | 04:51:51 | -9.2 min early | 15° |
+| Method        | Fajr time | Error vs observed   | Angle used |
+| ------------- | --------- | ------------------- | ---------- |
+| Observed      | 05:01:00  | :                   | 13.13°     |
+| PCD           | 04:35:11  | **-25.8 min early** | 19.49°     |
+| MSC reference | 04:35:27  | -25.6 min early     | :          |
+| MUIS (20°)    | 04:33:03  | -28.0 min early     | 20°        |
+| ISNA (15°)    | 04:51:51  | -9.2 min early      | 15°        |
 
 Sunrise: 05:53:27 WIB. The observation places Fajr at 52.4 minutes before sunrise.
 
@@ -190,13 +190,13 @@ The most surprising and important finding in this dataset is the consistent disa
 
 Five independent study programs at five different locations between 27.5°N and 32.1°N all find Fajr in the range 13–15°:
 
-| Study | Location | Lat | Observed° | PCD° | MSC° | Error |
-| --- | --- | --- | --- | --- | --- | --- |
-| Odeh 2004 (sea) | Tubruq, Libya | 32.1°N | 13.48° | 19.17° | 18.92° | ~5.5° |
-| Odeh 2004 (desert) | Tubruq, Libya | 32.1°N | 13.14° | 19.17° | 18.92° | ~5.8° |
-| ENRIA 1987 | Egypt (4 sites) | 24–31°N | 14.7° | 19.37° | 19.30° | ~4.6° |
-| Al-Shehri 2017 | Hail, Saudi Arabia | 27.5°N | 14.01° | 19.66° | 19.34° | ~5.3° |
-| AAAS 2019 | Fayum, Egypt | 29.3°N | 14.4° | 19.23° | 19.17° | ~4.8° |
+| Study              | Location           | Lat     | Observed° | PCD°   | MSC°   | Error |
+| ------------------ | ------------------ | ------- | --------- | ------ | ------ | ----- |
+| Odeh 2004 (sea)    | Tubruq, Libya      | 32.1°N  | 13.48°    | 19.17° | 18.92° | ~5.5° |
+| Odeh 2004 (desert) | Tubruq, Libya      | 32.1°N  | 13.14°    | 19.17° | 18.92° | ~5.8° |
+| ENRIA 1987         | Egypt (4 sites)    | 24–31°N | 14.7°     | 19.37° | 19.30° | ~4.6° |
+| Al-Shehri 2017     | Hail, Saudi Arabia | 27.5°N  | 14.01°    | 19.66° | 19.34° | ~5.3° |
+| AAAS 2019          | Fayum, Egypt       | 29.3°N  | 14.4°     | 19.23° | 19.17° | ~4.8° |
 
 Every one of these studies was conducted independently, at different times, in different countries, by different research institutions. The convergence around 13–15° is striking.
 
@@ -224,13 +224,13 @@ In summer at high latitudes, the sun never reaches 18° and PCD correctly adapts
 
 ## Summary: Method Performance by Scenario
 
-| Scenario | Best method | Runner-up | Worst method |
-| --- | --- | --- | --- |
-| High latitude (>48°N) summer | PCD / MSC |: | Fixed ≥18° (fails) |
-| High latitude (>48°N) winter | Fixed 18° (MWL) |: | PCD / MSC (too early) |
-| Mid-latitude (36–48°N) summer | ISNA (15°) | PCD (close) | Fixed 18° (early) |
-| Subtropical (20–36°N) | ISNA (15°) | MSC (marginally closer than PCD) | Fixed ≥18° (most early) |
-| Near-equatorial (0–10°) | ISNA (15°) | MSC | Fixed 20° (MUIS) |
+| Scenario                      | Best method     | Runner-up                        | Worst method            |
+| ----------------------------- | --------------- | -------------------------------- | ----------------------- |
+| High latitude (>48°N) summer  | PCD / MSC       | :                                | Fixed ≥18° (fails)      |
+| High latitude (>48°N) winter  | Fixed 18° (MWL) | :                                | PCD / MSC (too early)   |
+| Mid-latitude (36–48°N) summer | ISNA (15°)      | PCD (close)                      | Fixed 18° (early)       |
+| Subtropical (20–36°N)         | ISNA (15°)      | MSC (marginally closer than PCD) | Fixed ≥18° (most early) |
+| Near-equatorial (0–10°)       | ISNA (15°)      | MSC                              | Fixed 20° (MUIS)        |
 
 ### What This Means for PCD
 
@@ -257,18 +257,18 @@ The script computes all values in this page from first principles using pray-cal
 
 ## Citations
 
-- **Odeh, M.S.** (2004). "New Criterion for Lunar Crescent Visibility." *Experimental Astronomy*, 18(1–3), 39–64.
+- **Odeh, M.S.** (2004). "New Criterion for Lunar Crescent Visibility." _Experimental Astronomy_, 18(1–3), 39–64.
 - **Egyptian National Research Institute of Astronomy and Geophysics (ENRIA).** (1987). Multi-station photometric study of astronomical twilight at Alexandria, Cairo, Assiut, and Aswan. Internal report, referenced in Egyptian General Authority schedules.
-- **Al-Shehri, A.M.** (2017). "Empirical Determination of Fajr Prayer Time at Hail, Saudi Arabia." *Journal of the Astronomical Society of Saudi Arabia*.
+- **Al-Shehri, A.M.** (2017). "Empirical Determination of Fajr Prayer Time at Hail, Saudi Arabia." _Journal of the Astronomical Society of Saudi Arabia_.
 - **Al-Azhar Astronomical Society (AAAS).** (2019). Photometric study at Wadi Al-Rayan, Fayum. Presented at the 2019 Islamic Astronomical Conference, Cairo.
-- **Duff, M.I. & Duff, M.H.** (1989). "Fajr and Isha at High Latitudes." Field study, Blackburn, England. Published summary in *Muslim Community journal*.
+- **Duff, M.I. & Duff, M.H.** (1989). "Fajr and Isha at High Latitudes." Field study, Blackburn, England. Published summary in _Muslim Community journal_.
 - **Shaukat, K.** (1985). Chicago field observations. Unpublished; referenced on moonsighting.com.
 - **LAPAN (Lembaga Penerbangan dan Antariksa Nasional).** (2017). Sky brightness survey at six Indonesian stations. Technical report.
-- **Zambri, M. & Anwar, M.S.** (2017). "Digital Sky Brightness at Fajr: A DSLR Photometric Study." *Proceedings of the Malaysian Astronomical Congress*.
+- **Zambri, M. & Anwar, M.S.** (2017). "Digital Sky Brightness at Fajr: A DSLR Photometric Study." _Proceedings of the Malaysian Astronomical Congress_.
 - **Shaukat, K.** (2016). Personal field observation log, Pampigny, Switzerland. Archived on moonsighting.com.
 - **Shaukat, K.** (2000). Personal field observation log, Miami Beach, FL. Archived on moonsighting.com.
 - **Indonesian Islamic Astronomy Forum.** (2019). Community observation report, Jakarta, May 8, 2019.
 
 ---
 
-*[Research](Research) | [Methodology](Research-Methodology) | [Global Study](Research-Global-Study) | [Home-Territory Study](Research-Home-Territory) | [Observational Evidence](Research-Observational-Evidence)*
+_[Research](Research) | [Methodology](Research-Methodology) | [Global Study](Research-Global-Study) | [Home-Territory Study](Research-Home-Territory) | [Observational Evidence](Research-Observational-Evidence)_

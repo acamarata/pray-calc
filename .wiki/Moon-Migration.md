@@ -2,13 +2,13 @@
 
 In pray-calc v1, the package included five functions for moon data:
 
-| v1 Function | Description |
-| -- | -- |
-| `getMoon(date, lat, lon)` | Aggregated wrapper returning phase, position, illumination, visibility |
-| `getMoonPhase(date)` | Synodic-month calculation from known reference new moon |
-| `getMoonPosition(date, lat, lon)` | Thin wrapper around `suncalc.getMoonPosition` |
-| `getMoonIllumination(date)` | Thin wrapper around `suncalc.getMoonIllumination` |
-| `getMoonVisibility(date, lat, lon)` | Stub function: explicitly not accurate |
+| v1 Function                         | Description                                                            |
+| ----------------------------------- | ---------------------------------------------------------------------- |
+| `getMoon(date, lat, lon)`           | Aggregated wrapper returning phase, position, illumination, visibility |
+| `getMoonPhase(date)`                | Synodic-month calculation from known reference new moon                |
+| `getMoonPosition(date, lat, lon)`   | Thin wrapper around `suncalc.getMoonPosition`                          |
+| `getMoonIllumination(date)`         | Thin wrapper around `suncalc.getMoonIllumination`                      |
+| `getMoonVisibility(date, lat, lon)` | Stub function: explicitly not accurate                                 |
 
 All five have been removed from pray-calc v2. They live in the dedicated
 [moon-sighting](https://github.com/acamarata/moon-sighting) package, which is the
@@ -55,13 +55,13 @@ import { getMoon, getMoonPhase, getMoonPosition, getMoonIllumination } from 'moo
 
 ### Function Mapping
 
-| pray-calc v1 | moon-sighting v1.1 | Notes |
-| -- | -- | -- |
-| `getMoonPosition(date, lat, lon)` | `getMoonPosition(date, lat, lon, elevation?)` | Adds WGS84 model, Bennett refraction, `parallacticAngle` field |
-| `getMoonIllumination(date)` | `getMoonIllumination(date)` | Adds correct phase angle, `isWaxing` field |
-| `getMoonPhase(date)` | `getMoonPhase(date)` | Adds `phaseName`, `phaseSymbol`, more fields |
-| `getMoonVisibility(date, lat, lon)` | `getMoonVisibilityEstimate(date, lat, lon, elevation?)` | Real Odeh V-parameter, returns zone A–D, ARCL, ARCV, W |
-| `getMoon(date, lat, lon)` | `getMoon(date, lat, lon, elevation?)` | Same concept, properly computed |
+| pray-calc v1                        | moon-sighting v1.1                                      | Notes                                                          |
+| ----------------------------------- | ------------------------------------------------------- | -------------------------------------------------------------- |
+| `getMoonPosition(date, lat, lon)`   | `getMoonPosition(date, lat, lon, elevation?)`           | Adds WGS84 model, Bennett refraction, `parallacticAngle` field |
+| `getMoonIllumination(date)`         | `getMoonIllumination(date)`                             | Adds correct phase angle, `isWaxing` field                     |
+| `getMoonPhase(date)`                | `getMoonPhase(date)`                                    | Adds `phaseName`, `phaseSymbol`, more fields                   |
+| `getMoonVisibility(date, lat, lon)` | `getMoonVisibilityEstimate(date, lat, lon, elevation?)` | Real Odeh V-parameter, returns zone A–D, ARCL, ARCV, W         |
+| `getMoon(date, lat, lon)`           | `getMoon(date, lat, lon, elevation?)`                   | Same concept, properly computed                                |
 
 Return shapes are additive: all fields that existed in v1 still exist in v1.1.
 New fields are added but nothing is removed. The function for visibility is renamed
@@ -76,4 +76,4 @@ returns.
 
 ---
 
-*[Back to Home](Home) | [API Reference](API-Reference) | [Changelog](Changelog)*
+_[Back to Home](Home) | [API Reference](API-Reference) | [Changelog](Changelog)_

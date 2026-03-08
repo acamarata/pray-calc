@@ -16,6 +16,7 @@ In practice, the difference is typically 30–60 minutes, with Hanafi Asr being 
 ## The Math
 
 Let:
+
 - φ = observer latitude in radians
 - δ = solar declination in radians at local noon
 - s = shadow factor (1 for Shafi'i, 2 for Hanafi)
@@ -56,10 +57,10 @@ and declination are far apart.
 import { getAsr } from 'pray-calc';
 
 const asr = getAsr(
-  12.15,    // solar noon at ~12:09 local time
-  40.7128,  // New York latitude
-  23.44,    // solar declination at summer solstice
-  false,    // Shafi'i
+  12.15, // solar noon at ~12:09 local time
+  40.7128, // New York latitude
+  23.44, // solar declination at summer solstice
+  false, // Shafi'i
 );
 ```
 
@@ -80,4 +81,4 @@ than 5 seconds of timing error: completely negligible.
 
 ---
 
-*[Back to Home](Home) | [API Reference](API-Reference) | [Architecture](Architecture)*
+_[Back to Home](Home) | [API Reference](API-Reference) | [Architecture](Architecture)_
