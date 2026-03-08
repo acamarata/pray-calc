@@ -60,8 +60,8 @@ The MSC entry uses MSC minutes offsets relative to the SPA-computed sunrise/suns
 
 The only runtime dependency is `nrel-spa`. It provides:
 
-- `getSpa(date, lat, lng, tz, opts, zeniths)` — batch NREL SPA computation
-- `formatTime(fractionalHours)` — converts `5.5` to `"05:30:00"`, returns `"N/A"` for NaN
+- `getSpa(date, lat, lng, tz, opts, zeniths)`: batch NREL SPA computation
+- `formatTime(fractionalHours)`: converts `5.5` to `"05:30:00"`, returns `"N/A"` for NaN
 
 The SPA (Solar Position Algorithm) from the National Renewable Energy Laboratory is
 the reference algorithm for solar position. It is accurate to within ±0.0003° and
@@ -72,8 +72,8 @@ covers dates from -2000 to +6000.
 `getSolarEphemeris` implements Jean Meeus, *Astronomical Algorithms* (2nd ed.),
 Chapter 25. This provides:
 
-- Solar declination (δ) — accurate to ~0.01°
-- Earth-Sun distance (r) in AU — accurate to ~0.0001 AU
+- Solar declination (δ): accurate to ~0.01°
+- Earth-Sun distance (r) in AU: accurate to ~0.0001 AU
 - Apparent ecliptic longitude (λ) in degrees
 
 These values are used by `getAngles` to apply physics corrections to the MSC base
@@ -105,8 +105,8 @@ This is faster than an SPA call and avoids a dependency on internal ephemeris st
 All public types are in `src/types.ts` and re-exported from `src/index.ts`. The key
 distinction is:
 
-- `FractionalHours` (`number`) — raw output from `getTimes` / `getTimesAll`
-- `TimeString` (`string`) — formatted output from `calcTimes` / `calcTimesAll`
+- `FractionalHours` (`number`): raw output from `getTimes` / `getTimesAll`
+- `TimeString` (`string`): formatted output from `calcTimes` / `calcTimesAll`
 
 `PrayerTimesAll` extends `PrayerTimes` rather than duplicating fields. The `Methods`
 map uses string keys (method IDs) rather than a union type, to allow forward

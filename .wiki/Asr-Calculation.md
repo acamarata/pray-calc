@@ -47,10 +47,10 @@ and declination are far apart.
 
 `getAsr` is a pure math function. It requires:
 
-1. `solarNoon` — fractional hours (from the SPA output)
-2. `latitude` — decimal degrees
-3. `declination` — solar declination in degrees (from `solarEphemeris`)
-4. `hanafi` — boolean (default `false`)
+1. `solarNoon`: fractional hours (from the SPA output)
+2. `latitude`: decimal degrees
+3. `declination`: solar declination in degrees (from `solarEphemeris`)
+4. `hanafi`: boolean (default `false`)
 
 ```typescript
 import { getAsr } from 'pray-calc';
@@ -76,7 +76,7 @@ for any realistic use case.
 
 The SPA uses a more rigorous ephemeris for declination (accurate to ~0.0003°
 vs. Meeus at ~0.01°). For Asr, the difference in δ of 0.01° translates to less
-than 5 seconds of timing error — completely negligible.
+than 5 seconds of timing error: completely negligible.
 
 ---
 

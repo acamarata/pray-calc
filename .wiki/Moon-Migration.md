@@ -8,7 +8,7 @@ In pray-calc v1, the package included five functions for moon data:
 | `getMoonPhase(date)` | Synodic-month calculation from known reference new moon |
 | `getMoonPosition(date, lat, lon)` | Thin wrapper around `suncalc.getMoonPosition` |
 | `getMoonIllumination(date)` | Thin wrapper around `suncalc.getMoonIllumination` |
-| `getMoonVisibility(date, lat, lon)` | Stub function — explicitly not accurate |
+| `getMoonVisibility(date, lat, lon)` | Stub function: explicitly not accurate |
 
 All five have been removed from pray-calc v2. They live in the dedicated
 [moon-sighting](https://github.com/acamarata/moon-sighting) package, which is the
@@ -17,7 +17,7 @@ right place for this work.
 ## Why They Moved
 
 These functions did not belong in a prayer-times package. They were thin wrappers
-around `suncalc` — a third-party library that uses simplified spherical astronomy,
+around `suncalc`: a third-party library that uses simplified spherical astronomy,
 not a full topocentric pipeline. The visibility function was explicitly documented
 as a placeholder. Bundling them in pray-calc added a dependency (suncalc) for
 functionality that was, at best, approximate.
@@ -28,7 +28,7 @@ moon-sighting does the same job properly:
   ephemeris with full topocentric correction (parallax, WGS84 geodetic model).
 - Bennett atmospheric refraction applied to apparent altitude.
 - Illumination uses the correct Meeus phase angle formula, not a simplified fraction.
-- Visibility uses the Odeh (2006) V-parameter model — a genuine criterion from
+- Visibility uses the Odeh (2006) V-parameter model: a genuine criterion from
   published research, not a placeholder window function.
 
 The two packages complement each other. pray-calc handles solar-based prayer times.
@@ -63,7 +63,7 @@ import { getMoon, getMoonPhase, getMoonPosition, getMoonIllumination } from 'moo
 | `getMoonVisibility(date, lat, lon)` | `getMoonVisibilityEstimate(date, lat, lon, elevation?)` | Real Odeh V-parameter, returns zone A–D, ARCL, ARCV, W |
 | `getMoon(date, lat, lon)` | `getMoon(date, lat, lon, elevation?)` | Same concept, properly computed |
 
-Return shapes are additive — all fields that existed in v1 still exist in v1.1.
+Return shapes are additive: all fields that existed in v1 still exist in v1.1.
 New fields are added but nothing is removed. The function for visibility is renamed
 (`getMoonVisibility` to `getMoonVisibilityEstimate`) to be explicit about what it
 returns.

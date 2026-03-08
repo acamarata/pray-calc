@@ -140,15 +140,15 @@ the Sun is around 14–16° below the horizon, not 18°.
 
 The dynamic method computes the angle in three layers:
 
-1. **MSC seasonal base** — Khalid Shaukat's piecewise model, calibrated against field
+1. **MSC seasonal base**: Khalid Shaukat's piecewise model, calibrated against field
    observations across latitudes 0°–55°N/S. Returns minutes before/after sunrise/sunset,
    converted to depression degrees via spherical trigonometry.
 
-2. **Physics corrections** — Earth-Sun distance (r via Jean Meeus elliptical orbit),
+2. **Physics corrections**: Earth-Sun distance (r via Jean Meeus elliptical orbit),
    Fourier harmonic smoothing, atmospheric refraction at the computed altitude, and
    elevation horizon dip.
 
-3. **Physical bounds** — clipped to [10°, 22°].
+3. **Physical bounds**: clipped to [10°, 22°].
 
 At the equator the result converges to approximately 18°, consistent with historical
 usage. At 50–55°N in summer it falls to 12–14°, matching empirical UK observations.
@@ -158,8 +158,8 @@ Full detail: [Dynamic Algorithm wiki page](https://github.com/acamarata/pray-cal
 ## Architecture
 
 - Only runtime dependency: `nrel-spa` (NREL Solar Position Algorithm)
-- `getSolarEphemeris` — Jean Meeus Ch. 25: declination, Earth-Sun distance, ecliptic lon
-- `getTimesAll` — single batch SPA call for all 14×2 + 2 dynamic zenith angles
+- `getSolarEphemeris`: Jean Meeus Ch. 25: declination, Earth-Sun distance, ecliptic lon
+- `getTimesAll`: single batch SPA call for all 14×2 + 2 dynamic zenith angles
 
 Full detail: [Architecture wiki page](https://github.com/acamarata/pray-calc/wiki/Architecture)
 
@@ -196,9 +196,9 @@ Full documentation: [GitHub Wiki](https://github.com/acamarata/pray-calc/wiki)
 
 ## Related
 
-- [nrel-spa](https://github.com/acamarata/nrel-spa) — NREL Solar Position Algorithm
-- [luxon-hijri](https://github.com/acamarata/luxon-hijri) — Hijri/Gregorian calendar
-- [moon-sighting](https://github.com/acamarata/moon-sighting) — Crescent visibility
+- [nrel-spa](https://github.com/acamarata/nrel-spa): NREL Solar Position Algorithm
+- [luxon-hijri](https://github.com/acamarata/luxon-hijri): Hijri/Gregorian calendar
+- [moon-sighting](https://github.com/acamarata/moon-sighting): Crescent visibility
 
 ## Acknowledgments
 

@@ -8,10 +8,10 @@ All notable changes to this project will be documented in this file.
 
 - Full TypeScript rewrite with dual CJS/ESM build (tsup)
 - Physics-grounded dynamic twilight angle algorithm: MSC seasonal base + Earth-Sun distance correction + Fourier harmonic smoothing + atmospheric refraction + elevation horizon dip
-- Three new traditional methods: IGUT/Tehran (17.7°/14°), Kuwait (18°/17.5°), Qatar (18°/90 min) — total now 14
+- Three new traditional methods: IGUT/Tehran (17.7°/14°), Kuwait (18°/17.5°), Qatar (18°/90 min): total now 14
 - `getAngles()` exported as a standalone function
 - `getMscFajr()` / `getMscIsha()` exported with `shafaq` mode parameter (`general`, `ahmer`, `abyad`)
-- `solarEphemeris()` / `toJulianDate()` exported — Jean Meeus solar ephemeris (declination, r, ecliptic lon)
+- `solarEphemeris()` / `toJulianDate()` exported: Jean Meeus solar ephemeris (declination, r, ecliptic lon)
 - `METHODS` array exported for documentation and tooling
 - All TypeScript types exported (`PrayerTimes`, `FormattedPrayerTimes`, `PrayerTimesAll`, etc.)
 - `.wiki/` documentation: Home, API Reference, Dynamic Algorithm, Traditional Methods, Architecture, Twilight Physics, High-Latitude, Asr Calculation, Changelog
@@ -31,7 +31,7 @@ All notable changes to this project will be documented in this file.
 
 ### Removed
 
-- All moon-related functions (`getMoon`, `getMoonPhase`, `getMoonPosition`, `getMoonIllumination`, `getMoonVisibility`) — moved to `moon-sighting` package
+- All moon-related functions (`getMoon`, `getMoonPhase`, `getMoonPosition`, `getMoonIllumination`, `getMoonVisibility`): moved to `moon-sighting` package
 - `suncalc` runtime dependency (removed with moon functions)
 - `getEarthSunDistance` helper (inlined into `getSolarEphemeris`)
 - `methods.json` (methods now embedded in `getTimesAll.ts` with full metadata)

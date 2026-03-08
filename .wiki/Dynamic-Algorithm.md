@@ -71,7 +71,7 @@ deeper depression. Conversely, at aphelion, the sky stays darker a bit longer.
 Δr = -0.5 × ln(r)    (degrees)
 ```
 
-This correction is ±0.015° over the year — small, but included for completeness.
+This correction is ±0.015° over the year: small, but included for completeness.
 
 **Fourier harmonic correction (Δf)**
 
@@ -89,7 +89,7 @@ This adds up to ±0.15° at 45°N and proportionally less near the equator.
 **Atmospheric refraction**
 
 Near the horizon, refraction bends light rays by about 34 arcminutes. At twilight
-angles (Sun 14–18° below horizon), refraction is small — a few arcminutes — but
+angles (Sun 14–18° below horizon), refraction is small: a few arcminutes: but
 is still computed via the Bennett/Saemundsson formula for completeness. The current
 atmospheric conditions (pressure, temperature) are used.
 
@@ -102,7 +102,7 @@ degrees below the geometric horizon:
 d ≈ 1.06 × sqrt(h / 1000)    (degrees)
 ```
 
-At 1000 m, this is 1.06° — the effective depression for a given visual phenomenon
+At 1000 m, this is 1.06°: the effective depression for a given visual phenomenon
 is reduced by this amount. The correction is:
 
 ```

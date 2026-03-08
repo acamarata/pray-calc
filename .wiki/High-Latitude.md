@@ -4,7 +4,7 @@
 
 At latitudes above approximately 48.5°N/S, the Sun never reaches 18° below the
 horizon during summer months. Above 51.5°N/S, it never reaches 15° below the
-horizon. During these periods, a fixed-angle method produces no Isha — or computes
+horizon. During these periods, a fixed-angle method produces no Isha: or computes
 a sunrise before Fajr, or other nonsensical results.
 
 Even at latitudes where the Sun does reach 18°, the resulting times can be extreme.
@@ -44,7 +44,7 @@ renders it as `"N/A"`.
 
 This is intentional. The Methods map in `getTimesAll` shows you exactly which methods
 are applicable for a given location and date. If ISNA returns `N/A` for Isha in
-London in June, that is the correct answer for that method — it simply doesn't work
+London in June, that is the correct answer for that method: it simply doesn't work
 there.
 
 ## Juristic Solutions

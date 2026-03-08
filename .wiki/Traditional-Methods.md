@@ -46,7 +46,7 @@ used method in the US, UK, Australia, and New Zealand.
 
 ### SAMR (16°/15°)
 
-The Spiritual Administration of Muslims of Russia uses a split angle — 16° for
+The Spiritual Administration of Muslims of Russia uses a split angle: 16° for
 Fajr and 15° for Isha. The asymmetry reflects differing shafaq criteria (red
 twilight fades before white) and the latitudinal challenges of Russian Muslim
 communities, many of whom live above 50°N.
@@ -54,7 +54,7 @@ communities, many of whom live above 50°N.
 ### IGUT / Tehran (17.7°/14°)
 
 The Institute of Geophysics at the University of Tehran derived these values from
-observational studies in Iran. The 17.7° Fajr is unusual — close to the historical
+observational studies in Iran. The 17.7° Fajr is unusual: close to the historical
 18° but with a slight downward revision. The 14° Isha reflects the Shia tradition
 of using shafaq ahmer (red glow) rather than shafaq abyad (white glow), since red
 twilight disappears earlier. This method is used by Shia communities worldwide and
@@ -89,7 +89,7 @@ do not follow UAQ or Qatar.
 ### UAQ (18.5°/+90 min)
 
 Umm Al-Qura University in Makkah publishes the official Saudi calendar. The Fajr
-angle is 18.5° — more conservative than most methods. Isha uses a fixed 90-minute
+angle is 18.5°: more conservative than most methods. Isha uses a fixed 90-minute
 offset from sunset rather than an angle. In Ramadan, UAQ extends this to 120 minutes
 (some implementations; this library uses 90 year-round per the standard).
 
@@ -115,7 +115,7 @@ similar to MWL.
 ### MUIS (20°/18°)
 
 Singapore's Islamic Religious Council uses the most conservative angles in the table.
-Singapore sits at about 1.3°N — very close to the equator — where atmospheric
+Singapore sits at about 1.3°N: very close to the equator: where atmospheric
 conditions and the nearly vertical Sun path do result in a slightly later dawn and
 earlier dusk compared to higher latitudes. The 20° Fajr reflects these local conditions.
 

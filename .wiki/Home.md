@@ -26,7 +26,7 @@ fixed-angle methods are included for comparison.
 | [Research Overview](Research) | Study summary, headline results, PCD algorithm description |
 | [Methodology](Research-Methodology) | Reference standard, measurement approach, test infrastructure |
 | [Global Accuracy Study](Research-Global-Study) | 18-city comparison across latitudes 6°S–51.5°N and all seasons |
-| [Home-Territory Study](Research-Home-Territory) | Each method tested at its own calibration city — PCD wins 13/14 |
+| [Home-Territory Study](Research-Home-Territory) | Each method tested at its own calibration city: PCD wins 13/14 |
 | [Observational Evidence](Research-Observational-Evidence) | Field observations, published studies, academic literature |
 | [Field Observation Comparison](Research-Verified-Observations) | Systematic comparison of PCD vs real-world verified Fajr measurements |
 
@@ -79,9 +79,9 @@ never produces the "Isha never ends" failure that 18°-everywhere causes above 5
 
 ## Related Packages
 
-- [nrel-spa](https://github.com/acamarata/nrel-spa) — NREL Solar Position Algorithm (solar position foundation)
-- [luxon-hijri](https://github.com/acamarata/luxon-hijri) — Hijri/Gregorian calendar conversion
-- [moon-sighting](https://github.com/acamarata/moon-sighting) — Crescent visibility (Yallop/Odeh criteria)
+- [nrel-spa](https://github.com/acamarata/nrel-spa): NREL Solar Position Algorithm (solar position foundation)
+- [luxon-hijri](https://github.com/acamarata/luxon-hijri): Hijri/Gregorian calendar conversion
+- [moon-sighting](https://github.com/acamarata/moon-sighting): Crescent visibility (Yallop/Odeh criteria)
 
 ---
 

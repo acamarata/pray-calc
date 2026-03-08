@@ -1,6 +1,6 @@
 # Research & Accuracy Data
 
-This section documents the empirical accuracy analysis behind the **PCD (Prayer Calc Dynamic)** method — the physics-grounded adaptive twilight algorithm at the core of pray-calc v2.
+This section documents the empirical accuracy analysis behind the **PCD (Prayer Calc Dynamic)** method: the physics-grounded adaptive twilight algorithm at the core of pray-calc v2.
 
 The methodology, data, and conclusions here are reproducible. All computations were run against pray-calc v2.0.0 installed from a packed tarball and tested across 18 city/date combinations spanning latitudes 6°S to 51.5°N and all four seasons.
 
@@ -10,12 +10,12 @@ The methodology, data, and conclusions here are reproducible. All computations w
 
 | Metric | PCD (Dynamic) | Best Fixed Method | All Methods Avg |
 | --- | --- | --- | --- |
-| Global MAE — Fajr | **0.64 min** | 10.21 min (Qatar) | 18.6 min |
-| Global MAE — Isha | **1.30 min** | 10.22 min (Qatar/UAQ) | 18.8 min |
-| Global MAE — Combined | **0.97 min** | 10.21 min (Qatar) | 18.7 min |
-| Home-territory MAE — Fajr | **0.65 min** | 4.24 min (MUIS) | 8.69 min |
-| Home-territory MAE — Combined | **0.64 min** | 4.24 min (MUIS) | 8.69 min |
-| Win rate at method's own home city | **13 / 14** | — | — |
+| Global MAE: Fajr | **0.64 min** | 10.21 min (Qatar) | 18.6 min |
+| Global MAE: Isha | **1.30 min** | 10.22 min (Qatar/UAQ) | 18.8 min |
+| Global MAE: Combined | **0.97 min** | 10.21 min (Qatar) | 18.7 min |
+| Home-territory MAE: Fajr | **0.65 min** | 4.24 min (MUIS) | 8.69 min |
+| Home-territory MAE: Combined | **0.64 min** | 4.24 min (MUIS) | 8.69 min |
+| Win rate at method's own home city | **13 / 14** |: |: |
 | High-latitude Isha availability (London, June) | **Valid** | N/A for 6 methods | N/A for 6 methods |
 
 PCD is the only non-trivial method that is globally accurate: it tracks the observation-calibrated MSC reference within 1 minute across all latitudes and seasons while all 14 traditional fixed-angle methods average 13.5× more error even at their own calibration cities.
@@ -37,7 +37,7 @@ PCD is the only non-trivial method that is globally accurate: it tracks the obse
 
 The Prayer Calc Dynamic (PCD) method computes twilight depression angles in three layers rather than applying a globally fixed value.
 
-**Layer 1 — MSC Seasonal Base**
+**Layer 1: MSC Seasonal Base**
 
 The Moonsighting Committee Worldwide (MSC) seasonal model, developed by Khalid Shaukat from field observations across latitudes 0°–55°N/S, provides a latitude- and season-adjusted minute offset before sunrise (Fajr) and after sunset (Isha). These offsets are converted to depression angles via spherical trigonometry:
 
@@ -47,7 +47,7 @@ cos(H) = (sin(a) − sin(φ)·sin(δ)) / (cos(φ)·cos(δ))
 
 where `H` is the hour angle, `a` is the target altitude, `φ` is latitude, and `δ` is solar declination.
 
-**Layer 2 — Physics Corrections**
+**Layer 2: Physics Corrections**
 
 Four corrections are applied to the base angle:
 
@@ -58,7 +58,7 @@ Four corrections are applied to the base angle:
 | Atmospheric refraction | Bennett/Saemundsson formula at computed altitude | Variable by elevation |
 | Elevation dip | `−0.3 × 1.06 × √(h/1000)` degrees | Negative for elevated sites |
 
-**Layer 3 — Physical Bounds**
+**Layer 3: Physical Bounds**
 
 The computed angle is clipped to [10°, 22°]. This prevents astronomically impossible angles at extreme high latitudes (above ~55°N in summer) while maintaining the full range across temperate and equatorial zones.
 

@@ -61,7 +61,7 @@ Error is `method_time − MSC_reference` in minutes. Positive = later than MSC, 
 | 14 | ISNACA | 26.96 | 18.45 | 22.71 | 18 | 18 |
 | 15 | UOIF | 31.59 | 20.00 | 25.80 | 18 | 18 |
 
-**Notes on n values:** Methods with `n_Fajr = 17` or `n_Isha = 17` had one NaN result (typically London summer). Methods returning NaN for that case are not penalized in MAE — the actual failure rate is noted in the High-Latitude section below.
+**Notes on n values:** Methods with `n_Fajr = 17` or `n_Isha = 17` had one NaN result (typically London summer). Methods returning NaN for that case are not penalized in MAE: the actual failure rate is noted in the High-Latitude section below.
 
 ---
 
@@ -128,10 +128,10 @@ London, UK on June 21 (51.5°N) is the most extreme test case. As the sun approa
 | ISNA | 15° | 24:49 (technically computed, next day) |
 | SAMR | 15° | 24:49 (same as ISNA Isha) |
 | IGUT | 14° | 24:05 (next day) |
-| UAQ | +90 min | 22:51 (valid — not angle-based) |
-| Qatar | +90 min | 22:51 (valid — not angle-based) |
-| MSC | seasonal | 22:41 (valid — observation-based) |
-| **PCD** | **10.00°** | **22:54 (valid — adapted)** |
+| UAQ | +90 min | 22:51 (valid: not angle-based) |
+| Qatar | +90 min | 22:51 (valid: not angle-based) |
+| MSC | seasonal | 22:41 (valid: observation-based) |
+| **PCD** | **10.00°** | **22:54 (valid: adapted)** |
 | MWL | 17° | **N/A** |
 | DIBT | 17° | **N/A** |
 | Karachi | 18° | **N/A** |
@@ -139,7 +139,7 @@ London, UK on June 21 (51.5°N) is the most extreme test case. As the sun approa
 | Egypt | 17.5° | **N/A** |
 | MUIS | 18° | **N/A** |
 
-Six of the 14 methods produce no Isha time at London in midsummer. PCD adapts by clamping to the 10° lower bound and produces 22:54 — 13 minutes later than MSC's 22:41 (the largest single error in the study). The error is structural: at 51.5°N in June, the sky never fully darkens, and both the observation reference and any computed method are approximations of a genuinely ambiguous twilight condition.
+Six of the 14 methods produce no Isha time at London in midsummer. PCD adapts by clamping to the 10° lower bound and produces 22:54: 13 minutes later than MSC's 22:41 (the largest single error in the study). The error is structural: at 51.5°N in June, the sky never fully darkens, and both the observation reference and any computed method are approximations of a genuinely ambiguous twilight condition.
 
 ---
 
@@ -168,7 +168,7 @@ How the PCD-computed depression angle varies across the test cases.
 | London | 51.5°N | Dec | 14.69° | 14.24° | ISNA (15°) |
 | London | 51.5°N | Jun | 11.88° | 10.00° | UOIF (12°) |
 
-The angle moves from ~20° at tropical latitudes in summer to ~12° at high-latitude summer. No fixed method tracks this gradient correctly. SAMR (16°) is closest for North American and Central Asian summers. ISNA (15°) handles Toronto and London winter. IGUT (17.7°) is closest for Tehran and mid-latitude winters. But each of these methods fails in other conditions — only PCD adapts dynamically across the full range.
+The angle moves from ~20° at tropical latitudes in summer to ~12° at high-latitude summer. No fixed method tracks this gradient correctly. SAMR (16°) is closest for North American and Central Asian summers. ISNA (15°) handles Toronto and London winter. IGUT (17.7°) is closest for Tehran and mid-latitude winters. But each of these methods fails in other conditions: only PCD adapts dynamically across the full range.
 
 ---
 

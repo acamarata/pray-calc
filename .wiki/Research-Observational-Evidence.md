@@ -6,7 +6,7 @@ This page documents the empirical basis for the twilight angle values used in th
 
 ## Why Observational Evidence Matters
 
-Islamic prayer times are not purely mathematical constructs. Fajr (Subh Sadiq, true dawn) is defined as the moment horizontal white light becomes distinguishable along the eastern horizon — a physical phenomenon, not a calculation. Isha (the end of shafaq) similarly corresponds to the disappearance of the post-sunset glow — again, a physical event.
+Islamic prayer times are not purely mathematical constructs. Fajr (Subh Sadiq, true dawn) is defined as the moment horizontal white light becomes distinguishable along the eastern horizon: a physical phenomenon, not a calculation. Isha (the end of shafaq) similarly corresponds to the disappearance of the post-sunset glow: again, a physical event.
 
 Depression angles are a mathematical proxy for these physical events. The question of which angle correctly represents the physical phenomenon can only be settled by looking at what trained observers actually record when they witness the event.
 
@@ -16,11 +16,11 @@ The core finding across all published observational studies: **the twilight angl
 
 ## Published Observational Studies
 
-### Khalid Shaukat — Moonsighting Committee Worldwide (MSC)
+### Khalid Shaukat: Moonsighting Committee Worldwide (MSC)
 
 Decades of field observation, primarily 1980s–2010s. Reference: moonsighting.com.
 
-Khalid Shaukat conducted and compiled field observations of Fajr and Isha across multiple continents over several decades. His observations led to the MSC seasonal model — a piecewise function of latitude and month that returns minutes-before-sunrise (Fajr) and minutes-after-sunset (Isha).
+Khalid Shaukat conducted and compiled field observations of Fajr and Isha across multiple continents over several decades. His observations led to the MSC seasonal model: a piecewise function of latitude and month that returns minutes-before-sunrise (Fajr) and minutes-after-sunset (Isha).
 
 Selected reference values from Shaukat's seasonal tables:
 
@@ -39,9 +39,9 @@ Selected reference values from Shaukat's seasonal tables:
 Key conclusions from Shaukat's work:
 
 1. At the equator, the MSC model converges to approximately 108 minutes, corresponding to roughly 18° depression. This confirms the historical basis of the 18° standard.
-2. At 40–45°N in summer, the model yields 73–84 minutes — corresponding to approximately 13–16° depression, not 18°.
+2. At 40–45°N in summer, the model yields 73–84 minutes: corresponding to approximately 13–16° depression, not 18°.
 3. At 50–55°N in summer, 68–79 minutes corresponds to approximately 11–14° depression.
-4. In winter, at all latitudes, the minute offsets increase and converge — differences between methods become smaller.
+4. In winter, at all latitudes, the minute offsets increase and converge: differences between methods become smaller.
 
 The PCD algorithm implements Shaukat's piecewise model directly as its Layer 1 base.
 
@@ -56,9 +56,9 @@ Anugraha and Satria conducted photometric and naked-eye observations at Bandung,
 
 - At Jakarta/Bandung (near-equatorial, 6°S–6°N range), Fajr was observed at solar depression angles of **17–19°**, consistent with the historical 18° baseline.
 - The study found no significant seasonal variation at equatorial latitudes, confirming that equatorial locations are where fixed-18° methods are most accurate.
-- The 20° angle used by MUIS (Singapore) was found to be systematically too early — the study observed Fajr at ~18°, not 20°.
+- The 20° angle used by MUIS (Singapore) was found to be systematically too early: the study observed Fajr at ~18°, not 20°.
 
-**Relevance to PCD:** At Jakarta, PCD computes 18.72° Fajr (summer) — directly supported by Anugraha and Satria's observational range of 17–19°. MUIS at 20° is too early by approximately 6–8 minutes at these equatorial latitudes.
+**Relevance to PCD:** At Jakarta, PCD computes 18.72° Fajr (summer): directly supported by Anugraha and Satria's observational range of 17–19°. MUIS at 20° is too early by approximately 6–8 minutes at these equatorial latitudes.
 
 ### Karahanoglu (2019)
 
@@ -88,11 +88,11 @@ In 2007, the Fiqh Council of North America formally revised the ISNA prayer time
 - Field observation placed true Fajr at approximately **14–16°** depression at these latitudes in summer.
 - The 15° compromise was adopted to balance astronomical accuracy with doctrinal continuity.
 
-The ISNA revision is significant because it represents a formal institutional acknowledgment that fixed 18° was empirically wrong for North American latitudes. PCD confirms this: at New York in summer, PCD computes 16.21° Fajr. At Chicago, 15.94°. The 2007 revision moved in the right direction but stopped at 15° — still slightly low.
+The ISNA revision is significant because it represents a formal institutional acknowledgment that fixed 18° was empirically wrong for North American latitudes. PCD confirms this: at New York in summer, PCD computes 16.21° Fajr. At Chicago, 15.94°. The 2007 revision moved in the right direction but stopped at 15°: still slightly low.
 
-**Relevance to PCD:** PCD computes 15.9–16.9° for Chicago across seasons — consistently slightly above the ISNA 15° standard, consistent with the expectation that 15° understates the phenomenon by ~1–2°.
+**Relevance to PCD:** PCD computes 15.9–16.9° for Chicago across seasons: consistently slightly above the ISNA 15° standard, consistent with the expectation that 15° understates the phenomenon by ~1–2°.
 
-### UK Observations — HMNAO and Academic Sources
+### UK Observations: HMNAO and Academic Sources
 
 **Her Majesty's Nautical Almanac Office (HMNAO) and UK Islamic Scholars, various dates.**
 
@@ -103,20 +103,20 @@ The HMNAO publishes detailed astronomical twilight tables for UK cities. For Lon
 
 UK Islamic scholars and the Muslim Council of Britain have noted that:
 - True Fajr at London in summer corresponds to approximately **12–13°** solar depression.
-- Methods using 18° (MWL) or higher are unusable for London in summer — they produce times before midnight or N/A.
-- The MSC model (which PCD implements) yields 120 minutes before sunrise at London in June, corresponding to approximately 12° — matching these observations.
+- Methods using 18° (MWL) or higher are unusable for London in summer: they produce times before midnight or N/A.
+- The MSC model (which PCD implements) yields 120 minutes before sunrise at London in June, corresponding to approximately 12°: matching these observations.
 
-The Edinburgh Observation (cited by Shaukat): at 56°N in summer, Fajr was observed at approximately 65 minutes before sunrise — corresponding to roughly **11.5°** depression.
+The Edinburgh Observation (cited by Shaukat): at 56°N in summer, Fajr was observed at approximately 65 minutes before sunrise: corresponding to roughly **11.5°** depression.
 
 **Relevance to PCD:** At London (51.5°N) in summer, PCD computes 11.88° Fajr and clips Isha to 10° (the lower bound). This is consistent with UK observations of 12–13° true Fajr.
 
-### Iranian Institute of Geophysics — Tehran (IGUT Calibration)
+### Iranian Institute of Geophysics: Tehran (IGUT Calibration)
 
 **Institute of Geophysics, University of Tehran. Calibration basis for the IGUT method.**
 
-The IGUT method (17.7°/14°) was developed with observational input from the Institute of Geophysics. The 14° Isha angle reflects shafaq ahmer (red glow disappearance) rather than shafaq abyad (white glow) — an intentional juristic distinction followed in Iranian Shia fiqh.
+The IGUT method (17.7°/14°) was developed with observational input from the Institute of Geophysics. The 14° Isha angle reflects shafaq ahmer (red glow disappearance) rather than shafaq abyad (white glow): an intentional juristic distinction followed in Iranian Shia fiqh.
 
-The 17.7° Fajr angle for Tehran (35.7°N, 1191m elevation) was derived from observations at this specific location. PCD computes 17.95–18.84° for Tehran across seasons — within approximately 0.3–1.1° of IGUT's 17.7° calibration. This close agreement validates both IGUT's observational basis and PCD's physics model for high-elevation mid-latitude locations.
+The 17.7° Fajr angle for Tehran (35.7°N, 1191m elevation) was derived from observations at this specific location. PCD computes 17.95–18.84° for Tehran across seasons: within approximately 0.3–1.1° of IGUT's 17.7° calibration. This close agreement validates both IGUT's observational basis and PCD's physics model for high-elevation mid-latitude locations.
 
 ---
 
@@ -141,7 +141,7 @@ Legend: ✓ = within 0.5° of observed, ≈ = within 1°, ✗ = 1–3° off, ✗
 
 ‡ Based on adjacent-latitude field studies: Egyptian NRIA study (24–31°N, 1984–1987) found a mean of 14.7°; the Hail study (27.5°N, 2014–2015, 365 nights) found 14.01° ± 0.32°; the Fayum photometric study (29.3°N, 2018–2019) found 14–14.8°. All three are annual means, not summer-only. Direct summer observations for 21–25°N are not available in the published literature.
 
-**The high-latitude summer band (>48°N) is where PCD's advantage is clearest.** At Blackburn, England (53.75°N) in summer, PCD computed 11.87° vs the observed 12.0° — an error of 0.13°. Fixed-angle methods at 18° cannot produce any result at these latitudes in summer. At subtropical latitudes, the picture is more complex: all calculation methods, including PCD and the MSC base, compute angles in the 18–20° range, while multiple independent field studies consistently find true Fajr at 13–15° at these locations. This discrepancy is an active area of research and may reflect differences in observation methodology, atmospheric clarity, or the distinction between false dawn (zodiacal light) and true Subh Sadiq.
+**The high-latitude summer band (>48°N) is where PCD's advantage is clearest.** At Blackburn, England (53.75°N) in summer, PCD computed 11.87° vs the observed 12.0°: an error of 0.13°. Fixed-angle methods at 18° cannot produce any result at these latitudes in summer. At subtropical latitudes, the picture is more complex: all calculation methods, including PCD and the MSC base, compute angles in the 18–20° range, while multiple independent field studies consistently find true Fajr at 13–15° at these locations. This discrepancy is an active area of research and may reflect differences in observation methodology, atmospheric clarity, or the distinction between false dawn (zodiacal light) and true Subh Sadiq.
 
 ---
 
@@ -157,7 +157,7 @@ The 18° standard became problematic only when it was exported globally without 
 
 ## The Shafaq Distinction
 
-Isha is defined by the disappearance of shafaq — the post-sunset glow. There are two recognized criteria:
+Isha is defined by the disappearance of shafaq: the post-sunset glow. There are two recognized criteria:
 
 **Shafaq Ahmer (red glow):** The red/orange color at the horizon disappears. This occurs at approximately **4–7°** solar depression. Used by: IGUT (14°), Iranian Shia fiqh, some Hanbali scholars.
 

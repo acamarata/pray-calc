@@ -6,13 +6,13 @@ Accuracy comparisons require a ground truth. For Islamic twilight times, no univ
 
 Shaukat compiled his seasonal tables from direct field observations across multiple continents over several decades. The model represents minutes-before-sunrise (Fajr) and minutes-after-sunset (Isha) as piecewise functions of latitude and month. Unlike fixed-angle methods, which were derived from theoretical or historical-document reasoning, the MSC values were adjusted iteratively to match what trained observers actually saw.
 
-Because the PCD algorithm uses the MSC model as its Layer 1 base, using MSC as the accuracy reference is a conservative test — it measures how much the physics corrections in Layers 2 and 3 deviate from the MSC base. A PCD result that closely tracks MSC demonstrates the physics corrections do not introduce noise; a PCD result that slightly improves on MSC at specific locations (high elevation, perihelion dates) would confirm the corrections add value.
+Because the PCD algorithm uses the MSC model as its Layer 1 base, using MSC as the accuracy reference is a conservative test: it measures how much the physics corrections in Layers 2 and 3 deviate from the MSC base. A PCD result that closely tracks MSC demonstrates the physics corrections do not introduce noise; a PCD result that slightly improves on MSC at specific locations (high elevation, perihelion dates) would confirm the corrections add value.
 
 ### Why Not Astronomical Twilight as Reference?
 
 Astronomical twilight (18° depression, the moment sky background is fully dark) is a defined, computable quantity. However, it does not correspond to Islamic Fajr or Isha for two reasons:
 
-1. **Fajr (Subh Sadiq)** is the horizontal spread of light along the horizon, not full astronomical darkness. Field observations consistently place this between 12° and 18° depending on latitude and season — not at a fixed 18°.
+1. **Fajr (Subh Sadiq)** is the horizontal spread of light along the horizon, not full astronomical darkness. Field observations consistently place this between 12° and 18° depending on latitude and season: not at a fixed 18°.
 2. **Isha (end of Shafaq Abyad)** is when the white twilight glow vanishes. This corresponds to approximately 14–18° depression, not a single value.
 
 Using a fixed 18° as "truth" would prejudge the result in favor of fixed-18° methods and defeat the purpose of the study.

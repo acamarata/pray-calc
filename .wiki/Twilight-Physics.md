@@ -7,11 +7,11 @@ evaluating any prayer time calculation.
 
 Neither the Quran nor Hadith specifies a numeric angle. The required criteria are:
 
-- **Fajr**: The appearance of *Subh Sadiq* (true dawn) — a broad, horizontal
+- **Fajr**: The appearance of *Subh Sadiq* (true dawn): a broad, horizontal
   whitening of the eastern sky that stretches from north to south. Distinguished from
   *Subh Kadhib* (false dawn), which is a vertical column of zodiacal light that
   appears and then vanishes before true dawn.
-- **Isha**: The disappearance of *Shafaq* — the twilight glow remaining in the western
+- **Isha**: The disappearance of *Shafaq*: the twilight glow remaining in the western
   sky after sunset. Classical scholars disagreed on which glow: *shafaq ahmer* (red
   glow, which fades first) or *shafaq abyad* (white glow, which persists longer).
   Shia tradition and the IGUT/Tehran method use shafaq ahmer; Sunni tradition generally
@@ -39,7 +39,7 @@ astronomical twilight, depending on the convention.
 ### Latitude Effect
 
 The Sun's path intersects the horizon at a shallower angle at higher latitudes. Near
-the equator, the path is nearly vertical — the Sun passes through 18° of depression
+the equator, the path is nearly vertical: the Sun passes through 18° of depression
 quickly. At 55°N in summer, the Sun may skim 5–10° below the horizon before rising
 again. The geometry forces twilight to persist at much smaller depression angles.
 
@@ -50,7 +50,7 @@ cos(H) = (sin(-a) - sin(φ)sin(δ)) / (cos(φ)cos(δ))
 ```
 
 When φ (latitude) is large and δ (declination) has the same sign, the denominator
-shrinks, and the solution for H spreads out — more time is spent near the horizon.
+shrinks, and the solution for H spreads out: more time is spent near the horizon.
 
 ### Seasonal Effect (Declination)
 
@@ -127,7 +127,7 @@ is still computed by `getAngles` for completeness.
 After sunset, the western sky transitions through several phases:
 
 1. **Shafaq ahmer** (red glow): The brilliant red/orange color disappears when the Sun
-   is about 4–7° below the horizon — well before astronomical Isha. The Tehran/IGUT
+   is about 4–7° below the horizon: well before astronomical Isha. The Tehran/IGUT
    method places Isha at 14° depression, reflecting this earlier boundary.
 2. **Shafaq abyad** (white glow): The diffuse white luminosity persists longer. Most
    Sunni calculations use this, placing Isha at 15–18° depression.
