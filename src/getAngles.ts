@@ -52,13 +52,14 @@
 
 import { toJulianDate, solarEphemeris, atmosphericRefraction } from './getSolarEphemeris.js';
 import { getMscFajr, getMscIsha, minutesToDepression } from './getMSC.js';
+import { DEG, ANGLE_MIN, ANGLE_MAX } from './constants.js';
 import type { TwilightAngles } from './types.js';
 
-const DEG = Math.PI / 180;
-const FAJR_MIN = 10;
-const FAJR_MAX = 22;
-const ISHA_MIN = 10;
-const ISHA_MAX = 22;
+/** Internal result type including ephemeris data for caller reuse. */
+export interface AnglesWithEphemeris extends TwilightAngles {
+  /** Solar declination in degrees (reusable for Asr computation). */
+  decl: number;
+}
 
 /** Clamp a value to [min, max]. */
 function clip(value: number, min: number, max: number): number {
@@ -108,18 +109,15 @@ function earthSunDistanceCorrection(r: number): number {
  *
  * Net effect is small (< 0.3°) and primarily improves day-to-day smoothness.
  */
-function fourierSmoothingCorrection(
-  eclLon: number,
-  latAbsDeg: number,
-): number {
+function fourierSmoothingCorrection(eclLon: number, latAbsDeg: number): number {
   const theta = eclLon; // solar ecliptic longitude, radians [0, 2π)
   const phi = latAbsDeg * DEG;
 
   // First harmonic: small annual asymmetry correction
   // The perihelion/aphelion asymmetry causes slightly different twilight
   // behavior in January vs July even at the same declination.
-  const a1 = 0.03 * Math.sin(theta);   // peaks at ~Jun solstice
-  const b1 = -0.05 * Math.cos(theta);  // peaks at equinoxes
+  const a1 = 0.03 * Math.sin(theta); // peaks at ~Jun solstice
+  const b1 = -0.05 * Math.cos(theta); // peaks at equinoxes
 
   // Second harmonic: semi-annual variation
   const a2 = 0.02 * Math.sin(2 * theta);
@@ -133,27 +131,23 @@ function fourierSmoothingCorrection(
 }
 
 /**
- * Compute dynamic twilight depression angles for Fajr and Isha.
+ * Internal: compute angles and return solar declination for Asr reuse.
  *
- * @param date        - Observer's local date (time-of-day is ignored)
- * @param lat         - Latitude in decimal degrees
- * @param lng         - Longitude in decimal degrees (currently unused; reserved)
- * @param elevation   - Observer elevation in meters (default: 0)
- * @param temperature - Ambient temperature in °C (default: 15)
- * @param pressure    - Atmospheric pressure in mbar (default: 1013.25)
- * @returns Fajr and Isha depression angles in degrees
+ * This avoids recomputing solarEphemeris in getTimes/getTimesAll.
  */
-export function getAngles(
+export function computeAngles(
   date: Date,
   lat: number,
   lng: number,
   elevation = 0,
   temperature = 15,
   pressure = 1013.25,
-): TwilightAngles {
+): AnglesWithEphemeris {
   // 1. Solar ephemeris features at solar noon of the given date.
   //    Using UTC noon as a stable reference that avoids timezone artifacts.
-  const noonDate = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate(), 12, 0, 0));
+  const noonDate = new Date(
+    Date.UTC(date.getFullYear(), date.getMonth(), date.getDate(), 12, 0, 0),
+  );
   const jd = toJulianDate(noonDate);
   const { decl, r, eclLon } = solarEphemeris(jd);
 
@@ -202,8 +196,31 @@ export function getAngles(
   const rawFajr = fajrBase + rCorr + fourierCorr + refrFajr + elevCorr;
   const rawIsha = ishaBase + rCorr + fourierCorr + refrIsha + elevCorr;
 
-  const fajrAngle = round3(clip(rawFajr, FAJR_MIN, FAJR_MAX));
-  const ishaAngle = round3(clip(rawIsha, ISHA_MIN, ISHA_MAX));
+  const fajrAngle = round3(clip(rawFajr, ANGLE_MIN, ANGLE_MAX));
+  const ishaAngle = round3(clip(rawIsha, ANGLE_MIN, ANGLE_MAX));
 
+  return { fajrAngle, ishaAngle, decl };
+}
+
+/**
+ * Compute dynamic twilight depression angles for Fajr and Isha.
+ *
+ * @param date        - Observer's local date (time-of-day is ignored)
+ * @param lat         - Latitude in decimal degrees (-90 to 90)
+ * @param lng         - Longitude in decimal degrees (-180 to 180, currently unused; reserved)
+ * @param elevation   - Observer elevation in meters (default: 0)
+ * @param temperature - Ambient temperature in °C (default: 15)
+ * @param pressure    - Atmospheric pressure in mbar (default: 1013.25)
+ * @returns Fajr and Isha depression angles in degrees
+ */
+export function getAngles(
+  date: Date,
+  lat: number,
+  lng: number,
+  elevation = 0,
+  temperature = 15,
+  pressure = 1013.25,
+): TwilightAngles {
+  const { fajrAngle, ishaAngle } = computeAngles(date, lat, lng, elevation, temperature, pressure);
   return { fajrAngle, ishaAngle };
 }

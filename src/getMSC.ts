@@ -9,10 +9,28 @@
  *
  * Reference: moonsighting.com/isha_fajr.html
  *
+ * ## MCW Coefficient Key
+ *
+ * The piecewise-linear anchor values (a, b, c, d) follow the pattern:
+ *   value = BASE + (SLOPE / LAT_SCALE) × |latitude|
+ *
+ * where BASE is the equatorial offset in minutes, SLOPE is the per-degree
+ * latitude coefficient, and LAT_SCALE = 55° is the normalisation latitude.
+ * Coefficients were curve-fit to multi-latitude observations of Subh Sadiq
+ * and Shafaq by the Moonsighting Committee (moonsighting.com/isha_fajr.html).
+ *
  * High-latitude handling (|lat| > 55°): falls back to 1/7-night rule.
  */
 
 export type ShafaqMode = 'general' | 'ahmer' | 'abyad';
+
+/**
+ * Normalisation latitude (degrees) used as the divisor in MCW latitude
+ * scaling coefficients. All MCW slope values are expressed per 55° of
+ * latitude so that the piecewise function smoothly scales from equator
+ * to mid-high latitudes.
+ */
+const LAT_SCALE = 55;
 
 function isLeapYear(year: number): boolean {
   return (year % 4 === 0 && year % 100 !== 0) || year % 400 === 0;
@@ -79,10 +97,12 @@ export function getMscFajr(date: Date, latitude: number): number {
   const latAbs = Math.abs(latitude);
   const { dyy, daysInYear } = computeDyy(date, latitude);
 
-  const a = 75 + (28.65 / 55) * latAbs;
-  const b = 75 + (19.44 / 55) * latAbs;
-  const c = 75 + (32.74 / 55) * latAbs;
-  const d = 75 + (48.1 / 55) * latAbs;
+  // Anchor values: BASE + (SLOPE / LAT_SCALE) × |lat|
+  // BASE = 75 min (equatorial Fajr offset). Slopes from MCW curve-fit.
+  const a = 75 + (28.65 / LAT_SCALE) * latAbs;
+  const b = 75 + (19.44 / LAT_SCALE) * latAbs;
+  const c = 75 + (32.74 / LAT_SCALE) * latAbs;
+  const d = 75 + (48.1 / LAT_SCALE) * latAbs;
 
   return Math.round(interpolateSegment(dyy, daysInYear, a, b, c, d));
 }
@@ -95,11 +115,7 @@ export function getMscFajr(date: Date, latitude: number): number {
  * - 'ahmer': based on disappearance of redness (shafaq ahmer)
  * - 'abyad': based on disappearance of whiteness (shafaq abyad), later
  */
-export function getMscIsha(
-  date: Date,
-  latitude: number,
-  shafaq: ShafaqMode = 'general',
-): number {
+export function getMscIsha(date: Date, latitude: number, shafaq: ShafaqMode = 'general'): number {
   const latAbs = Math.abs(latitude);
   const { dyy, daysInYear } = computeDyy(date, latitude);
 
@@ -107,22 +123,25 @@ export function getMscIsha(
 
   switch (shafaq) {
     case 'ahmer':
-      a = 62 + (17.4 / 55) * latAbs;
-      b = 62 - (7.16 / 55) * latAbs;
-      c = 62 + (5.12 / 55) * latAbs;
-      d = 62 + (19.44 / 55) * latAbs;
+      // Shafaq ahmer (red glow): BASE = 62 min (shorter twilight)
+      a = 62 + (17.4 / LAT_SCALE) * latAbs;
+      b = 62 - (7.16 / LAT_SCALE) * latAbs;
+      c = 62 + (5.12 / LAT_SCALE) * latAbs;
+      d = 62 + (19.44 / LAT_SCALE) * latAbs;
       break;
     case 'abyad':
-      a = 75 + (25.6 / 55) * latAbs;
-      b = 75 + (7.16 / 55) * latAbs;
-      c = 75 + (36.84 / 55) * latAbs;
-      d = 75 + (81.84 / 55) * latAbs;
+      // Shafaq abyad (white glow): BASE = 75 min (longer twilight)
+      a = 75 + (25.6 / LAT_SCALE) * latAbs;
+      b = 75 + (7.16 / LAT_SCALE) * latAbs;
+      c = 75 + (36.84 / LAT_SCALE) * latAbs;
+      d = 75 + (81.84 / LAT_SCALE) * latAbs;
       break;
     default: // 'general'
-      a = 75 + (25.6 / 55) * latAbs;
-      b = 75 + (2.05 / 55) * latAbs;
-      c = 75 - (9.21 / 55) * latAbs;
-      d = 75 + (6.14 / 55) * latAbs;
+      // General (blended) mode: BASE = 75 min
+      a = 75 + (25.6 / LAT_SCALE) * latAbs;
+      b = 75 + (2.05 / LAT_SCALE) * latAbs;
+      c = 75 - (9.21 / LAT_SCALE) * latAbs;
+      d = 75 + (6.14 / LAT_SCALE) * latAbs;
   }
 
   return Math.round(interpolateSegment(dyy, daysInYear, a, b, c, d));
@@ -138,11 +157,7 @@ export function getMscIsha(
  *
  * Returns NaN if the geometry is unreachable (polar day/night).
  */
-export function minutesToDepression(
-  minutes: number,
-  latDeg: number,
-  declDeg: number,
-): number {
+export function minutesToDepression(minutes: number, latDeg: number, declDeg: number): number {
   const phi = latDeg * (Math.PI / 180);
   const delta = declDeg * (Math.PI / 180);
 
@@ -162,7 +177,7 @@ export function minutesToDepression(
   const cosH_rise = (sinH0 - sinPhi * sinDelta) / denominator;
 
   if (cosH_rise < -1) return NaN; // polar night
-  if (cosH_rise > 1) return NaN;  // polar day
+  if (cosH_rise > 1) return NaN; // polar day
 
   const H_rise = Math.acos(cosH_rise); // radians
 
@@ -179,8 +194,7 @@ export function minutesToDepression(
   }
 
   // Solar altitude at H_prayer
-  const sinH_prayer =
-    sinPhi * sinDelta + cosPhi * cosDelta * Math.cos(H_prayer);
+  const sinH_prayer = sinPhi * sinDelta + cosPhi * cosDelta * Math.cos(H_prayer);
   const h_prayer = Math.asin(Math.max(-1, Math.min(1, sinH_prayer)));
 
   // Depression angle: positive when sun is below horizon

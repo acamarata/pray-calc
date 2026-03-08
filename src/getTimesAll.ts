@@ -25,43 +25,128 @@
  */
 
 import { getSpa } from 'nrel-spa';
-import { toJulianDate, solarEphemeris } from './getSolarEphemeris.js';
-import { getAngles } from './getAngles.js';
+import { computeAngles } from './getAngles.js';
 import { getAsr } from './getAsr.js';
 import { getQiyam } from './getQiyam.js';
 import { getMscFajr, getMscIsha } from './getMSC.js';
+import { validateInputs } from './validate.js';
+import { DHUHR_OFFSET_MINUTES } from './constants.js';
 import type { MethodDefinition, PrayerTimesAll } from './types.js';
 
 /** All supported traditional methods. */
 const METHODS: MethodDefinition[] = [
-  { id: 'UOIF',    name: 'Union des Organisations Islamiques de France',         region: 'France',          fajrAngle: 12,   ishaAngle: 12   },
-  { id: 'ISNACA',  name: 'IQNA / Islamic Council of North America',              region: 'Canada',          fajrAngle: 13,   ishaAngle: 13   },
-  { id: 'ISNA',    name: 'FCNA / Islamic Society of North America',              region: 'US, UK, AU, NZ',  fajrAngle: 15,   ishaAngle: 15   },
-  { id: 'SAMR',    name: 'Spiritual Administration of Muslims of Russia',        region: 'Russia',          fajrAngle: 16,   ishaAngle: 15   },
-  { id: 'IGUT',    name: 'Institute of Geophysics, University of Tehran',        region: 'Iran',            fajrAngle: 17.7, ishaAngle: 14   },
-  { id: 'MWL',     name: 'Muslim World League',                                  region: 'Global',          fajrAngle: 18,   ishaAngle: 17   },
-  { id: 'DIBT',    name: 'Diyanet İşleri Başkanlığı, Turkey',                    region: 'Turkey',          fajrAngle: 18,   ishaAngle: 17   },
-  { id: 'Karachi', name: 'University of Islamic Sciences, Karachi',              region: 'PK, BD, IN, AF',  fajrAngle: 18,   ishaAngle: 18   },
-  { id: 'Kuwait',  name: 'Kuwait Ministry of Islamic Affairs',                   region: 'Kuwait',          fajrAngle: 18,   ishaAngle: 17.5 },
-  { id: 'UAQ',     name: 'Umm Al-Qura University, Makkah',                      region: 'Saudi Arabia',    fajrAngle: 18.5, ishaAngle: null, ishaMinutes: 90  },
-  { id: 'Qatar',   name: 'Qatar / Gulf Standard',                                region: 'Qatar, Gulf',     fajrAngle: 18,   ishaAngle: null, ishaMinutes: 90  },
-  { id: 'Egypt',   name: 'Egyptian General Authority of Survey',                 region: 'EG, SY, IQ, LB',  fajrAngle: 19.5, ishaAngle: 17.5 },
-  { id: 'MUIS',    name: 'Majlis Ugama Islam Singapura',                         region: 'Singapore',       fajrAngle: 20,   ishaAngle: 18   },
-  { id: 'MSC',     name: 'Moonsighting Committee Worldwide',                     region: 'Global',          fajrAngle: null, ishaAngle: null, useMSC: true },
+  {
+    id: 'UOIF',
+    name: 'Union des Organisations Islamiques de France',
+    region: 'France',
+    fajrAngle: 12,
+    ishaAngle: 12,
+  },
+  {
+    id: 'ISNACA',
+    name: 'IQNA / Islamic Council of North America',
+    region: 'Canada',
+    fajrAngle: 13,
+    ishaAngle: 13,
+  },
+  {
+    id: 'ISNA',
+    name: 'FCNA / Islamic Society of North America',
+    region: 'US, UK, AU, NZ',
+    fajrAngle: 15,
+    ishaAngle: 15,
+  },
+  {
+    id: 'SAMR',
+    name: 'Spiritual Administration of Muslims of Russia',
+    region: 'Russia',
+    fajrAngle: 16,
+    ishaAngle: 15,
+  },
+  {
+    id: 'IGUT',
+    name: 'Institute of Geophysics, University of Tehran',
+    region: 'Iran',
+    fajrAngle: 17.7,
+    ishaAngle: 14,
+  },
+  { id: 'MWL', name: 'Muslim World League', region: 'Global', fajrAngle: 18, ishaAngle: 17 },
+  {
+    id: 'DIBT',
+    name: 'Diyanet İşleri Başkanlığı, Turkey',
+    region: 'Turkey',
+    fajrAngle: 18,
+    ishaAngle: 17,
+  },
+  {
+    id: 'Karachi',
+    name: 'University of Islamic Sciences, Karachi',
+    region: 'PK, BD, IN, AF',
+    fajrAngle: 18,
+    ishaAngle: 18,
+  },
+  {
+    id: 'Kuwait',
+    name: 'Kuwait Ministry of Islamic Affairs',
+    region: 'Kuwait',
+    fajrAngle: 18,
+    ishaAngle: 17.5,
+  },
+  {
+    id: 'UAQ',
+    name: 'Umm Al-Qura University, Makkah',
+    region: 'Saudi Arabia',
+    fajrAngle: 18.5,
+    ishaAngle: null,
+    ishaMinutes: 90,
+  },
+  {
+    id: 'Qatar',
+    name: 'Qatar / Gulf Standard',
+    region: 'Qatar, Gulf',
+    fajrAngle: 18,
+    ishaAngle: null,
+    ishaMinutes: 90,
+  },
+  {
+    id: 'Egypt',
+    name: 'Egyptian General Authority of Survey',
+    region: 'EG, SY, IQ, LB',
+    fajrAngle: 19.5,
+    ishaAngle: 17.5,
+  },
+  {
+    id: 'MUIS',
+    name: 'Majlis Ugama Islam Singapura',
+    region: 'Singapore',
+    fajrAngle: 20,
+    ishaAngle: 18,
+  },
+  {
+    id: 'MSC',
+    name: 'Moonsighting Committee Worldwide',
+    region: 'Global',
+    fajrAngle: null,
+    ishaAngle: null,
+    useMSC: true,
+  },
 ];
 
 /**
  * Compute prayer times plus all traditional method comparisons.
  *
- * @param date        - Observer's local date
- * @param lat         - Latitude in decimal degrees
- * @param lng         - Longitude in decimal degrees
+ * @param date        - Observer's local date (time-of-day is ignored)
+ * @param lat         - Latitude in decimal degrees (-90 to 90)
+ * @param lng         - Longitude in decimal degrees (-180 to 180)
  * @param tz          - UTC offset in hours (defaults to system tz)
  * @param elevation   - Observer elevation in meters (default: 0)
  * @param temperature - Ambient temperature in °C (default: 15)
  * @param pressure    - Atmospheric pressure in mbar (default: 1013.25)
  * @param hanafi      - Asr convention: false = Shafi'i (default), true = Hanafi
- * @returns Prayer times for the dynamic method plus all traditional methods
+ * @returns Prayer times for the dynamic method plus all traditional methods.
+ *          Any time that cannot be computed is returned as `NaN`.
+ *          Methods map contains `[fajrTime, ishaTime]` per method.
+ * @throws {RangeError} if lat, lng, tz, or elevation are out of valid range
  */
 export function getTimesAll(
   date: Date,
@@ -73,8 +158,17 @@ export function getTimesAll(
   pressure = 1013.25,
   hanafi = false,
 ): PrayerTimesAll {
-  // 1. Dynamic angles.
-  const { fajrAngle, ishaAngle } = getAngles(date, lat, lng, elevation, temperature, pressure);
+  validateInputs(lat, lng, tz, elevation);
+
+  // 1. Dynamic angles and reusable solar declination.
+  const { fajrAngle, ishaAngle, decl } = computeAngles(
+    date,
+    lat,
+    lng,
+    elevation,
+    temperature,
+    pressure,
+  );
 
   // 2. Build batch zenith angles for the SPA call:
   //    Slot 0: dynamic Fajr, Slot 1: dynamic Isha, then pairs for each method.
@@ -97,20 +191,15 @@ export function getTimesAll(
   const spaData = getSpa(date, lat, lng, tz, spaOpts, allZeniths);
 
   // 3. Extract core times (index 0 = dynamic Fajr, index 1 = dynamic Isha).
-  const fajrTime    = spaData.angles[0].sunrise;
+  const fajrTime = spaData.angles[0].sunrise;
   const sunriseTime = spaData.sunrise;
-  const noonTime    = spaData.solarNoon;
+  const noonTime = spaData.solarNoon;
   const maghribTime = spaData.sunset;
-  const ishaTime    = spaData.angles[1].sunset;
-  const dhuhrTime   = noonTime + 2.5 / 60;
+  const ishaTime = spaData.angles[1].sunset;
+  const dhuhrTime = noonTime + DHUHR_OFFSET_MINUTES / 60;
 
-  // 4. Solar declination for Asr.
-  const jd = toJulianDate(
-    new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate(), 12, 0, 0)),
-  );
-  const { decl } = solarEphemeris(jd);
-
-  const asrTime   = getAsr(noonTime, lat, decl, hanafi);
+  // 4. Asr time (reuses declination from computeAngles — no extra ephemeris call).
+  const asrTime = getAsr(noonTime, lat, decl, hanafi);
   const qiyamTime = getQiyam(fajrTime, ishaTime);
 
   // 5. Build Methods map.
@@ -140,14 +229,14 @@ export function getTimesAll(
   }
 
   return {
-    Qiyam:   isFinite(qiyamTime)   ? qiyamTime   : NaN,
-    Fajr:    isFinite(fajrTime)    ? fajrTime    : NaN,
+    Qiyam: isFinite(qiyamTime) ? qiyamTime : NaN,
+    Fajr: isFinite(fajrTime) ? fajrTime : NaN,
     Sunrise: isFinite(sunriseTime) ? sunriseTime : NaN,
-    Noon:    isFinite(noonTime)    ? noonTime    : NaN,
-    Dhuhr:   isFinite(dhuhrTime)   ? dhuhrTime   : NaN,
-    Asr:     isFinite(asrTime)     ? asrTime     : NaN,
+    Noon: isFinite(noonTime) ? noonTime : NaN,
+    Dhuhr: isFinite(dhuhrTime) ? dhuhrTime : NaN,
+    Asr: isFinite(asrTime) ? asrTime : NaN,
     Maghrib: isFinite(maghribTime) ? maghribTime : NaN,
-    Isha:    isFinite(ishaTime)    ? ishaTime    : NaN,
+    Isha: isFinite(ishaTime) ? ishaTime : NaN,
     Methods,
     angles: { fajrAngle, ishaAngle },
   };
