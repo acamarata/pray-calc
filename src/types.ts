@@ -57,8 +57,16 @@ export interface FormattedPrayerTimes {
   angles: TwilightAngles;
 }
 
-/** Method entry in the Methods map: [fajrTime, ishaTime] as fractional hours. */
-export type MethodEntry = [FractionalHours, FractionalHours];
+/**
+ * Method entry in the Methods map: `[fajrTime, ishaTime]` as fractional hours.
+ *
+ * - Index 0 (`fajr`): Fajr time for this method (fractional hours, or `NaN`)
+ * - Index 1 (`isha`): Isha time for this method (fractional hours, or `NaN`)
+ *
+ * A value of `NaN` indicates the event is unreachable at this location/date
+ * (e.g. the sun never dips to 18° below the horizon at high latitudes in summer).
+ */
+export type MethodEntry = [fajr: FractionalHours, isha: FractionalHours];
 
 /** Prayer times plus all method comparison times as fractional hours. */
 export interface PrayerTimesAll extends PrayerTimes {

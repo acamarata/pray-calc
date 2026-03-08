@@ -30,14 +30,14 @@ export function calcTimes(
   // Sort by fractional hour value so output reflects chronological order.
   // Angles are preserved as-is (not time values).
   return {
-    Qiyam:   formatTime(raw.Qiyam),
-    Fajr:    formatTime(raw.Fajr),
+    Qiyam: formatTime(raw.Qiyam),
+    Fajr: formatTime(raw.Fajr),
     Sunrise: formatTime(raw.Sunrise),
-    Noon:    formatTime(raw.Noon),
-    Dhuhr:   formatTime(raw.Dhuhr),
-    Asr:     formatTime(raw.Asr),
+    Noon: formatTime(raw.Noon),
+    Dhuhr: formatTime(raw.Dhuhr),
+    Asr: formatTime(raw.Asr),
     Maghrib: formatTime(raw.Maghrib),
-    Isha:    formatTime(raw.Isha),
-    angles:  raw.angles,
+    Isha: formatTime(raw.Isha),
+    angles: raw.angles,
   };
 }

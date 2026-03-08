@@ -8,7 +8,7 @@
  * prayer time solving still uses the full SPA via nrel-spa.
  */
 
-const DEG = Math.PI / 180;
+import { DEG } from './constants.js';
 
 /** Julian Date from a JavaScript Date (UTC). */
 export function toJulianDate(date: Date): number {
@@ -32,10 +32,10 @@ export function solarEphemeris(jd: number): SolarEphemeris {
   const T = (jd - 2451545.0) / 36525.0;
 
   // Geometric mean longitude L0 (degrees)
-  const L0 = ((280.46646 + 36000.76983 * T + 0.0003032 * T * T) % 360 + 360) % 360;
+  const L0 = (((280.46646 + 36000.76983 * T + 0.0003032 * T * T) % 360) + 360) % 360;
 
   // Mean anomaly M (degrees)
-  const M = ((357.52911 + 35999.05029 * T - 0.0001537 * T * T) % 360 + 360) % 360;
+  const M = (((357.52911 + 35999.05029 * T - 0.0001537 * T * T) % 360) + 360) % 360;
   const Mrad = M * DEG;
 
   // Orbital eccentricity
@@ -58,7 +58,7 @@ export function solarEphemeris(jd: number): SolarEphemeris {
   const r = (1.000001018 * (1 - e * e)) / (1 + e * Math.cos(nuRad));
 
   // Longitude of ascending node of Moon's orbit (for nutation)
-  const Omega = ((125.04 - 1934.136 * T) % 360 + 360) % 360;
+  const Omega = (((125.04 - 1934.136 * T) % 360) + 360) % 360;
   const OmegaRad = Omega * DEG;
 
   // Apparent solar longitude corrected for nutation and aberration
@@ -66,11 +66,7 @@ export function solarEphemeris(jd: number): SolarEphemeris {
   const lambdaRad = lambda * DEG;
 
   // Mean obliquity of the ecliptic (degrees)
-  const epsilon0 =
-    23.439291 -
-    0.013004 * T -
-    1.638e-7 * T * T +
-    5.036e-7 * T * T * T;
+  const epsilon0 = 23.439291 - 0.013004 * T - 1.638e-7 * T * T + 5.036e-7 * T * T * T;
 
   // True obliquity with nutation correction
   const epsilon = (epsilon0 + 0.00256 * Math.cos(OmegaRad)) * DEG;
@@ -92,11 +88,7 @@ export function solarEphemeris(jd: number): SolarEphemeris {
  *
  * Formula: dh/dt ≈ 15 × cos(φ) × cos(δ) × sin(H) [°/hr]
  */
-export function solarVerticalSpeed(
-  latRad: number,
-  declRad: number,
-  hAngleRad: number,
-): number {
+export function solarVerticalSpeed(latRad: number, declRad: number, hAngleRad: number): number {
   return 15 * Math.abs(Math.cos(latRad) * Math.cos(declRad) * Math.sin(hAngleRad));
 }
 

@@ -56,3 +56,9 @@ coverage/
 .windsurf/
 .cody/
 .sourcegraph/
+.vscode/*
+.codex/
+.aider/
+.aider.chat.history.md
+.continue/
+.gemini/

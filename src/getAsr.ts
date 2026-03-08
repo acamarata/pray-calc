@@ -7,7 +7,7 @@
  * and solar noon are known.
  */
 
-const DEG = Math.PI / 180;
+import { DEG } from './constants.js';
 
 /**
  * Compute Asr time as fractional hours.
@@ -36,9 +36,7 @@ export function getAsr(
 
   // Solve the hour-angle equation:
   // cos(H0) = (sin(A) − sin(φ)sin(δ)) / (cos(φ)cos(δ))
-  const cosH0 =
-    (sinA - Math.sin(phi) * Math.sin(delta)) /
-    (Math.cos(phi) * Math.cos(delta));
+  const cosH0 = (sinA - Math.sin(phi) * Math.sin(delta)) / (Math.cos(phi) * Math.cos(delta));
 
   if (cosH0 < -1 || cosH0 > 1) return NaN; // sun never reaches A
 
