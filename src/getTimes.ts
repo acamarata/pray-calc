@@ -10,6 +10,7 @@ import { getSpa } from 'nrel-spa';
 import { computeAngles } from './getAngles.js';
 import { getAsr } from './getAsr.js';
 import { getQiyam } from './getQiyam.js';
+import { getMidnight } from './getMidnight.js';
 import { validateInputs } from './validate.js';
 import { DHUHR_OFFSET_MINUTES } from './constants.js';
 import type { PrayerTimes } from './types.js';
@@ -81,6 +82,9 @@ export function getTimes(
   // 5. Qiyam al-Layl (last third of the night).
   const qiyamTime = getQiyam(fajrTime, ishaTime);
 
+  // 6. Midnight: midpoint between Maghrib and Fajr (standard definition).
+  const midnightTime = getMidnight(maghribTime, fajrTime);
+
   return {
     Qiyam: isFinite(qiyamTime) ? qiyamTime : NaN,
     Fajr: isFinite(fajrTime) ? fajrTime : NaN,
@@ -90,6 +94,7 @@ export function getTimes(
     Asr: isFinite(asrTime) ? asrTime : NaN,
     Maghrib: isFinite(maghribTime) ? maghribTime : NaN,
     Isha: isFinite(ishaTime) ? ishaTime : NaN,
+    Midnight: isFinite(midnightTime) ? midnightTime : NaN,
     angles: { fajrAngle, ishaAngle },
   };
 }

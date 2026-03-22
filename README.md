@@ -72,7 +72,7 @@ Returns raw fractional-hour prayer times using the dynamic method.
 | `pressure` | `number` | `1013.25` | Atmospheric pressure, mbar |
 | `hanafi` | `boolean` | `false` | Asr convention: false = Shafi'i, true = Hanafi |
 
-Returns `PrayerTimes`: `{ Qiyam, Fajr, Sunrise, Noon, Dhuhr, Asr, Maghrib, Isha, angles }`.
+Returns `PrayerTimes`: `{ Qiyam, Fajr, Sunrise, Noon, Dhuhr, Asr, Maghrib, Isha, Midnight, angles }`.
 All times are fractional hours in local time (e.g., `5.5` = 05:30:00). `NaN` when an event
 cannot be computed (polar night, etc.).
 
@@ -100,6 +100,11 @@ Computes Asr from solar noon time, latitude, and solar declination. Returns frac
 ### `getQiyam(fajrTime, ishaTime)`
 
 Returns the start of the last third of the night as fractional hours.
+
+### `getMidnight(maghribTime, endTime)`
+
+Returns the midpoint of the night as fractional hours. Pass Fajr as `endTime` for the
+standard definition (Maghrib-to-Fajr midpoint), or Sunrise for the astronomical variant.
 
 ### `getMscFajr(date, latitude)` / `getMscIsha(date, latitude, shafaq?)`
 

@@ -1,6 +1,6 @@
 {
   "name": "pray-calc",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "Islamic prayer times with a physics-grounded dynamic twilight angle algorithm. Covers Fajr, Sunrise, Dhuhr, Asr, Maghrib, Isha, Qiyam. Includes 14 traditional fixed-angle methods for comparison.",
   "author": "Aric Camarata",
   "license": "MIT",

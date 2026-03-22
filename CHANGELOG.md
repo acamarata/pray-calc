@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2.1.0] - 2026-03-22
+
+### Added
+
+- `getMidnight()` function: computes the midpoint of the night (Maghrib to Fajr). Useful as the Isha prayer endpoint per the hadith in Sahih Muslim. Also works with sunrise as the second anchor for the astronomical variant.
+- `Midnight` field added to `PrayerTimes`, `FormattedPrayerTimes`, `PrayerTimesAll`, and `FormattedPrayerTimesAll` interfaces
+- 15 new tests covering `getMidnight` standalone and integrated output
+
 ## [2.0.0] - 2026-02-25
 
 ### Added

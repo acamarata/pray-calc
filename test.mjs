@@ -22,6 +22,7 @@ import {
   getAngles,
   getAsr,
   getQiyam,
+  getMidnight,
   getMscFajr,
   getMscIsha,
   solarEphemeris,
@@ -275,12 +276,109 @@ describe('MSC minute offsets', () => {
 });
 
 // ─────────────────────────────────────────────────────────────────────────────
+// Section 6b: getMidnight — midpoint of night
+// ─────────────────────────────────────────────────────────────────────────────
+describe('getMidnight', () => {
+  it('midpoint of 20:00–04:00 is 00:00', () => {
+    const m = getMidnight(20.0, 4.0);
+    assert(approx(m, 0.0, 0.001), `Got ${m}`);
+  });
+
+  it('midpoint of 18:00–06:00 is 00:00', () => {
+    const m = getMidnight(18.0, 6.0);
+    assert(approx(m, 0.0, 0.001), `Got ${m}`);
+  });
+
+  it('midpoint of 19:00–05:00 is 00:00', () => {
+    const m = getMidnight(19.0, 5.0);
+    assert(approx(m, 0.0, 0.001), `Got ${m}`);
+  });
+
+  it('midpoint of 21:00–03:00 is 00:00', () => {
+    const m = getMidnight(21.0, 3.0);
+    assert(approx(m, 0.0, 0.001), `Got ${m}`);
+  });
+
+  it('asymmetric night: 20:30–04:30 gives 00:30', () => {
+    const m = getMidnight(20.5, 4.5);
+    assert(approx(m, 0.5, 0.001), `Got ${m}`);
+  });
+
+  it('late sunset: 21:30–03:30 gives 00:30', () => {
+    const m = getMidnight(21.5, 3.5);
+    assert(approx(m, 0.5, 0.001), `Got ${m}`);
+  });
+
+  it('short night: 17:00–07:00 gives 00:00', () => {
+    const m = getMidnight(17.0, 7.0);
+    assert(approx(m, 0.0, 0.001), `Got ${m}`);
+  });
+
+  it('result is always between 0 and 24', () => {
+    for (const [mag, faj] of [[18, 6], [20, 4], [21.5, 3.5], [17, 7], [22, 2]]) {
+      const m = getMidnight(mag, faj);
+      assert(m >= 0 && m < 24, `Got ${m} for [${mag}, ${faj}]`);
+    }
+  });
+});
+
+describe('Midnight in getTimes', () => {
+  it('Midnight field present and finite', () => {
+    const t = getTimes(new Date('2024-06-21'), 40.7128, -74.0060, -4);
+    assert('Midnight' in t, 'Missing Midnight field');
+    assert(isFinite(t.Midnight), `Midnight=${t.Midnight}`);
+  });
+
+  it('Midnight falls between Isha and Fajr (next day)', () => {
+    const t = getTimes(new Date('2024-06-21'), 40.7128, -74.0060, -4);
+    // Midnight should be after Isha (both are evening/night times)
+    assert(t.Midnight > t.Isha || t.Midnight < t.Fajr,
+      `Midnight(${t.Midnight}) should be after Isha(${t.Isha}) or before Fajr(${t.Fajr})`);
+  });
+
+  it('Midnight is between Maghrib and Qiyam', () => {
+    const t = getTimes(new Date('2024-06-21'), 40.7128, -74.0060, -4);
+    if (isFinite(t.Qiyam) && isFinite(t.Midnight)) {
+      // Midnight (1/2 night) comes before Qiyam (2/3 night)
+      // Both wrap around midnight, so compare by adjusting
+      const adjMid = t.Midnight < t.Maghrib ? t.Midnight + 24 : t.Midnight;
+      const adjQiy = t.Qiyam < t.Maghrib ? t.Qiyam + 24 : t.Qiyam;
+      assert(adjMid < adjQiy,
+        `Midnight(${t.Midnight}) should come before Qiyam(${t.Qiyam})`);
+    }
+  });
+
+  it('Midnight around 23:00-01:00 for typical mid-latitude', () => {
+    const t = getTimes(new Date('2024-06-21'), 40.7128, -74.0060, -4);
+    // Normalize to [0,24) range for comparison
+    const m = t.Midnight;
+    assert((m >= 23 && m < 24) || (m >= 0 && m < 2),
+      `Expected midnight near 00:00, got ${m}`);
+  });
+
+  it('Midnight in calcTimes is HH:MM:SS', () => {
+    const t = calcTimes(new Date('2024-06-21'), 40.7128, -74.0060, -4);
+    assert(/^\d{2}:\d{2}:\d{2}$/.test(t.Midnight), `Midnight="${t.Midnight}"`);
+  });
+
+  it('Midnight in getTimesAll is present', () => {
+    const t = getTimesAll(new Date('2024-06-21'), 40.7128, -74.0060, -4);
+    assert(isFinite(t.Midnight), `Midnight=${t.Midnight}`);
+  });
+
+  it('Midnight in calcTimesAll is HH:MM:SS', () => {
+    const t = calcTimesAll(new Date('2024-06-21'), 40.7128, -74.0060, -4);
+    assert(/^\d{2}:\d{2}:\d{2}$/.test(t.Midnight), `Midnight="${t.Midnight}"`);
+  });
+});
+
+// ─────────────────────────────────────────────────────────────────────────────
 // Section 7: getTimes — core output structure
 // ─────────────────────────────────────────────────────────────────────────────
 describe('getTimes — structure', () => {
   it('returns all required fields', () => {
     const t = getTimes(new Date('2024-06-21'), 40.7, -74.0);
-    for (const field of ['Qiyam','Fajr','Sunrise','Noon','Dhuhr','Asr','Maghrib','Isha']) {
+    for (const field of ['Qiyam','Fajr','Sunrise','Noon','Dhuhr','Asr','Maghrib','Isha','Midnight']) {
       assert(field in t, `Missing field: ${field}`);
     }
     assert('angles' in t);

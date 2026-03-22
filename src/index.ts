@@ -9,6 +9,7 @@
  *   getAngles      - Dynamic Fajr/Isha twilight depression angles
  *   getAsr         - Asr prayer time from solar noon and declination
  *   getQiyam       - Start of the last third of the night
+ *   getMidnight    - Midpoint of the night (Isha endpoint)
  *   getMscFajr     - MSC Fajr offset in minutes before sunrise
  *   getMscIsha     - MSC Isha offset in minutes after sunset
  *   solarEphemeris - Jean Meeus solar ephemeris (declination, Earth-Sun distance, ecliptic lon)
@@ -22,6 +23,7 @@ export { calcTimesAll } from './calcTimesAll.js';
 export { getAngles } from './getAngles.js';
 export { getAsr } from './getAsr.js';
 export { getQiyam } from './getQiyam.js';
+export { getMidnight } from './getMidnight.js';
 export { getMscFajr, getMscIsha } from './getMSC.js';
 export { solarEphemeris, toJulianDate } from './getSolarEphemeris.js';
 export { DHUHR_OFFSET_MINUTES, ANGLE_MIN, ANGLE_MAX } from './constants.js';

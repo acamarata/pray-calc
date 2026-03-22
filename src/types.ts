@@ -40,6 +40,8 @@ export interface PrayerTimes {
   Maghrib: FractionalHours;
   /** Isha (nightfall, end of shafaq). */
   Isha: FractionalHours;
+  /** Midnight: midpoint between Maghrib and Fajr. */
+  Midnight: FractionalHours;
   /** Dynamic twilight angles used for this calculation. */
   angles: TwilightAngles;
 }
@@ -54,6 +56,7 @@ export interface FormattedPrayerTimes {
   Asr: TimeString;
   Maghrib: TimeString;
   Isha: TimeString;
+  Midnight: TimeString;
   angles: TwilightAngles;
 }
 
@@ -84,6 +87,7 @@ export interface FormattedPrayerTimesAll {
   Asr: TimeString;
   Maghrib: TimeString;
   Isha: TimeString;
+  Midnight: TimeString;
   angles: TwilightAngles;
   /** Formatted comparison times for each method: [fajrString, ishaString]. */
   Methods: Record<string, [TimeString, TimeString]>;

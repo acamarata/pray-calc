@@ -38,6 +38,7 @@ export function calcTimes(
     Asr: formatTime(raw.Asr),
     Maghrib: formatTime(raw.Maghrib),
     Isha: formatTime(raw.Isha),
+    Midnight: formatTime(raw.Midnight),
     angles: raw.angles,
   };
 }

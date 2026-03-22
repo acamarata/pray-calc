@@ -28,6 +28,7 @@ import { getSpa } from 'nrel-spa';
 import { computeAngles } from './getAngles.js';
 import { getAsr } from './getAsr.js';
 import { getQiyam } from './getQiyam.js';
+import { getMidnight } from './getMidnight.js';
 import { getMscFajr, getMscIsha } from './getMSC.js';
 import { validateInputs } from './validate.js';
 import { DHUHR_OFFSET_MINUTES } from './constants.js';
@@ -201,6 +202,7 @@ export function getTimesAll(
   // 4. Asr time (reuses declination from computeAngles — no extra ephemeris call).
   const asrTime = getAsr(noonTime, lat, decl, hanafi);
   const qiyamTime = getQiyam(fajrTime, ishaTime);
+  const midnightTime = getMidnight(maghribTime, fajrTime);
 
   // 5. Build Methods map.
   const Methods: Record<string, [number, number]> = {};
@@ -237,6 +239,7 @@ export function getTimesAll(
     Asr: isFinite(asrTime) ? asrTime : NaN,
     Maghrib: isFinite(maghribTime) ? maghribTime : NaN,
     Isha: isFinite(ishaTime) ? ishaTime : NaN,
+    Midnight: isFinite(midnightTime) ? midnightTime : NaN,
     Methods,
     angles: { fajrAngle, ishaAngle },
   };

@@ -16,6 +16,7 @@ const {
   getAngles,
   getAsr,
   getQiyam,
+  getMidnight,
   getMscFajr,
   getMscIsha,
   solarEphemeris,
@@ -73,6 +74,17 @@ describe('[CJS] Core exports', () => {
   it('getQiyam returns a number', () => {
     const q = getQiyam(4.0, 22.0);
     assert(typeof q === 'number');
+  });
+
+  it('getMidnight returns a number', () => {
+    const m = getMidnight(20.0, 4.0);
+    assert(typeof m === 'number');
+    assert(Math.abs(m) < 0.001, `Expected ~0, got ${m}`);
+  });
+
+  it('getTimes includes Midnight field', () => {
+    const t = getTimes(new Date('2024-06-21'), 40.7128, -74.0060, -4);
+    assert(isFinite(t.Midnight), `Midnight=${t.Midnight}`);
   });
 
   it('getMscFajr returns positive minutes', () => {
