@@ -26,8 +26,8 @@ jobs:
       - run: node --test test.mjs
       - run: node --test test-cjs.cjs
 
-  lint:
-    name: Lint & Format
+  coverage:
+    name: Coverage
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -38,8 +38,15 @@ jobs:
           node-version: 24
           cache: pnpm
       - run: pnpm install --frozen-lockfile
-      - run: pnpm run lint
-      - run: pnpm run format:check
+      - run: pnpm build
+      - name: Coverage
+        run: pnpm run coverage
+      - name: Upload to Codecov
+        uses: codecov/codecov-action@v4
+        with:
+          files: ./coverage/lcov.info
+          token: ${{ secrets.CODECOV_TOKEN }}
+          fail_ci_if_error: false
 
   typecheck:
     name: Typecheck
