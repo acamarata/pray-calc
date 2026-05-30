@@ -6,7 +6,7 @@
 
 # Interface: AtmosphericParams
 
-Defined in: [types.ts:97](https://github.com/acamarata/pray-calc/blob/af34aef986c37d8de9cf8db0744a41e3b0c99c40/src/types.ts#L97)
+Defined in: [types.ts:97](https://github.com/acamarata/pray-calc/blob/4227afc2c3993234794b3a1a561c080edc6d4d4e/src/types.ts#L97)
 
 Optional atmospheric and elevation parameters.
 
@@ -16,7 +16,7 @@ Optional atmospheric and elevation parameters.
 
 > `optional` **elevation?**: `number`
 
-Defined in: [types.ts:98](https://github.com/acamarata/pray-calc/blob/af34aef986c37d8de9cf8db0744a41e3b0c99c40/src/types.ts#L98)
+Defined in: [types.ts:98](https://github.com/acamarata/pray-calc/blob/4227afc2c3993234794b3a1a561c080edc6d4d4e/src/types.ts#L98)
 
 ***
 
@@ -24,7 +24,7 @@ Defined in: [types.ts:98](https://github.com/acamarata/pray-calc/blob/af34aef986
 
 > `optional` **pressure?**: `number`
 
-Defined in: [types.ts:100](https://github.com/acamarata/pray-calc/blob/af34aef986c37d8de9cf8db0744a41e3b0c99c40/src/types.ts#L100)
+Defined in: [types.ts:100](https://github.com/acamarata/pray-calc/blob/4227afc2c3993234794b3a1a561c080edc6d4d4e/src/types.ts#L100)
 
 ***
 
@@ -32,4 +32,4 @@ Defined in: [types.ts:100](https://github.com/acamarata/pray-calc/blob/af34aef98
 
 > `optional` **temperature?**: `number`
 
-Defined in: [types.ts:99](https://github.com/acamarata/pray-calc/blob/af34aef986c37d8de9cf8db0744a41e3b0c99c40/src/types.ts#L99)
+Defined in: [types.ts:99](https://github.com/acamarata/pray-calc/blob/4227afc2c3993234794b3a1a561c080edc6d4d4e/src/types.ts#L99)

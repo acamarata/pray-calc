@@ -6,7 +6,7 @@
 
 # Interface: FormattedPrayerTimesAll
 
-Defined in: [types.ts:81](https://github.com/acamarata/pray-calc/blob/af34aef986c37d8de9cf8db0744a41e3b0c99c40/src/types.ts#L81)
+Defined in: [types.ts:81](https://github.com/acamarata/pray-calc/blob/4227afc2c3993234794b3a1a561c080edc6d4d4e/src/types.ts#L81)
 
 Prayer times plus all method comparison times, fully formatted.
 
@@ -16,7 +16,7 @@ Prayer times plus all method comparison times, fully formatted.
 
 > **angles**: [`TwilightAngles`](TwilightAngles.md)
 
-Defined in: [types.ts:91](https://github.com/acamarata/pray-calc/blob/af34aef986c37d8de9cf8db0744a41e3b0c99c40/src/types.ts#L91)
+Defined in: [types.ts:91](https://github.com/acamarata/pray-calc/blob/4227afc2c3993234794b3a1a561c080edc6d4d4e/src/types.ts#L91)
 
 ***
 
@@ -24,7 +24,7 @@ Defined in: [types.ts:91](https://github.com/acamarata/pray-calc/blob/af34aef986
 
 > **Asr**: `string`
 
-Defined in: [types.ts:87](https://github.com/acamarata/pray-calc/blob/af34aef986c37d8de9cf8db0744a41e3b0c99c40/src/types.ts#L87)
+Defined in: [types.ts:87](https://github.com/acamarata/pray-calc/blob/4227afc2c3993234794b3a1a561c080edc6d4d4e/src/types.ts#L87)
 
 ***
 
@@ -32,7 +32,7 @@ Defined in: [types.ts:87](https://github.com/acamarata/pray-calc/blob/af34aef986
 
 > **Dhuhr**: `string`
 
-Defined in: [types.ts:86](https://github.com/acamarata/pray-calc/blob/af34aef986c37d8de9cf8db0744a41e3b0c99c40/src/types.ts#L86)
+Defined in: [types.ts:86](https://github.com/acamarata/pray-calc/blob/4227afc2c3993234794b3a1a561c080edc6d4d4e/src/types.ts#L86)
 
 ***
 
@@ -40,7 +40,7 @@ Defined in: [types.ts:86](https://github.com/acamarata/pray-calc/blob/af34aef986
 
 > **Fajr**: `string`
 
-Defined in: [types.ts:83](https://github.com/acamarata/pray-calc/blob/af34aef986c37d8de9cf8db0744a41e3b0c99c40/src/types.ts#L83)
+Defined in: [types.ts:83](https://github.com/acamarata/pray-calc/blob/4227afc2c3993234794b3a1a561c080edc6d4d4e/src/types.ts#L83)
 
 ***
 
@@ -48,7 +48,7 @@ Defined in: [types.ts:83](https://github.com/acamarata/pray-calc/blob/af34aef986
 
 > **Isha**: `string`
 
-Defined in: [types.ts:89](https://github.com/acamarata/pray-calc/blob/af34aef986c37d8de9cf8db0744a41e3b0c99c40/src/types.ts#L89)
+Defined in: [types.ts:89](https://github.com/acamarata/pray-calc/blob/4227afc2c3993234794b3a1a561c080edc6d4d4e/src/types.ts#L89)
 
 ***
 
@@ -56,7 +56,7 @@ Defined in: [types.ts:89](https://github.com/acamarata/pray-calc/blob/af34aef986
 
 > **Maghrib**: `string`
 
-Defined in: [types.ts:88](https://github.com/acamarata/pray-calc/blob/af34aef986c37d8de9cf8db0744a41e3b0c99c40/src/types.ts#L88)
+Defined in: [types.ts:88](https://github.com/acamarata/pray-calc/blob/4227afc2c3993234794b3a1a561c080edc6d4d4e/src/types.ts#L88)
 
 ***
 
@@ -64,7 +64,7 @@ Defined in: [types.ts:88](https://github.com/acamarata/pray-calc/blob/af34aef986
 
 > **Methods**: `Record`\<`string`, \[[`TimeString`](../type-aliases/TimeString.md), [`TimeString`](../type-aliases/TimeString.md)\]\>
 
-Defined in: [types.ts:93](https://github.com/acamarata/pray-calc/blob/af34aef986c37d8de9cf8db0744a41e3b0c99c40/src/types.ts#L93)
+Defined in: [types.ts:93](https://github.com/acamarata/pray-calc/blob/4227afc2c3993234794b3a1a561c080edc6d4d4e/src/types.ts#L93)
 
 Formatted comparison times for each method: [fajrString, ishaString].
 
@@ -74,7 +74,7 @@ Formatted comparison times for each method: [fajrString, ishaString].
 
 > **Midnight**: `string`
 
-Defined in: [types.ts:90](https://github.com/acamarata/pray-calc/blob/af34aef986c37d8de9cf8db0744a41e3b0c99c40/src/types.ts#L90)
+Defined in: [types.ts:90](https://github.com/acamarata/pray-calc/blob/4227afc2c3993234794b3a1a561c080edc6d4d4e/src/types.ts#L90)
 
 ***
 
@@ -82,7 +82,7 @@ Defined in: [types.ts:90](https://github.com/acamarata/pray-calc/blob/af34aef986
 
 > **Noon**: `string`
 
-Defined in: [types.ts:85](https://github.com/acamarata/pray-calc/blob/af34aef986c37d8de9cf8db0744a41e3b0c99c40/src/types.ts#L85)
+Defined in: [types.ts:85](https://github.com/acamarata/pray-calc/blob/4227afc2c3993234794b3a1a561c080edc6d4d4e/src/types.ts#L85)
 
 ***
 
@@ -90,7 +90,7 @@ Defined in: [types.ts:85](https://github.com/acamarata/pray-calc/blob/af34aef986
 
 > **Qiyam**: `string`
 
-Defined in: [types.ts:82](https://github.com/acamarata/pray-calc/blob/af34aef986c37d8de9cf8db0744a41e3b0c99c40/src/types.ts#L82)
+Defined in: [types.ts:82](https://github.com/acamarata/pray-calc/blob/4227afc2c3993234794b3a1a561c080edc6d4d4e/src/types.ts#L82)
 
 ***
 
@@ -98,4 +98,4 @@ Defined in: [types.ts:82](https://github.com/acamarata/pray-calc/blob/af34aef986
 
 > **Sunrise**: `string`
 
-Defined in: [types.ts:84](https://github.com/acamarata/pray-calc/blob/af34aef986c37d8de9cf8db0744a41e3b0c99c40/src/types.ts#L84)
+Defined in: [types.ts:84](https://github.com/acamarata/pray-calc/blob/4227afc2c3993234794b3a1a561c080edc6d4d4e/src/types.ts#L84)

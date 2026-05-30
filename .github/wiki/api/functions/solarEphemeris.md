@@ -8,7 +8,7 @@
 
 > **solarEphemeris**(`jd`): `SolarEphemeris`
 
-Defined in: [getSolarEphemeris.ts:46](https://github.com/acamarata/pray-calc/blob/af34aef986c37d8de9cf8db0744a41e3b0c99c40/src/getSolarEphemeris.ts#L46)
+Defined in: [getSolarEphemeris.ts:46](https://github.com/acamarata/pray-calc/blob/4227afc2c3993234794b3a1a561c080edc6d4d4e/src/getSolarEphemeris.ts#L46)
 
 Compute solar declination, Earth-Sun distance, and ecliptic longitude
 from a Julian Date. Accuracy: ~0.01° for declination, ~0.0001 AU for r.

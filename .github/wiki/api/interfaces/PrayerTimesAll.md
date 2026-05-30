@@ -6,7 +6,7 @@
 
 # Interface: PrayerTimesAll
 
-Defined in: [types.ts:75](https://github.com/acamarata/pray-calc/blob/af34aef986c37d8de9cf8db0744a41e3b0c99c40/src/types.ts#L75)
+Defined in: [types.ts:75](https://github.com/acamarata/pray-calc/blob/4227afc2c3993234794b3a1a561c080edc6d4d4e/src/types.ts#L75)
 
 Prayer times plus all method comparison times as fractional hours.
 
@@ -20,7 +20,7 @@ Prayer times plus all method comparison times as fractional hours.
 
 > **angles**: [`TwilightAngles`](TwilightAngles.md)
 
-Defined in: [types.ts:46](https://github.com/acamarata/pray-calc/blob/af34aef986c37d8de9cf8db0744a41e3b0c99c40/src/types.ts#L46)
+Defined in: [types.ts:46](https://github.com/acamarata/pray-calc/blob/4227afc2c3993234794b3a1a561c080edc6d4d4e/src/types.ts#L46)
 
 Dynamic twilight angles used for this calculation.
 
@@ -34,7 +34,7 @@ Dynamic twilight angles used for this calculation.
 
 > **Asr**: `number`
 
-Defined in: [types.ts:38](https://github.com/acamarata/pray-calc/blob/af34aef986c37d8de9cf8db0744a41e3b0c99c40/src/types.ts#L38)
+Defined in: [types.ts:38](https://github.com/acamarata/pray-calc/blob/4227afc2c3993234794b3a1a561c080edc6d4d4e/src/types.ts#L38)
 
 Asr (Shafi'i or Hanafi shadow convention).
 
@@ -48,7 +48,7 @@ Asr (Shafi'i or Hanafi shadow convention).
 
 > **Dhuhr**: `number`
 
-Defined in: [types.ts:36](https://github.com/acamarata/pray-calc/blob/af34aef986c37d8de9cf8db0744a41e3b0c99c40/src/types.ts#L36)
+Defined in: [types.ts:36](https://github.com/acamarata/pray-calc/blob/4227afc2c3993234794b3a1a561c080edc6d4d4e/src/types.ts#L36)
 
 Dhuhr (2.5 minutes after solar noon).
 
@@ -62,7 +62,7 @@ Dhuhr (2.5 minutes after solar noon).
 
 > **Fajr**: `number`
 
-Defined in: [types.ts:30](https://github.com/acamarata/pray-calc/blob/af34aef986c37d8de9cf8db0744a41e3b0c99c40/src/types.ts#L30)
+Defined in: [types.ts:30](https://github.com/acamarata/pray-calc/blob/4227afc2c3993234794b3a1a561c080edc6d4d4e/src/types.ts#L30)
 
 True dawn (Subh Sadiq).
 
@@ -76,7 +76,7 @@ True dawn (Subh Sadiq).
 
 > **Isha**: `number`
 
-Defined in: [types.ts:42](https://github.com/acamarata/pray-calc/blob/af34aef986c37d8de9cf8db0744a41e3b0c99c40/src/types.ts#L42)
+Defined in: [types.ts:42](https://github.com/acamarata/pray-calc/blob/4227afc2c3993234794b3a1a561c080edc6d4d4e/src/types.ts#L42)
 
 Isha (nightfall, end of shafaq).
 
@@ -90,7 +90,7 @@ Isha (nightfall, end of shafaq).
 
 > **Maghrib**: `number`
 
-Defined in: [types.ts:40](https://github.com/acamarata/pray-calc/blob/af34aef986c37d8de9cf8db0744a41e3b0c99c40/src/types.ts#L40)
+Defined in: [types.ts:40](https://github.com/acamarata/pray-calc/blob/4227afc2c3993234794b3a1a561c080edc6d4d4e/src/types.ts#L40)
 
 Maghrib (sunset).
 
@@ -104,7 +104,7 @@ Maghrib (sunset).
 
 > **Methods**: `Record`\<`string`, [`MethodEntry`](../type-aliases/MethodEntry.md)\>
 
-Defined in: [types.ts:77](https://github.com/acamarata/pray-calc/blob/af34aef986c37d8de9cf8db0744a41e3b0c99c40/src/types.ts#L77)
+Defined in: [types.ts:77](https://github.com/acamarata/pray-calc/blob/4227afc2c3993234794b3a1a561c080edc6d4d4e/src/types.ts#L77)
 
 Comparison results from all supported fixed-angle and seasonal methods.
 
@@ -114,7 +114,7 @@ Comparison results from all supported fixed-angle and seasonal methods.
 
 > **Midnight**: `number`
 
-Defined in: [types.ts:44](https://github.com/acamarata/pray-calc/blob/af34aef986c37d8de9cf8db0744a41e3b0c99c40/src/types.ts#L44)
+Defined in: [types.ts:44](https://github.com/acamarata/pray-calc/blob/4227afc2c3993234794b3a1a561c080edc6d4d4e/src/types.ts#L44)
 
 Midnight: midpoint between Maghrib and Fajr.
 
@@ -128,7 +128,7 @@ Midnight: midpoint between Maghrib and Fajr.
 
 > **Noon**: `number`
 
-Defined in: [types.ts:34](https://github.com/acamarata/pray-calc/blob/af34aef986c37d8de9cf8db0744a41e3b0c99c40/src/types.ts#L34)
+Defined in: [types.ts:34](https://github.com/acamarata/pray-calc/blob/4227afc2c3993234794b3a1a561c080edc6d4d4e/src/types.ts#L34)
 
 Solar noon (exact geometric transit).
 
@@ -142,7 +142,7 @@ Solar noon (exact geometric transit).
 
 > **Qiyam**: `number`
 
-Defined in: [types.ts:28](https://github.com/acamarata/pray-calc/blob/af34aef986c37d8de9cf8db0744a41e3b0c99c40/src/types.ts#L28)
+Defined in: [types.ts:28](https://github.com/acamarata/pray-calc/blob/4227afc2c3993234794b3a1a561c080edc6d4d4e/src/types.ts#L28)
 
 Start of the last third of the night (Qiyam al-Layl).
 
@@ -156,7 +156,7 @@ Start of the last third of the night (Qiyam al-Layl).
 
 > **Sunrise**: `number`
 
-Defined in: [types.ts:32](https://github.com/acamarata/pray-calc/blob/af34aef986c37d8de9cf8db0744a41e3b0c99c40/src/types.ts#L32)
+Defined in: [types.ts:32](https://github.com/acamarata/pray-calc/blob/4227afc2c3993234794b3a1a561c080edc6d4d4e/src/types.ts#L32)
 
 Astronomical sunrise.
 

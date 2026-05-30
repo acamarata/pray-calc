@@ -8,7 +8,7 @@
 
 > **getMscFajr**(`date`, `latitude`): `number`
 
-Defined in: [getMSC.ts:103](https://github.com/acamarata/pray-calc/blob/af34aef986c37d8de9cf8db0744a41e3b0c99c40/src/getMSC.ts#L103)
+Defined in: [getMSC.ts:103](https://github.com/acamarata/pray-calc/blob/4227afc2c3993234794b3a1a561c080edc6d4d4e/src/getMSC.ts#L103)
 
 Compute Fajr offset in minutes before sunrise using the MCW algorithm.
 

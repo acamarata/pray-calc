@@ -8,7 +8,7 @@
 
 > **getTimes**(`date`, `lat`, `lng`, `tz?`, `elevation?`, `temperature?`, `pressure?`, `hanafi?`): [`PrayerTimes`](../interfaces/PrayerTimes.md)
 
-Defined in: [getTimes.ts:39](https://github.com/acamarata/pray-calc/blob/af34aef986c37d8de9cf8db0744a41e3b0c99c40/src/getTimes.ts#L39)
+Defined in: [getTimes.ts:39](https://github.com/acamarata/pray-calc/blob/4227afc2c3993234794b3a1a561c080edc6d4d4e/src/getTimes.ts#L39)
 
 Compute prayer times for a given date and location.
 

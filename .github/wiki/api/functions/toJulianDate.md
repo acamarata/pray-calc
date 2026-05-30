@@ -8,7 +8,7 @@
 
 > **toJulianDate**(`date`): `number`
 
-Defined in: [getSolarEphemeris.ts:22](https://github.com/acamarata/pray-calc/blob/af34aef986c37d8de9cf8db0744a41e3b0c99c40/src/getSolarEphemeris.ts#L22)
+Defined in: [getSolarEphemeris.ts:22](https://github.com/acamarata/pray-calc/blob/4227afc2c3993234794b3a1a561c080edc6d4d4e/src/getSolarEphemeris.ts#L22)
 
 Convert a JavaScript Date to a Julian Date number.
 

@@ -8,7 +8,7 @@
 
 > **MethodEntry** = \[[`FractionalHours`](FractionalHours.md), [`FractionalHours`](FractionalHours.md)\]
 
-Defined in: [types.ts:72](https://github.com/acamarata/pray-calc/blob/af34aef986c37d8de9cf8db0744a41e3b0c99c40/src/types.ts#L72)
+Defined in: [types.ts:72](https://github.com/acamarata/pray-calc/blob/4227afc2c3993234794b3a1a561c080edc6d4d4e/src/types.ts#L72)
 
 Method entry in the Methods map: `[fajrTime, ishaTime]` as fractional hours.
 

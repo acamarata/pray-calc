@@ -8,7 +8,7 @@
 
 > **getMscIsha**(`date`, `latitude`, `shafaq?`): `number`
 
-Defined in: [getMSC.ts:133](https://github.com/acamarata/pray-calc/blob/af34aef986c37d8de9cf8db0744a41e3b0c99c40/src/getMSC.ts#L133)
+Defined in: [getMSC.ts:133](https://github.com/acamarata/pray-calc/blob/4227afc2c3993234794b3a1a561c080edc6d4d4e/src/getMSC.ts#L133)
 
 Compute Isha offset in minutes after sunset using the MCW algorithm.
 
