@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.1.2] - 2026-05-30
+
+### Fixed
+- Add explicit `files` field to package.json; remove `.npmignore` to ensure correct published file set
+- Include `dist/index.d.mts` in published package (was missing from 2.1.1)
+
 ## [2.1.1] - 2026-05-28
 
 ### Changed
