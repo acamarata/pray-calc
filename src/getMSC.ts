@@ -92,6 +92,13 @@ function interpolateSegment(
  *
  * Returns minutes before sunrise. At latitudes above 55°, the 1/7-night
  * approximation is recommended (handled at the calling site).
+ *
+ * @param date     - Observer's local date
+ * @param latitude - Observer latitude in decimal degrees
+ * @returns Minutes before sunrise for Fajr (Subh Sadiq)
+ * @example
+ * const offset = getMscFajr(new Date('2024-06-21'), 40.7128);
+ * // offset ≈ 93 (minutes before sunrise for New York in summer)
  */
 export function getMscFajr(date: Date, latitude: number): number {
   const latAbs = Math.abs(latitude);
@@ -114,6 +121,14 @@ export function getMscFajr(date: Date, latitude: number): number {
  * - 'general': blend that reduces hardship at high latitudes (default)
  * - 'ahmer': based on disappearance of redness (shafaq ahmer)
  * - 'abyad': based on disappearance of whiteness (shafaq abyad), later
+ *
+ * @param date     - Observer's local date
+ * @param latitude - Observer latitude in decimal degrees
+ * @param shafaq   - Twilight type: 'general' | 'ahmer' | 'abyad'
+ * @returns Minutes after sunset for Isha
+ * @example
+ * const offset = getMscIsha(new Date('2024-06-21'), 40.7128, 'general');
+ * // offset ≈ 84
  */
 export function getMscIsha(date: Date, latitude: number, shafaq: ShafaqMode = 'general'): number {
   const latAbs = Math.abs(latitude);

@@ -13,8 +13,19 @@ import type { FormattedPrayerTimesAll } from './types.js';
  * Uses the dynamic twilight angle algorithm for the primary times. See
  * getTimesAll() for full parameter documentation.
  *
+ * @param date        - Observer's local date
+ * @param lat         - Latitude in decimal degrees (-90 to 90)
+ * @param lng         - Longitude in decimal degrees (-180 to 180)
+ * @param tz          - UTC offset in hours (default: system timezone)
+ * @param elevation   - Elevation in meters (default: 0)
+ * @param temperature - Temperature in Celsius (default: 15)
+ * @param pressure    - Pressure in mbar/hPa (default: 1013.25)
+ * @param hanafi      - Hanafi Asr convention (default: false)
  * @returns All prayer times as HH:MM:SS strings. "N/A" for unreachable events.
- *          Methods map contains [fajrString, ishaString] per method.
+ * @example
+ * const result = calcTimesAll(new Date('2024-06-21'), 40.7128, -74.006, -4);
+ * console.log(result.dynamic.Fajr); // "03:51:24"
+ * console.log(result.ISNA.Fajr);    // "04:07:30"
  */
 export function calcTimesAll(
   date: Date,

@@ -3,6 +3,7 @@
 [![npm version](https://img.shields.io/npm/v/pray-calc)](https://www.npmjs.com/package/pray-calc)
 [![CI](https://github.com/acamarata/pray-calc/actions/workflows/ci.yml/badge.svg)](https://github.com/acamarata/pray-calc/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![Wiki](https://img.shields.io/badge/docs-wiki-blue)](https://github.com/acamarata/pray-calc/wiki)
 
 Islamic prayer times for any location and date. The primary method uses a physics-grounded dynamic twilight angle algorithm that adjusts Fajr and Isha angles for latitude, season, Earth-Sun distance, and atmospheric conditions. Fourteen traditional fixed-angle methods are included for comparison. Single runtime dependency: [nrel-spa](https://github.com/acamarata/nrel-spa).
 

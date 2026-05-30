@@ -5,6 +5,20 @@
 **Reference**
 - [API Reference](API-Reference)
 - [Architecture](Architecture)
+- [Bundle Size / Performance](benchmarks/index)
+
+**Per-Function API**
+- [getTimes](api/getTimes)
+- [calcTimes](api/calcTimes)
+- [getTimesAll / METHODS](api/getTimesAll)
+- [calcTimesAll](api/calcTimesAll)
+- [getAngles](api/getAngles)
+- [getAsr](api/getAsr)
+- [getQiyam](api/getQiyam)
+- [getMidnight](api/getMidnight)
+- [getMscFajr / getMscIsha](api/getMscFajr-getMscIsha)
+- [solarEphemeris / toJulianDate](api/solarEphemeris)
+- [Constants](api/ANGLE_MIN-ANGLE_MAX)
 
 **Algorithm**
 - [Dynamic Algorithm](Dynamic-Algorithm)

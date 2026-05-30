@@ -10,7 +10,15 @@
 
 import { DEG } from './constants.js';
 
-/** Julian Date from a JavaScript Date (UTC). */
+/**
+ * Convert a JavaScript Date to a Julian Date number.
+ *
+ * @param date - Any JavaScript Date object (uses UTC internally)
+ * @returns Julian Date: days since noon January 1, 4713 BC UTC
+ * @example
+ * const jd = toJulianDate(new Date('2024-06-21'));
+ * // jd ≈ 2460482.5
+ */
 export function toJulianDate(date: Date): number {
   return date.getTime() / 86400000 + 2440587.5;
 }
@@ -27,6 +35,13 @@ export interface SolarEphemeris {
 /**
  * Compute solar declination, Earth-Sun distance, and ecliptic longitude
  * from a Julian Date. Accuracy: ~0.01° for declination, ~0.0001 AU for r.
+ *
+ * @param jd - Julian Date (use toJulianDate to convert a JS Date)
+ * @returns Solar ephemeris data: declination (degrees), Earth-Sun distance (AU),
+ *          and ecliptic longitude (radians, 0-2π season phase)
+ * @example
+ * const jd = toJulianDate(new Date('2024-06-21'));
+ * const { decl, r, eclLon } = solarEphemeris(jd);
  */
 export function solarEphemeris(jd: number): SolarEphemeris {
   const T = (jd - 2451545.0) / 36525.0;
