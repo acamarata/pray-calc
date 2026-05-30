@@ -67,11 +67,15 @@ export function getTimes(
   const spaOpts = { elevation, temperature, pressure };
   const spaData = getSpa(date, lat, lng, tz, spaOpts, [fajrZenith, ishaZenith]);
 
-  const fajrTime = spaData.angles[0].sunrise;
+  // Non-null assertions: getSpa was called with exactly [fajrZenith, ishaZenith], so
+  // index 0 and 1 are always defined.
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+  const fajrTime = spaData.angles[0]!.sunrise;
   const sunriseTime = spaData.sunrise;
   const noonTime = spaData.solarNoon;
   const maghribTime = spaData.sunset;
-  const ishaTime = spaData.angles[1].sunset;
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+  const ishaTime = spaData.angles[1]!.sunset;
 
   // Dhuhr: offset after solar noon (standard practice to confirm transit).
   const dhuhrTime = noonTime + DHUHR_OFFSET_MINUTES / 60;

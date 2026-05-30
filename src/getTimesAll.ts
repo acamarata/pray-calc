@@ -192,11 +192,14 @@ export function getTimesAll(
   const spaData = getSpa(date, lat, lng, tz, spaOpts, allZeniths);
 
   // 3. Extract core times (index 0 = dynamic Fajr, index 1 = dynamic Isha).
-  const fajrTime = spaData.angles[0].sunrise;
+  // Non-null assertions: allZeniths guarantees at least 2 angle entries (index 0 and 1 always set).
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+  const fajrTime = spaData.angles[0]!.sunrise;
   const sunriseTime = spaData.sunrise;
   const noonTime = spaData.solarNoon;
   const maghribTime = spaData.sunset;
-  const ishaTime = spaData.angles[1].sunset;
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+  const ishaTime = spaData.angles[1]!.sunset;
   const dhuhrTime = noonTime + DHUHR_OFFSET_MINUTES / 60;
 
   // 4. Asr time (reuses declination from computeAngles — no extra ephemeris call).
@@ -208,10 +211,14 @@ export function getTimesAll(
   const Methods: Record<string, [number, number]> = {};
 
   for (let i = 0; i < METHODS.length; i++) {
-    const m = METHODS[i];
+    // Non-null assertion: METHODS.length is static (14), allZeniths was built with exactly
+    // 2 + METHODS.length*2 entries, so spaBaseIdx and spaBaseIdx+1 are always valid.
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    const m = METHODS[i]!;
     const spaBaseIdx = 2 + i * 2; // angles index offset for this method
 
-    let methodFajr = spaData.angles[spaBaseIdx].sunrise;
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    let methodFajr = spaData.angles[spaBaseIdx]!.sunrise;
     let methodIsha: number;
 
     if (m.useMSC) {
@@ -224,7 +231,8 @@ export function getTimesAll(
       // Fixed-minute Isha (UAQ = 90 min, Qatar = 90 min after sunset).
       methodIsha = isFinite(maghribTime) ? maghribTime + m.ishaMinutes / 60 : NaN;
     } else {
-      methodIsha = spaData.angles[spaBaseIdx + 1].sunset;
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      methodIsha = spaData.angles[spaBaseIdx + 1]!.sunset;
     }
 
     Methods[m.id] = [methodFajr, methodIsha];
