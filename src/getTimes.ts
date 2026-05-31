@@ -6,14 +6,14 @@
  * offset (tz parameter).
  */
 
-import { getSpa } from 'nrel-spa';
-import { computeAngles } from './getAngles.js';
-import { getAsr } from './getAsr.js';
-import { getQiyam } from './getQiyam.js';
-import { getMidnight } from './getMidnight.js';
-import { validateInputs } from './validate.js';
-import { DHUHR_OFFSET_MINUTES } from './constants.js';
-import type { PrayerTimes } from './types.js';
+import { getSpa } from "nrel-spa";
+import { computeAngles } from "./getAngles.js";
+import { getAsr } from "./getAsr.js";
+import { getQiyam } from "./getQiyam.js";
+import { getMidnight } from "./getMidnight.js";
+import { validateInputs } from "./validate.js";
+import { DHUHR_OFFSET_MINUTES } from "./constants.js";
+import type { PrayerTimes } from "./types.js";
 
 /**
  * Compute prayer times for a given date and location.

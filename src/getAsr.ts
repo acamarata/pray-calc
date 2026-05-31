@@ -7,7 +7,7 @@
  * and solar noon are known.
  */
 
-import { DEG } from './constants.js';
+import { DEG } from "./constants.js";
 
 /**
  * Compute Asr time as fractional hours.

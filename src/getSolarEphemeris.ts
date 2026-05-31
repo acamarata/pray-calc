@@ -8,7 +8,7 @@
  * prayer time solving still uses the full SPA via nrel-spa.
  */
 
-import { DEG } from './constants.js';
+import { DEG } from "./constants.js";
 
 /**
  * Convert a JavaScript Date to a Julian Date number.

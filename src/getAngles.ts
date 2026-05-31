@@ -50,10 +50,10 @@
  * - Jean Meeus, Astronomical Algorithms (2nd ed., 1998)
  */
 
-import { toJulianDate, solarEphemeris, atmosphericRefraction } from './getSolarEphemeris.js';
-import { getMscFajr, getMscIsha, minutesToDepression } from './getMSC.js';
-import { DEG, ANGLE_MIN, ANGLE_MAX } from './constants.js';
-import type { TwilightAngles } from './types.js';
+import { toJulianDate, solarEphemeris, atmosphericRefraction } from "./getSolarEphemeris.js";
+import { getMscFajr, getMscIsha, minutesToDepression } from "./getMSC.js";
+import { DEG, ANGLE_MIN, ANGLE_MAX } from "./constants.js";
+import type { TwilightAngles } from "./types.js";
 
 /** Internal result type including ephemeris data for caller reuse. */
 export interface AnglesWithEphemeris extends TwilightAngles {

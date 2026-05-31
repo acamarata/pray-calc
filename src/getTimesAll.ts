@@ -24,109 +24,109 @@
  * | MSC     | Moonsighting Committee Worldwide (seasonal)  | —     | —               | Global          |
  */
 
-import { getSpa } from 'nrel-spa';
-import { computeAngles } from './getAngles.js';
-import { getAsr } from './getAsr.js';
-import { getQiyam } from './getQiyam.js';
-import { getMidnight } from './getMidnight.js';
-import { getMscFajr, getMscIsha } from './getMSC.js';
-import { validateInputs } from './validate.js';
-import { DHUHR_OFFSET_MINUTES } from './constants.js';
-import type { MethodDefinition, PrayerTimesAll } from './types.js';
+import { getSpa } from "nrel-spa";
+import { computeAngles } from "./getAngles.js";
+import { getAsr } from "./getAsr.js";
+import { getQiyam } from "./getQiyam.js";
+import { getMidnight } from "./getMidnight.js";
+import { getMscFajr, getMscIsha } from "./getMSC.js";
+import { validateInputs } from "./validate.js";
+import { DHUHR_OFFSET_MINUTES } from "./constants.js";
+import type { MethodDefinition, PrayerTimesAll } from "./types.js";
 
 /** All supported traditional methods. */
 const METHODS: MethodDefinition[] = [
   {
-    id: 'UOIF',
-    name: 'Union des Organisations Islamiques de France',
-    region: 'France',
+    id: "UOIF",
+    name: "Union des Organisations Islamiques de France",
+    region: "France",
     fajrAngle: 12,
     ishaAngle: 12,
   },
   {
-    id: 'ISNACA',
-    name: 'IQNA / Islamic Council of North America',
-    region: 'Canada',
+    id: "ISNACA",
+    name: "IQNA / Islamic Council of North America",
+    region: "Canada",
     fajrAngle: 13,
     ishaAngle: 13,
   },
   {
-    id: 'ISNA',
-    name: 'FCNA / Islamic Society of North America',
-    region: 'US, UK, AU, NZ',
+    id: "ISNA",
+    name: "FCNA / Islamic Society of North America",
+    region: "US, UK, AU, NZ",
     fajrAngle: 15,
     ishaAngle: 15,
   },
   {
-    id: 'SAMR',
-    name: 'Spiritual Administration of Muslims of Russia',
-    region: 'Russia',
+    id: "SAMR",
+    name: "Spiritual Administration of Muslims of Russia",
+    region: "Russia",
     fajrAngle: 16,
     ishaAngle: 15,
   },
   {
-    id: 'IGUT',
-    name: 'Institute of Geophysics, University of Tehran',
-    region: 'Iran',
+    id: "IGUT",
+    name: "Institute of Geophysics, University of Tehran",
+    region: "Iran",
     fajrAngle: 17.7,
     ishaAngle: 14,
   },
-  { id: 'MWL', name: 'Muslim World League', region: 'Global', fajrAngle: 18, ishaAngle: 17 },
+  { id: "MWL", name: "Muslim World League", region: "Global", fajrAngle: 18, ishaAngle: 17 },
   {
-    id: 'DIBT',
-    name: 'Diyanet İşleri Başkanlığı, Turkey',
-    region: 'Turkey',
+    id: "DIBT",
+    name: "Diyanet İşleri Başkanlığı, Turkey",
+    region: "Turkey",
     fajrAngle: 18,
     ishaAngle: 17,
   },
   {
-    id: 'Karachi',
-    name: 'University of Islamic Sciences, Karachi',
-    region: 'PK, BD, IN, AF',
+    id: "Karachi",
+    name: "University of Islamic Sciences, Karachi",
+    region: "PK, BD, IN, AF",
     fajrAngle: 18,
     ishaAngle: 18,
   },
   {
-    id: 'Kuwait',
-    name: 'Kuwait Ministry of Islamic Affairs',
-    region: 'Kuwait',
+    id: "Kuwait",
+    name: "Kuwait Ministry of Islamic Affairs",
+    region: "Kuwait",
     fajrAngle: 18,
     ishaAngle: 17.5,
   },
   {
-    id: 'UAQ',
-    name: 'Umm Al-Qura University, Makkah',
-    region: 'Saudi Arabia',
+    id: "UAQ",
+    name: "Umm Al-Qura University, Makkah",
+    region: "Saudi Arabia",
     fajrAngle: 18.5,
     ishaAngle: null,
     ishaMinutes: 90,
   },
   {
-    id: 'Qatar',
-    name: 'Qatar / Gulf Standard',
-    region: 'Qatar, Gulf',
+    id: "Qatar",
+    name: "Qatar / Gulf Standard",
+    region: "Qatar, Gulf",
     fajrAngle: 18,
     ishaAngle: null,
     ishaMinutes: 90,
   },
   {
-    id: 'Egypt',
-    name: 'Egyptian General Authority of Survey',
-    region: 'EG, SY, IQ, LB',
+    id: "Egypt",
+    name: "Egyptian General Authority of Survey",
+    region: "EG, SY, IQ, LB",
     fajrAngle: 19.5,
     ishaAngle: 17.5,
   },
   {
-    id: 'MUIS',
-    name: 'Majlis Ugama Islam Singapura',
-    region: 'Singapore',
+    id: "MUIS",
+    name: "Majlis Ugama Islam Singapura",
+    region: "Singapore",
     fajrAngle: 20,
     ishaAngle: 18,
   },
   {
-    id: 'MSC',
-    name: 'Moonsighting Committee Worldwide',
-    region: 'Global',
+    id: "MSC",
+    name: "Moonsighting Committee Worldwide",
+    region: "Global",
     fajrAngle: null,
     ishaAngle: null,
     useMSC: true,

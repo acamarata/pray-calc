@@ -2,9 +2,9 @@
  * Formatted prayer times — dynamic method plus all traditional method comparisons.
  */
 
-import { formatTime } from 'nrel-spa';
-import { getTimesAll } from './getTimesAll.js';
-import type { FormattedPrayerTimesAll } from './types.js';
+import { formatTime } from "nrel-spa";
+import { getTimesAll } from "./getTimesAll.js";
+import type { FormattedPrayerTimesAll } from "./types.js";
 
 /**
  * Compute prayer times formatted as HH:MM:SS strings, plus comparison times

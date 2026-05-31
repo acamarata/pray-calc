@@ -16,17 +16,17 @@
  *   METHODS        - Array of all supported traditional method definitions
  */
 
-export { getTimes } from './getTimes.js';
-export { calcTimes } from './calcTimes.js';
-export { getTimesAll, METHODS } from './getTimesAll.js';
-export { calcTimesAll } from './calcTimesAll.js';
-export { getAngles } from './getAngles.js';
-export { getAsr } from './getAsr.js';
-export { getQiyam } from './getQiyam.js';
-export { getMidnight } from './getMidnight.js';
-export { getMscFajr, getMscIsha } from './getMSC.js';
-export { solarEphemeris, toJulianDate } from './getSolarEphemeris.js';
-export { DHUHR_OFFSET_MINUTES, ANGLE_MIN, ANGLE_MAX } from './constants.js';
+export { getTimes } from "./getTimes.js";
+export { calcTimes } from "./calcTimes.js";
+export { getTimesAll, METHODS } from "./getTimesAll.js";
+export { calcTimesAll } from "./calcTimesAll.js";
+export { getAngles } from "./getAngles.js";
+export { getAsr } from "./getAsr.js";
+export { getQiyam } from "./getQiyam.js";
+export { getMidnight } from "./getMidnight.js";
+export { getMscFajr, getMscIsha } from "./getMSC.js";
+export { solarEphemeris, toJulianDate } from "./getSolarEphemeris.js";
+export { DHUHR_OFFSET_MINUTES, ANGLE_MIN, ANGLE_MAX } from "./constants.js";
 
 export type {
   FractionalHours,
@@ -41,4 +41,4 @@ export type {
   FormattedPrayerTimesAll,
   AtmosphericParams,
   MethodDefinition,
-} from './types.js';
+} from "./types.js";

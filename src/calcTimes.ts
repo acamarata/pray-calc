@@ -2,9 +2,9 @@
  * Formatted prayer times using the PrayCalc Dynamic Method.
  */
 
-import { formatTime } from 'nrel-spa';
-import { getTimes } from './getTimes.js';
-import type { FormattedPrayerTimes } from './types.js';
+import { formatTime } from "nrel-spa";
+import { getTimes } from "./getTimes.js";
+import type { FormattedPrayerTimes } from "./types.js";
 
 /**
  * Compute prayer times formatted as HH:MM:SS strings.

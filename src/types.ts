@@ -9,10 +9,10 @@ export type FractionalHours = number;
 export type TimeString = string;
 
 /** Asr shadow convention: Shafi'i (shadow = 1x object length) or Hanafi (2x). */
-export type AsrConvention = 'shafii' | 'hanafi';
+export type AsrConvention = "shafii" | "hanafi";
 
 /** Shafaq (twilight glow) variant for the MSC Isha model. */
-export type ShafaqMode = 'general' | 'ahmer' | 'abyad';
+export type ShafaqMode = "general" | "ahmer" | "abyad";
 
 /** Computed twilight depression angles for Fajr and Isha. */
 export interface TwilightAngles {

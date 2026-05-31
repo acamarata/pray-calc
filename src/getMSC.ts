@@ -22,7 +22,7 @@
  * High-latitude handling (|lat| > 55°): falls back to 1/7-night rule.
  */
 
-export type ShafaqMode = 'general' | 'ahmer' | 'abyad';
+export type ShafaqMode = "general" | "ahmer" | "abyad";
 
 /**
  * Normalisation latitude (degrees) used as the divisor in MCW latitude
@@ -130,21 +130,21 @@ export function getMscFajr(date: Date, latitude: number): number {
  * const offset = getMscIsha(new Date('2024-06-21'), 40.7128, 'general');
  * // offset ≈ 84
  */
-export function getMscIsha(date: Date, latitude: number, shafaq: ShafaqMode = 'general'): number {
+export function getMscIsha(date: Date, latitude: number, shafaq: ShafaqMode = "general"): number {
   const latAbs = Math.abs(latitude);
   const { dyy, daysInYear } = computeDyy(date, latitude);
 
   let a: number, b: number, c: number, d: number;
 
   switch (shafaq) {
-    case 'ahmer':
+    case "ahmer":
       // Shafaq ahmer (red glow): BASE = 62 min (shorter twilight)
       a = 62 + (17.4 / LAT_SCALE) * latAbs;
       b = 62 - (7.16 / LAT_SCALE) * latAbs;
       c = 62 + (5.12 / LAT_SCALE) * latAbs;
       d = 62 + (19.44 / LAT_SCALE) * latAbs;
       break;
-    case 'abyad':
+    case "abyad":
       // Shafaq abyad (white glow): BASE = 75 min (longer twilight)
       a = 75 + (25.6 / LAT_SCALE) * latAbs;
       b = 75 + (7.16 / LAT_SCALE) * latAbs;
