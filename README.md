@@ -66,6 +66,11 @@ Full API reference, dynamic algorithm details, traditional method table, and hig
 
 Solar position calculations use [nrel-spa](https://github.com/acamarata/nrel-spa), a port of the NREL SPA by Ibrahim Reda and Afshin Andreas. The seasonal twilight model builds on the work of Khalid Shaukat (Moonsighting Committee Worldwide).
 
+## Telemetry
+
+This package supports opt-in anonymous usage telemetry — off by default.
+Enable: `ACAMARATA_TELEMETRY=1`. See [TELEMETRY.md](./TELEMETRY.md) for what is sent and how to disable.
+
 ## License
 
 MIT. Copyright (c) 2023-2026 Aric Camarata.
