@@ -3,6 +3,7 @@
  */
 
 import { formatTime } from "nrel-spa";
+import type { HighLatitudeRule } from "./highLatitude.js";
 import { getTimes } from "./getTimes.js";
 import type { FormattedPrayerTimes } from "./types.js";
 
@@ -36,8 +37,9 @@ export function calcTimes(
   temperature = 15,
   pressure = 1013.25,
   hanafi = false,
+  highLatitudeRule: HighLatitudeRule = "none",
 ): FormattedPrayerTimes {
-  const raw = getTimes(date, lat, lng, tz, elevation, temperature, pressure, hanafi);
+  const raw = getTimes(date, lat, lng, tz, elevation, temperature, pressure, hanafi, highLatitudeRule);
 
   // Sort by fractional hour value so output reflects chronological order.
   // Angles are preserved as-is (not time values).
@@ -52,5 +54,6 @@ export function calcTimes(
     Isha: formatTime(raw.Isha),
     Midnight: formatTime(raw.Midnight),
     angles: raw.angles,
+    provenance: raw.provenance,
   };
 }

@@ -2,6 +2,10 @@
  * Core types for pray-calc v2.
  */
 
+import type { TimeProvenance } from "./highLatitude.js";
+
+export type { HighLatitudeRule, TimeProvenance, TimeSource } from "./highLatitude.js";
+
 /** Fractional hours (e.g. 5.5 = 05:30:00). NaN indicates an unreachable event. */
 export type FractionalHours = number;
 
@@ -44,6 +48,15 @@ export interface PrayerTimes {
   Midnight: FractionalHours;
   /** Dynamic twilight angles used for this calculation. */
   angles: TwilightAngles;
+  /**
+   * Origin of Fajr and Isha: `"observed"` when solved from the sun's actual position,
+   * the rule name when a high-latitude substitution supplied it, `"unavailable"` when
+   * no observable time exists and no rule was able to supply one.
+   *
+   * Check this before presenting a time as a calculation: above the polar circles a
+   * substituted value is a juristic choice, not an astronomical result.
+   */
+  provenance: TimeProvenance;
 }
 
 /** Prayer times formatted as HH:MM:SS strings. */
@@ -58,6 +71,8 @@ export interface FormattedPrayerTimes {
   Isha: TimeString;
   Midnight: TimeString;
   angles: TwilightAngles;
+  /** Origin of Fajr and Isha — see `PrayerTimes.provenance`. */
+  provenance: TimeProvenance;
 }
 
 /**
@@ -89,6 +104,8 @@ export interface FormattedPrayerTimesAll {
   Isha: TimeString;
   Midnight: TimeString;
   angles: TwilightAngles;
+  /** Origin of Fajr and Isha — see `PrayerTimes.provenance`. */
+  provenance: TimeProvenance;
   /** Formatted comparison times for each method: [fajrString, ishaString]. */
   Methods: Record<string, [TimeString, TimeString]>;
 }

@@ -31,6 +31,9 @@ import { getQiyam } from "./getQiyam.js";
 import { getMidnight } from "./getMidnight.js";
 import { getMscFajr, getMscIsha } from "./getMSC.js";
 import { validateInputs } from "./validate.js";
+import { getTimes } from "./getTimes.js";
+import { applyHighLatitudeRule } from "./highLatitude.js";
+import type { HighLatitudeRule } from "./highLatitude.js";
 import { DHUHR_OFFSET_MINUTES } from "./constants.js";
 import type { MethodDefinition, PrayerTimesAll } from "./types.js";
 
@@ -158,6 +161,7 @@ export function getTimesAll(
   temperature = 15,
   pressure = 1013.25,
   hanafi = false,
+  highLatitudeRule: HighLatitudeRule = "none",
 ): PrayerTimesAll {
   validateInputs(lat, lng, tz, elevation);
 
@@ -204,8 +208,31 @@ export function getTimesAll(
 
   // 4. Asr time (reuses declination from computeAngles — no extra ephemeris call).
   const asrTime = getAsr(noonTime, lat, decl, hanafi);
-  const qiyamTime = getQiyam(fajrTime, ishaTime);
-  const midnightTime = getMidnight(maghribTime, fajrTime);
+
+  // High-latitude substitution for the dynamic Fajr/Isha. Solved times pass through
+  // untouched; only genuinely absent ones are supplied, and only by the requested rule.
+  // The per-method entries below are deliberately left unsubstituted: the Methods map
+  // exists to show which methods are applicable where, so a method that cannot produce a
+  // time at this location must keep saying so.
+  const highLat = applyHighLatitudeRule(
+    {
+      rule: highLatitudeRule,
+      date,
+      lat,
+      lng,
+      fajrAngle,
+      ishaAngle,
+      resolveDay: (d, resolveLat, resolveLng) =>
+        getTimes(d, resolveLat, resolveLng, tz, elevation, temperature, pressure, hanafi, "none"),
+    },
+    fajrTime,
+    ishaTime,
+    sunriseTime,
+    maghribTime,
+  );
+
+  const qiyamTime = getQiyam(highLat.Fajr, highLat.Isha);
+  const midnightTime = getMidnight(maghribTime, highLat.Fajr);
 
   // 5. Build Methods map.
   const Methods: Record<string, [number, number]> = {};
@@ -240,16 +267,17 @@ export function getTimesAll(
 
   return {
     Qiyam: isFinite(qiyamTime) ? qiyamTime : NaN,
-    Fajr: isFinite(fajrTime) ? fajrTime : NaN,
+    Fajr: isFinite(highLat.Fajr) ? highLat.Fajr : NaN,
     Sunrise: isFinite(sunriseTime) ? sunriseTime : NaN,
     Noon: isFinite(noonTime) ? noonTime : NaN,
     Dhuhr: isFinite(dhuhrTime) ? dhuhrTime : NaN,
     Asr: isFinite(asrTime) ? asrTime : NaN,
     Maghrib: isFinite(maghribTime) ? maghribTime : NaN,
-    Isha: isFinite(ishaTime) ? ishaTime : NaN,
+    Isha: isFinite(highLat.Isha) ? highLat.Isha : NaN,
     Midnight: isFinite(midnightTime) ? midnightTime : NaN,
     Methods,
     angles: { fajrAngle, ishaAngle },
+    provenance: highLat.provenance,
   };
 }
 
