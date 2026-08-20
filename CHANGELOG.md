@@ -1,3 +1,8 @@
+## 2.3.0 — 2026-08-20
+
+### Added
+- `applyHighLatitudeRule` and its types are now public, along with `AQRAB_AL_BILAD_LATITUDE`. A consumer that computes Fajr and Isha its own way — a fixed-method overlay, or user-supplied custom depression angles — can apply the same substitution rules to its own values by supplying a `DayResolver`, instead of reimplementing them and drifting from this package's semantics.
+
 ## 2.2.0 — 2026-08-19
 
 ### Added

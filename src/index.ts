@@ -27,6 +27,18 @@ export { getMidnight } from "./getMidnight.js";
 export { getMscFajr, getMscIsha } from "./getMSC.js";
 export { solarEphemeris, toJulianDate } from "./getSolarEphemeris.js";
 export { DHUHR_OFFSET_MINUTES, ANGLE_MIN, ANGLE_MAX } from "./constants.js";
+// Exported so a consumer that computes Fajr/Isha its own way — a fixed-method overlay, or
+// user-supplied custom depression angles — can apply the same substitution rules to its own
+// values instead of reimplementing them and drifting from this package's semantics.
+export { applyHighLatitudeRule, AQRAB_AL_BILAD_LATITUDE } from "./highLatitude.js";
+export type {
+  HighLatitudeRule,
+  TimeSource,
+  TimeProvenance,
+  HighLatitudeContext,
+  HighLatitudeResult,
+  DayResolver,
+} from "./highLatitude.js";
 
 export type {
   FractionalHours,
