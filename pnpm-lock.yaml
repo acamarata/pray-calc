@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       nrel-spa:
-        specifier: ^2.0.1
-        version: 2.0.1
+        specifier: ^2.1.0
+        version: 2.1.0
     devDependencies:
       '@acamarata/eslint-config':
         specifier: ^0.1.0
@@ -944,8 +944,8 @@ packages:
   natural-compare@1.4.0:
     resolution: {integrity: sha512-OWND8ei3VtNC9h7V60qff3SVobHr996CTwgxubgyQYEpg290h9J0buyECNNJexkFm5sOajh5G116RYA1c8ZMSw==}
 
-  nrel-spa@2.0.1:
-    resolution: {integrity: sha512-KwsudVfAHMUwz9RwhriI7oNqFYz77+VGi2vUpJeR+xNx57MU28EYcdt1TQ1frEDbpBXkF4EJxM62Hi2iX6QNCA==}
+  nrel-spa@2.1.0:
+    resolution: {integrity: sha512-YM5Ry7HRg8PNrM6EymFmdYV8yQhs5NXd06GZzLwhYN9Ppd3CmtMGsvVMubM0bvTjJAAOt0JFzYRh3Cnh5NBOhg==}
     engines: {node: '>=20'}
 
   object-assign@4.1.1:
@@ -1997,7 +1997,7 @@ snapshots:
 
   natural-compare@1.4.0: {}
 
-  nrel-spa@2.0.1: {}
+  nrel-spa@2.1.0: {}
 
   object-assign@4.1.1: {}
 

@@ -3,6 +3,7 @@
  */
 
 import { formatTime } from "nrel-spa";
+import type { HighLatitudeRule } from "./highLatitude.js";
 import { getTimesAll } from "./getTimesAll.js";
 import type { FormattedPrayerTimesAll } from "./types.js";
 
@@ -36,8 +37,9 @@ export function calcTimesAll(
   temperature = 15,
   pressure = 1013.25,
   hanafi = false,
+  highLatitudeRule: HighLatitudeRule = "none",
 ): FormattedPrayerTimesAll {
-  const raw = getTimesAll(date, lat, lng, tz, elevation, temperature, pressure, hanafi);
+  const raw = getTimesAll(date, lat, lng, tz, elevation, temperature, pressure, hanafi, highLatitudeRule);
 
   const Methods: Record<string, [string, string]> = {};
   for (const [id, [fajr, isha]] of Object.entries(raw.Methods)) {
@@ -55,6 +57,7 @@ export function calcTimesAll(
     Isha: formatTime(raw.Isha),
     Midnight: formatTime(raw.Midnight),
     angles: raw.angles,
+    provenance: raw.provenance,
     Methods,
   };
 }

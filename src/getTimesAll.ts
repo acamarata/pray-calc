@@ -31,6 +31,9 @@ import { getQiyam } from "./getQiyam.js";
 import { getMidnight } from "./getMidnight.js";
 import { getMscFajr, getMscIsha } from "./getMSC.js";
 import { validateInputs } from "./validate.js";
+import { getTimes } from "./getTimes.js";
+import { applyHighLatitudeRule } from "./highLatitude.js";
+import type { HighLatitudeRule } from "./highLatitude.js";
 import { DHUHR_OFFSET_MINUTES } from "./constants.js";
 import type { MethodDefinition, PrayerTimesAll } from "./types.js";
 
@@ -158,6 +161,7 @@ export function getTimesAll(
   temperature = 15,
   pressure = 1013.25,
   hanafi = false,
+  highLatitudeRule: HighLatitudeRule = "none",
 ): PrayerTimesAll {
   validateInputs(lat, lng, tz, elevation);
 
@@ -193,19 +197,42 @@ export function getTimesAll(
 
   // 3. Extract core times (index 0 = dynamic Fajr, index 1 = dynamic Isha).
   // Non-null assertions: allZeniths guarantees at least 2 angle entries (index 0 and 1 always set).
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+   
   const fajrTime = spaData.angles[0]!.sunrise;
   const sunriseTime = spaData.sunrise;
   const noonTime = spaData.solarNoon;
   const maghribTime = spaData.sunset;
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+   
   const ishaTime = spaData.angles[1]!.sunset;
   const dhuhrTime = noonTime + DHUHR_OFFSET_MINUTES / 60;
 
   // 4. Asr time (reuses declination from computeAngles — no extra ephemeris call).
   const asrTime = getAsr(noonTime, lat, decl, hanafi);
-  const qiyamTime = getQiyam(fajrTime, ishaTime);
-  const midnightTime = getMidnight(maghribTime, fajrTime);
+
+  // High-latitude substitution for the dynamic Fajr/Isha. Solved times pass through
+  // untouched; only genuinely absent ones are supplied, and only by the requested rule.
+  // The per-method entries below are deliberately left unsubstituted: the Methods map
+  // exists to show which methods are applicable where, so a method that cannot produce a
+  // time at this location must keep saying so.
+  const highLat = applyHighLatitudeRule(
+    {
+      rule: highLatitudeRule,
+      date,
+      lat,
+      lng,
+      fajrAngle,
+      ishaAngle,
+      resolveDay: (d, resolveLat, resolveLng) =>
+        getTimes(d, resolveLat, resolveLng, tz, elevation, temperature, pressure, hanafi, "none"),
+    },
+    fajrTime,
+    ishaTime,
+    sunriseTime,
+    maghribTime,
+  );
+
+  const qiyamTime = getQiyam(highLat.Fajr, highLat.Isha);
+  const midnightTime = getMidnight(maghribTime, highLat.Fajr);
 
   // 5. Build Methods map.
   const Methods: Record<string, [number, number]> = {};
@@ -213,11 +240,11 @@ export function getTimesAll(
   for (let i = 0; i < METHODS.length; i++) {
     // Non-null assertion: METHODS.length is static (14), allZeniths was built with exactly
     // 2 + METHODS.length*2 entries, so spaBaseIdx and spaBaseIdx+1 are always valid.
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+     
     const m = METHODS[i]!;
     const spaBaseIdx = 2 + i * 2; // angles index offset for this method
 
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+     
     let methodFajr = spaData.angles[spaBaseIdx]!.sunrise;
     let methodIsha: number;
 
@@ -231,7 +258,7 @@ export function getTimesAll(
       // Fixed-minute Isha (UAQ = 90 min, Qatar = 90 min after sunset).
       methodIsha = isFinite(maghribTime) ? maghribTime + m.ishaMinutes / 60 : NaN;
     } else {
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+       
       methodIsha = spaData.angles[spaBaseIdx + 1]!.sunset;
     }
 
@@ -240,16 +267,17 @@ export function getTimesAll(
 
   return {
     Qiyam: isFinite(qiyamTime) ? qiyamTime : NaN,
-    Fajr: isFinite(fajrTime) ? fajrTime : NaN,
+    Fajr: isFinite(highLat.Fajr) ? highLat.Fajr : NaN,
     Sunrise: isFinite(sunriseTime) ? sunriseTime : NaN,
     Noon: isFinite(noonTime) ? noonTime : NaN,
     Dhuhr: isFinite(dhuhrTime) ? dhuhrTime : NaN,
     Asr: isFinite(asrTime) ? asrTime : NaN,
     Maghrib: isFinite(maghribTime) ? maghribTime : NaN,
-    Isha: isFinite(ishaTime) ? ishaTime : NaN,
+    Isha: isFinite(highLat.Isha) ? highLat.Isha : NaN,
     Midnight: isFinite(midnightTime) ? midnightTime : NaN,
     Methods,
     angles: { fajrAngle, ishaAngle },
+    provenance: highLat.provenance,
   };
 }
 

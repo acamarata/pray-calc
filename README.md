@@ -56,6 +56,28 @@ import type {
 
 Full API reference, dynamic algorithm details, traditional method table, and high-latitude handling: [GitHub Wiki](https://github.com/acamarata/pray-calc/wiki)
 
+## High latitudes
+
+Above roughly 48.5 degrees the sun stops reaching 18 degrees below the horizon in summer,
+and inside the polar circles it stops rising or setting at all for weeks. There is then no
+observable dawn or nightfall, so Fajr and Isha have no calculable time.
+
+By default this library reports them as absent (`NaN` / `"N/A"`) rather than substituting
+a value, because every substitution is a juristic position rather than an astronomical
+result. Six opt-in rules are available — `middleOfNight`, `oneSeventh`, `angleBased`,
+`aqrabAlBilad` (nearest latitude, the 45th parallel) and `aqrabAlAyyam` (nearest date) —
+passed as the trailing `highLatitudeRule` argument. Note that the three night-proportion
+rules need a real sunset to measure from, so only the two nearest-substitution rules cover
+the polar circles.
+
+Every result carries a `provenance` field naming the origin of Fajr and Isha, so a
+substituted time is never mistaken for a computed one.
+
+Dhuhr and Asr remain available every day at every latitude: the sun crosses the local
+meridian even on days it never rises.
+
+Details and the full rule-by-latitude table: [High-Latitude Handling](https://github.com/acamarata/pray-calc/wiki/High-Latitude)
+
 ## Related
 
 - [nrel-spa](https://github.com/acamarata/nrel-spa): NREL Solar Position Algorithm (the solar foundation)

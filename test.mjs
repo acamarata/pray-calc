@@ -847,3 +847,118 @@ describe('Input validation', () => {
     assert.throws(() => getTimesAll(new Date('2024-06-21'), 91, 0, 0), { name: 'RangeError' });
   });
 });
+
+// ---------------------------------------------------------------------------
+// PKG-10/11/12 — high-latitude rules and provenance.
+//
+// Above ~48.5 degrees the sun stops reaching 18 degrees below the horizon in summer;
+// above the polar circles it stops rising or setting at all. There is then no observable
+// dawn or nightfall, so any Fajr/Isha is a juristic substitution rather than a
+// calculation. The default is to substitute NOTHING and say so.
+// ---------------------------------------------------------------------------
+describe('PKG-10/11/12 — high-latitude rules', () => {
+  const LONGYEARBYEN = { date: new Date('2026-06-21T12:00:00Z'), lat: 78.22334, lng: 15.64689, tz: 1 };
+  const HELSINKI_JUNE = { date: new Date('2026-06-21T12:00:00Z'), lat: 60.1733, lng: 24.941, tz: 3 };
+  const call = (c, rule) =>
+    getTimes(c.date, c.lat, c.lng, c.tz, 0, 15, 1013.25, false, rule);
+
+  it('default is "none": nothing is substituted and provenance says so', () => {
+    const r = getTimes(LONGYEARBYEN.date, LONGYEARBYEN.lat, LONGYEARBYEN.lng, LONGYEARBYEN.tz);
+    assert.ok(Number.isNaN(r.Fajr), 'Fajr must stay absent by default');
+    assert.ok(Number.isNaN(r.Isha), 'Isha must stay absent by default');
+    assert.equal(r.provenance.Fajr, 'unavailable');
+    assert.equal(r.provenance.Isha, 'unavailable');
+  });
+
+  it('an observed time is always reported as observed, whatever the rule', () => {
+    for (const rule of ['none', 'middleOfNight', 'oneSeventh', 'angleBased', 'aqrabAlBilad', 'aqrabAlAyyam']) {
+      const r = getTimes(new Date('2026-03-15T12:00:00Z'), 40.7128, -74.006, -4, 0, 15, 1013.25, false, rule);
+      assert.ok(Number.isFinite(r.Fajr) && Number.isFinite(r.Isha));
+      assert.equal(r.provenance.Fajr, 'observed', `rule ${rule} relabelled a solved Fajr`);
+      assert.equal(r.provenance.Isha, 'observed', `rule ${rule} relabelled a solved Isha`);
+    }
+  });
+
+  it('a rule never changes a time that was solved astronomically', () => {
+    const base = getTimes(new Date('2026-03-15T12:00:00Z'), 40.7128, -74.006, -4);
+    for (const rule of ['middleOfNight', 'oneSeventh', 'angleBased', 'aqrabAlBilad', 'aqrabAlAyyam']) {
+      const r = getTimes(new Date('2026-03-15T12:00:00Z'), 40.7128, -74.006, -4, 0, 15, 1013.25, false, rule);
+      assert.equal(r.Fajr, base.Fajr, `rule ${rule} moved a solved Fajr`);
+      assert.equal(r.Isha, base.Isha, `rule ${rule} moved a solved Isha`);
+    }
+  });
+
+  describe('night-proportion rules', () => {
+    for (const rule of ['middleOfNight', 'oneSeventh', 'angleBased']) {
+      it(`${rule} supplies a time where a real sunset exists (Helsinki, June)`, () => {
+        const r = call(HELSINKI_JUNE, rule);
+        assert.ok(Number.isFinite(r.Isha), `${rule} should supply Isha at Helsinki`);
+        assert.equal(r.provenance.Isha, rule);
+        assert.ok(r.Isha >= 0 && r.Isha < 24);
+      });
+
+      it(`${rule} cannot help where there is no sunset at all (Longyearbyen, June)`, () => {
+        const r = call(LONGYEARBYEN, rule);
+        // Honest failure: a proportion of the night needs a night to divide.
+        assert.ok(Number.isNaN(r.Fajr));
+        assert.ok(Number.isNaN(r.Isha));
+        assert.equal(r.provenance.Fajr, 'unavailable');
+        assert.equal(r.provenance.Isha, 'unavailable');
+      });
+    }
+  });
+
+  describe('aqrabAlBilad (nearest latitude, 45 degrees)', () => {
+    it('supplies both times during polar day', () => {
+      const r = call(LONGYEARBYEN, 'aqrabAlBilad');
+      assert.ok(Number.isFinite(r.Fajr), 'Fajr should be supplied');
+      assert.ok(Number.isFinite(r.Isha), 'Isha should be supplied');
+      assert.equal(r.provenance.Fajr, 'aqrabAlBilad');
+      assert.equal(r.provenance.Isha, 'aqrabAlBilad');
+    });
+
+    it('matches what the 45th parallel actually produces', () => {
+      const r = call(LONGYEARBYEN, 'aqrabAlBilad');
+      const at45 = getTimes(LONGYEARBYEN.date, 45, LONGYEARBYEN.lng, LONGYEARBYEN.tz);
+      assert.ok(Math.abs(r.Fajr - at45.Fajr) < 1e-9);
+      assert.ok(Math.abs(r.Isha - at45.Isha) < 1e-9);
+    });
+
+    it('borrows from the matching hemisphere (McMurdo uses 45S, not 45N)', () => {
+      const mcmurdo = { date: new Date('2026-06-21T12:00:00Z'), lat: -77.8419, lng: 166.6863, tz: 13 };
+      const r = call(mcmurdo, 'aqrabAlBilad');
+      const south = getTimes(mcmurdo.date, -45, mcmurdo.lng, mcmurdo.tz);
+      assert.ok(Number.isFinite(r.Fajr));
+      assert.ok(Math.abs(r.Fajr - south.Fajr) < 1e-9, 'must borrow from 45 SOUTH to keep the season');
+    });
+  });
+
+  describe('aqrabAlAyyam (nearest day)', () => {
+    it('supplies both times during polar day', () => {
+      const r = call(LONGYEARBYEN, 'aqrabAlAyyam');
+      assert.ok(Number.isFinite(r.Fajr), 'Fajr should be supplied');
+      assert.ok(Number.isFinite(r.Isha), 'Isha should be supplied');
+      assert.equal(r.provenance.Fajr, 'aqrabAlAyyam');
+      assert.equal(r.provenance.Isha, 'aqrabAlAyyam');
+    });
+
+    it('keeps Fajr before Isha in the borrowed pair', () => {
+      const r = call(LONGYEARBYEN, 'aqrabAlAyyam');
+      // Both are anchored to this date's solar noon, so the shape of the night is kept.
+      assert.ok(r.Fajr >= 0 && r.Fajr < 24);
+      assert.ok(r.Isha >= 0 && r.Isha < 24);
+    });
+  });
+
+  it('every polar day of the year is covered by the two nearest-substitution rules', () => {
+    for (const rule of ['aqrabAlBilad', 'aqrabAlAyyam']) {
+      let gaps = 0;
+      for (let i = 0; i < 365; i++) {
+        const d = new Date(Date.UTC(2026, 0, 1 + i, 12));
+        const r = getTimes(d, 78.22334, 15.64689, 1, 0, 15, 1013.25, false, rule);
+        if (!Number.isFinite(r.Fajr) || !Number.isFinite(r.Isha)) gaps++;
+      }
+      assert.equal(gaps, 0, `${rule} left ${gaps} days of the year without Fajr/Isha`);
+    }
+  });
+});
