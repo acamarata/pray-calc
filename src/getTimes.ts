@@ -78,12 +78,12 @@ export function getTimes(
 
   // Non-null assertions: getSpa was called with exactly [fajrZenith, ishaZenith], so
   // index 0 and 1 are always defined.
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+   
   const fajrTime = spaData.angles[0]!.sunrise;
   const sunriseTime = spaData.sunrise;
   const noonTime = spaData.solarNoon;
   const maghribTime = spaData.sunset;
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+   
   const ishaTime = spaData.angles[1]!.sunset;
 
   // Dhuhr: offset after solar noon (standard practice to confirm transit).

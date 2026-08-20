@@ -197,12 +197,12 @@ export function getTimesAll(
 
   // 3. Extract core times (index 0 = dynamic Fajr, index 1 = dynamic Isha).
   // Non-null assertions: allZeniths guarantees at least 2 angle entries (index 0 and 1 always set).
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+   
   const fajrTime = spaData.angles[0]!.sunrise;
   const sunriseTime = spaData.sunrise;
   const noonTime = spaData.solarNoon;
   const maghribTime = spaData.sunset;
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+   
   const ishaTime = spaData.angles[1]!.sunset;
   const dhuhrTime = noonTime + DHUHR_OFFSET_MINUTES / 60;
 
@@ -240,11 +240,11 @@ export function getTimesAll(
   for (let i = 0; i < METHODS.length; i++) {
     // Non-null assertion: METHODS.length is static (14), allZeniths was built with exactly
     // 2 + METHODS.length*2 entries, so spaBaseIdx and spaBaseIdx+1 are always valid.
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+     
     const m = METHODS[i]!;
     const spaBaseIdx = 2 + i * 2; // angles index offset for this method
 
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+     
     let methodFajr = spaData.angles[spaBaseIdx]!.sunrise;
     let methodIsha: number;
 
@@ -258,7 +258,7 @@ export function getTimesAll(
       // Fixed-minute Isha (UAQ = 90 min, Qatar = 90 min after sunset).
       methodIsha = isFinite(maghribTime) ? maghribTime + m.ishaMinutes / 60 : NaN;
     } else {
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+       
       methodIsha = spaData.angles[spaBaseIdx + 1]!.sunset;
     }
 

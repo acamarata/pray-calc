@@ -93,5 +93,10 @@
   },
   "type": "module",
   "packageManager": "pnpm@10.11.1",
-  "prettier": "@acamarata/prettier-config"
+  "prettier": "@acamarata/prettier-config",
+  "pnpm": {
+    "overrides": {
+      "nrel-spa": "link:../nrel-spa"
+    }
+  }
 }
