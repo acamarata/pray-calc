@@ -894,7 +894,11 @@ describe('PKG-10/11/12 — high-latitude rules', () => {
         const r = call(HELSINKI_JUNE, rule);
         assert.ok(Number.isFinite(r.Isha), `${rule} should supply Isha at Helsinki`);
         assert.equal(r.provenance.Isha, rule);
-        assert.ok(r.Isha >= 0 && r.Isha < 24);
+        // Deliberately NOT asserted to be < 24: an Isha that lands after midnight is
+        // returned as e.g. 25.37, matching what the observed path already does. Wrapping
+        // it into the same day is what used to put Isha before Fajr.
+        assert.ok(r.Isha > 0 && r.Isha < 48, `Isha out of sane band: ${r.Isha}`);
+        assert.ok(r.Isha > r.Fajr, `Isha ${r.Isha} must come after Fajr ${r.Fajr}`);
       });
 
       it(`${rule} cannot help where there is no sunset at all (Longyearbyen, June)`, () => {
@@ -948,6 +952,33 @@ describe('PKG-10/11/12 — high-latitude rules', () => {
       assert.ok(r.Fajr >= 0 && r.Fajr < 24);
       assert.ok(r.Isha >= 0 && r.Isha < 24);
     });
+  });
+
+  it('Fajr always precedes Isha, under every rule, all year, at every latitude tested', () => {
+    // The regression this guards: substituted times were wrapped into [0, 24) while the
+    // observed path leaves a post-midnight Isha above 24. That wrap put Isha BEFORE Fajr
+    // on 158 days a year at Longyearbyen under aqrabAlAyyam alone, which is precisely the
+    // "the ordering does not make sense" symptom seen in other libraries.
+    const places = [
+      ['Longyearbyen', 78.22334, 15.64689, 2],
+      ['Tromso', 69.6492, 18.9553, 2],
+      ['Helsinki', 60.1733, 24.941, 3],
+      ['London', 51.5074, -0.1278, 1],
+    ];
+    const rules = ['middleOfNight', 'oneSeventh', 'angleBased', 'aqrabAlBilad', 'aqrabAlAyyam'];
+    for (const [name, lat, lng, tz] of places) {
+      for (const rule of rules) {
+        for (let i = 0; i < 365; i++) {
+          const d = new Date(Date.UTC(2026, 0, 1 + i, 12));
+          const r = getTimes(d, lat, lng, tz, 0, 15, 1013.25, false, rule);
+          if (!Number.isFinite(r.Fajr) || !Number.isFinite(r.Isha)) continue;
+          assert.ok(
+            r.Isha > r.Fajr,
+            `${name} ${rule} ${d.toISOString().slice(0, 10)}: Isha ${r.Isha} <= Fajr ${r.Fajr}`,
+          );
+        }
+      }
+    }
   });
 
   it('every polar day of the year is covered by the two nearest-substitution rules', () => {

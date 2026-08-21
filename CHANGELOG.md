@@ -1,3 +1,8 @@
+## 2.3.1 — 2026-08-21
+
+### Fixed
+- **Substituted Fajr/Isha are no longer wrapped into [0, 24), which could put Isha before Fajr.** The observed path already returns a post-midnight Isha as e.g. `24.163` (00:09 the next morning) and never wraps; the high-latitude substitution paths did, so a supplied Isha landed at the *start* of the same day and sorted ahead of Fajr. At Longyearbyen under `aqrabAlAyyam` that affected 158 days a year, and every night-proportion rule was affected too. This is the "the times are out of order" symptom that makes a polar timetable look broken. Substituted times now follow the same convention as computed ones, so `Fajr < Isha` holds by construction; the day-rollover decision belongs to the caller, which is the only place it can be rendered.
+
 ## 2.3.0 — 2026-08-20
 
 ### Added

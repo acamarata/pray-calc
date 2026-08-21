@@ -94,6 +94,18 @@ function isUsable(value: number): boolean {
 }
 
 /**
+ * Times are fractional hours measured from midnight of the requested civil date, and they
+ * are deliberately NOT wrapped into [0, 24).
+ *
+ * The observed path already works this way: at Helsinki in mid-May `getTimes` returns an
+ * Isha of 24.163, meaning 00:09 the following morning. Wrapping a substituted time into
+ * the same day instead put Isha *before* Fajr in the result, which is exactly the
+ * "times are out of order" symptom that makes a polar prayer timetable look broken.
+ * Leaving the value un-wrapped keeps Fajr < Isha true by construction, and leaves the
+ * day-rollover decision to the caller, which is the only place it can be rendered.
+ */
+
+/**
  * Fraction of the night to offset from sunset/sunrise for the night-proportion rules.
  * Returns NaN for rules that are not night proportions.
  */
@@ -128,8 +140,7 @@ function applyNightPortion(
   const maghribUnwrapped = maghrib < sunrise ? maghrib + 24 : maghrib;
   const nightLength = 24 - (maghribUnwrapped - sunrise);
   const offset = portion * nightLength;
-  const raw = isFajr ? sunrise - offset : maghribUnwrapped + offset;
-  return ((raw % 24) + 24) % 24;
+  return isFajr ? sunrise - offset : maghribUnwrapped + offset;
 }
 
 /**
@@ -182,8 +193,9 @@ function applyAqrabAlAyyam(ctx: HighLatitudeContext): { Fajr: number; Isha: numb
     if (isUsable(fajr) && isUsable(isha)) break;
   }
 
-  const wrap = (v: number): number => (isUsable(v) ? ((v % 24) + 24) % 24 : NaN);
-  return { Fajr: wrap(fajr), Isha: wrap(isha) };
+  // Un-wrapped by design: `probe.Fajr < probe.Noon < probe.Isha`, so carrying both across
+  // as offsets from this day's noon preserves Fajr < Isha even when Isha lands past midnight.
+  return { Fajr: fajr, Isha: isha };
 }
 
 /**
