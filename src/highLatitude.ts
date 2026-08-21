@@ -21,6 +21,16 @@
  * - **Nearest substitutions** (`aqrabAlBilad`, `aqrabAlAyyam`) borrow from a place or a
  *   date where the sign is observable. These are the only rules that cover the polar
  *   circles.
+ *
+ * ## Output convention
+ *
+ * Returned times are fractional hours measured from midnight of the requested civil date
+ * and are deliberately NOT wrapped into [0, 24). The observed path already works this way:
+ * at Helsinki in mid-May `getTimes` returns an Isha of 24.163, meaning 00:09 the following
+ * morning. Wrapping a substituted time onto the same day instead put Isha *before* Fajr,
+ * which is exactly the "times are out of order" symptom that makes a polar timetable look
+ * broken. Leaving it un-wrapped keeps `Fajr < Isha` true by construction and leaves the
+ * day-rollover decision to the caller, which is the only place it can be rendered.
  */
 
 import type { FractionalHours, PrayerTimes } from "./types.js";
@@ -92,18 +102,6 @@ export interface HighLatitudeResult {
 function isUsable(value: number): boolean {
   return Number.isFinite(value);
 }
-
-/**
- * Times are fractional hours measured from midnight of the requested civil date, and they
- * are deliberately NOT wrapped into [0, 24).
- *
- * The observed path already works this way: at Helsinki in mid-May `getTimes` returns an
- * Isha of 24.163, meaning 00:09 the following morning. Wrapping a substituted time into
- * the same day instead put Isha *before* Fajr in the result, which is exactly the
- * "times are out of order" symptom that makes a polar prayer timetable look broken.
- * Leaving the value un-wrapped keeps Fajr < Isha true by construction, and leaves the
- * day-rollover decision to the caller, which is the only place it can be rendered.
- */
 
 /**
  * Fraction of the night to offset from sunset/sunrise for the night-proportion rules.
