@@ -31,6 +31,8 @@ import { getQiyam } from "./getQiyam.js";
 import { getMidnight } from "./getMidnight.js";
 import { getMscFajr, getMscIsha } from "./getMSC.js";
 import { validateInputs } from "./validate.js";
+import { toCivilDate, defaultTimezone } from "./civilDate.js";
+import type { CivilDateInput } from "./civilDate.js";
 import { getTimes } from "./getTimes.js";
 import { applyHighLatitudeRule } from "./highLatitude.js";
 import type { HighLatitudeRule } from "./highLatitude.js";
@@ -153,10 +155,10 @@ const METHODS: MethodDefinition[] = [
  * @throws {RangeError} if lat, lng, tz, or elevation are out of valid range
  */
 export function getTimesAll(
-  date: Date,
+  date: CivilDateInput,
   lat: number,
   lng: number,
-  tz: number = -date.getTimezoneOffset() / 60,
+  tz: number = defaultTimezone(date),
   elevation = 0,
   temperature = 15,
   pressure = 1013.25,
@@ -165,9 +167,14 @@ export function getTimesAll(
 ): PrayerTimesAll {
   validateInputs(lat, lng, tz, elevation);
 
+  // Prayer times belong to a calendar date, not to an instant. Pin the caller's date to
+  // UTC noon of the day they expressed so the result stops depending on the host timezone
+  // and on what time of day the question was asked. See ./civilDate.ts.
+  const civDate = toCivilDate(date);
+
   // 1. Dynamic angles and reusable solar declination.
   const { fajrAngle, ishaAngle, decl } = computeAngles(
-    date,
+    civDate,
     lat,
     lng,
     elevation,
@@ -193,7 +200,7 @@ export function getTimesAll(
   ] as [number, ...number[]];
 
   const spaOpts = { elevation, temperature, pressure };
-  const spaData = getSpa(date, lat, lng, tz, spaOpts, allZeniths);
+  const spaData = getSpa(civDate, lat, lng, tz, spaOpts, allZeniths);
 
   // 3. Extract core times (index 0 = dynamic Fajr, index 1 = dynamic Isha).
   // Non-null assertions: allZeniths guarantees at least 2 angle entries (index 0 and 1 always set).
@@ -217,7 +224,7 @@ export function getTimesAll(
   const highLat = applyHighLatitudeRule(
     {
       rule: highLatitudeRule,
-      date,
+      date: civDate,
       lat,
       lng,
       fajrAngle,
@@ -250,8 +257,8 @@ export function getTimesAll(
 
     if (m.useMSC) {
       // MSC: seasonal minutes from sunrise/sunset.
-      const mscFajrMin = getMscFajr(date, lat);
-      const mscIshaMin = getMscIsha(date, lat);
+      const mscFajrMin = getMscFajr(civDate, lat);
+      const mscIshaMin = getMscIsha(civDate, lat);
       methodFajr = isFinite(sunriseTime) ? sunriseTime - mscFajrMin / 60 : NaN;
       methodIsha = isFinite(maghribTime) ? maghribTime + mscIshaMin / 60 : NaN;
     } else if (m.ishaMinutes !== undefined) {

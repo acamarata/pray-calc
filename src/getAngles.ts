@@ -53,6 +53,7 @@
 import { toJulianDate, solarEphemeris, atmosphericRefraction } from "./getSolarEphemeris.js";
 import { getMscFajr, getMscIsha, minutesToDepression } from "./getMSC.js";
 import { DEG, ANGLE_MIN, ANGLE_MAX } from "./constants.js";
+import { toCivilDate } from "./civilDate.js";
 import type { TwilightAngles } from "./types.js";
 
 /** Internal result type including ephemeris data for caller reuse. */
@@ -143,11 +144,10 @@ export function computeAngles(
   temperature = 15,
   pressure = 1013.25,
 ): AnglesWithEphemeris {
-  // 1. Solar ephemeris features at solar noon of the given date.
-  //    Using UTC noon as a stable reference that avoids timezone artifacts.
-  const noonDate = new Date(
-    Date.UTC(date.getFullYear(), date.getMonth(), date.getDate(), 12, 0, 0),
-  );
+  // 1. Solar ephemeris features at solar noon of the given date. Normalising here as well
+  //    as at the entry points keeps this correct when the function is called directly, and
+  //    is a no-op when it is reached through getTimes.
+  const noonDate = toCivilDate(date);
   const jd = toJulianDate(noonDate);
   const { decl, r, eclLon } = solarEphemeris(jd);
 

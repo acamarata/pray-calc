@@ -31,7 +31,7 @@ describe('[CJS] Core exports', () => {
   });
 
   it('getTimes returns valid structure', () => {
-    const t = getTimes(new Date('2024-06-21'), 40.7128, -74.0060, -4);
+    const t = getTimes('2024-06-21', 40.7128, -74.0060, -4);
     assert(isFinite(t.Fajr), `Fajr=${t.Fajr}`);
     assert(isFinite(t.Sunrise), `Sunrise=${t.Sunrise}`);
     assert(isFinite(t.Maghrib), `Maghrib=${t.Maghrib}`);
@@ -40,19 +40,19 @@ describe('[CJS] Core exports', () => {
   });
 
   it('calcTimes returns HH:MM:SS strings', () => {
-    const t = calcTimes(new Date('2024-06-21'), 40.7128, -74.0060, -4);
+    const t = calcTimes('2024-06-21', 40.7128, -74.0060, -4);
     assert(/^\d{2}:\d{2}:\d{2}$/.test(t.Fajr), `Fajr="${t.Fajr}"`);
     assert(/^\d{2}:\d{2}:\d{2}$/.test(t.Sunrise), `Sunrise="${t.Sunrise}"`);
     assert(/^\d{2}:\d{2}:\d{2}$/.test(t.Maghrib), `Maghrib="${t.Maghrib}"`);
   });
 
   it('getTimesAll returns 14 methods', () => {
-    const t = getTimesAll(new Date('2024-06-21'), 40.7128, -74.0060, -4);
+    const t = getTimesAll('2024-06-21', 40.7128, -74.0060, -4);
     assert.strictEqual(Object.keys(t.Methods).length, 14);
   });
 
   it('calcTimesAll Methods are string pairs', () => {
-    const t = calcTimesAll(new Date('2024-06-21'), 40.7128, -74.0060, -4);
+    const t = calcTimesAll('2024-06-21', 40.7128, -74.0060, -4);
     for (const [fajr, isha] of Object.values(t.Methods)) {
       assert(typeof fajr === 'string');
       assert(typeof isha === 'string');
@@ -60,7 +60,7 @@ describe('[CJS] Core exports', () => {
   });
 
   it('getAngles returns bounded angles', () => {
-    const a = getAngles(new Date('2024-06-21'), 40.7128, -74.0060);
+    const a = getAngles('2024-06-21', 40.7128, -74.0060);
     assert(a.fajrAngle >= 10 && a.fajrAngle <= 22);
     assert(a.ishaAngle >= 10 && a.ishaAngle <= 22);
   });
@@ -83,17 +83,17 @@ describe('[CJS] Core exports', () => {
   });
 
   it('getTimes includes Midnight field', () => {
-    const t = getTimes(new Date('2024-06-21'), 40.7128, -74.0060, -4);
+    const t = getTimes('2024-06-21', 40.7128, -74.0060, -4);
     assert(isFinite(t.Midnight), `Midnight=${t.Midnight}`);
   });
 
   it('getMscFajr returns positive minutes', () => {
-    const m = getMscFajr(new Date('2024-06-21'), 40.7);
+    const m = getMscFajr('2024-06-21', 40.7);
     assert(m > 0);
   });
 
   it('getMscIsha returns positive minutes', () => {
-    const m = getMscIsha(new Date('2024-06-21'), 40.7);
+    const m = getMscIsha('2024-06-21', 40.7);
     assert(m > 0);
   });
 
@@ -106,12 +106,12 @@ describe('[CJS] Core exports', () => {
   });
 
   it('Makkah all-methods comparison — UAQ Isha = Maghrib + 90min', () => {
-    const t = getTimesAll(new Date('2024-06-21'), 21.4225, 39.8262, 3);
+    const t = getTimesAll('2024-06-21', 21.4225, 39.8262, 3);
     const diff = (t.Methods.UAQ[1] - t.Maghrib) * 60;
     assert(Math.abs(diff - 90) < 2, `UAQ isha diff=${diff}`);
   });
 
   it('rejects invalid inputs', () => {
-    assert.throws(() => getTimes(new Date('2024-06-21'), 91, 0, 0), { name: 'RangeError' });
+    assert.throws(() => getTimes('2024-06-21', 91, 0, 0), { name: 'RangeError' });
   });
 });

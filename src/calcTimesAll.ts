@@ -4,6 +4,8 @@
 
 import { formatTime } from "nrel-spa";
 import type { HighLatitudeRule } from "./highLatitude.js";
+import { defaultTimezone } from "./civilDate.js";
+import type { CivilDateInput } from "./civilDate.js";
 import { getTimesAll } from "./getTimesAll.js";
 import type { FormattedPrayerTimesAll } from "./types.js";
 
@@ -29,10 +31,10 @@ import type { FormattedPrayerTimesAll } from "./types.js";
  * console.log(result.ISNA.Fajr);    // "04:07:30"
  */
 export function calcTimesAll(
-  date: Date,
+  date: CivilDateInput,
   lat: number,
   lng: number,
-  tz: number = -date.getTimezoneOffset() / 60,
+  tz: number = defaultTimezone(date),
   elevation = 0,
   temperature = 15,
   pressure = 1013.25,

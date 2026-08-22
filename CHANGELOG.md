@@ -1,3 +1,20 @@
+## 2.4.0 — 2026-08-22
+
+### Fixed
+- **Results no longer depend on the host machine's timezone.** Every entry point fed the caller's `Date` straight to SPA, so the calendar day computed depended on where the machine was. A caller in Tokyo writing `new Date(2024, 2, 20)` produced the instant `2024-03-19T15:00Z` and got the *previous* day: New York's sunrise came back at 07:00 instead of 06:58, out by 1m39s at the equinox, with Maghrib out by 64s. Dates are now pinned to UTC noon of the calendar day the caller expressed, so the same day gives the same answer on every host.
+- **Results no longer depend on what time of day you asked.** The twilight-angle model read the instant rather than the day, so asking for 20 March 2024 at 00:00Z and again at 23:00Z returned Isha times 79 seconds apart. In an app that surfaced as a countdown that drifted as the day wore on. Output is now a pure function of `(calendar date, location, options)`.
+- **The seasonal index no longer lands a day early at UTC+13 and UTC+14.** `computeDyy` read local date components from an already-normalised UTC instant, shifting Fajr by about 7 seconds for callers in Auckland (during DST) and Kiritimati. It now reads UTC components, which after normalisation *are* the calendar day.
+
+### Added
+- **Every entry point accepts a `'YYYY-MM-DD'` string as well as a `Date`.** A JavaScript `Date` is an instant and carries no record of whether it was built from local or UTC parts, so `new Date(2024, 2, 20)` and `new Date('2024-03-20')` are different instants that a reader would call the same day. The string form names a calendar day outright, with no instant involved and no host timezone able to shift it. This is the recommended form, and what the test suite and the README examples now use.
+- `toCivilDate` and the `CivilDateInput` type are exported, for callers that need to perform the same normalisation on their own dates.
+
+### Changed
+- `Date` arguments are read in **local** components (`getFullYear`/`getMonth`/`getDate`), because the observer's UTC offset is already a separate explicit parameter — the date argument is the observer's own calendar day, which is what `new Date(y, m, d)` and `new Date()` produce. Note that `new Date('2024-03-20')` is UTC midnight and therefore reads as 19 March on any host west of UTC; pass `'2024-03-20'` instead.
+
+### Notes on upgrading
+Times shift by up to ~15 seconds for callers who were passing an instant whose UTC hour was far from noon, and by up to ~100 seconds for callers east of UTC who were silently getting the wrong calendar day. Both are corrections. Callers already normalising to UTC noon — which is what `praycalc`'s own web API and mobile client were doing independently — are unaffected, as that input now takes an idempotent fast path.
+
 ## 2.3.1 — 2026-08-21
 
 ### Fixed

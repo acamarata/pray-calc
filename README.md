@@ -19,19 +19,42 @@ npm install pray-calc
 import { calcTimes } from 'pray-calc';
 
 const times = calcTimes(
-  new Date('2024-06-21'),
-  40.7128,  // New York latitude
-  -74.0060, // longitude
-  -4,       // UTC offset (hours)
+  '2024-06-21', // calendar day
+  40.7128,      // New York latitude
+  -74.0060,     // longitude
+  -4,           // UTC offset (hours)
 );
 
-console.log(times.Fajr);    // "03:51:24"
-console.log(times.Sunrise); // "05:25:08"
-console.log(times.Dhuhr);   // "13:01:17"
-console.log(times.Asr);     // "17:02:43"
-console.log(times.Maghrib); // "20:31:17"
-console.log(times.Isha);    // "22:07:43"
+console.log(times.Fajr);     // "03:34:14"
+console.log(times.Sunrise);  // "05:25:07"
+console.log(times.Dhuhr);    // "13:00:29"
+console.log(times.Asr);      // "16:58:15"
+console.log(times.Maghrib);  // "20:30:39"
+console.log(times.Isha);     // "21:50:45"
+console.log(times.Midnight); // "00:02:26"
 ```
+
+### Dates
+
+Prayer times belong to a calendar day, not to an instant, and a JavaScript `Date` is an
+instant. It carries no record of whether it was built from local or UTC parts, so
+`new Date(2024, 5, 21)` and `new Date('2024-06-21')` are different moments that a reader
+would call the same day — and which one you get depends on where the machine is.
+
+Pass the day itself and the ambiguity disappears:
+
+```typescript
+calcTimes('2024-06-21', lat, lng, tz);   // recommended
+```
+
+A `Date` still works, and is read in **local** components — the observer's UTC offset is
+already a separate argument, so the date argument is the observer's own calendar day, which
+is what `new Date(y, m, d)` and `new Date()` give you. The one form to avoid is
+`new Date('2024-06-21')`: that is UTC midnight, which reads as 20 June on any host west of
+UTC.
+
+Whichever form you pass, the result depends only on the calendar day, the location and the
+options — never on the host timezone, and never on what time of day you asked.
 
 CommonJS:
 

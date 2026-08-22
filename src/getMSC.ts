@@ -30,6 +30,8 @@ export type ShafaqMode = "general" | "ahmer" | "abyad";
  * latitude so that the piecewise function smoothly scales from equator
  * to mid-high latitudes.
  */
+import { toCivilDate } from "./civilDate.js";
+
 const LAT_SCALE = 55;
 
 function isLeapYear(year: number): boolean {
@@ -41,17 +43,21 @@ function isLeapYear(year: number): boolean {
  * winter solstice (Northern Hemisphere) or summer solstice (Southern).
  */
 function computeDyy(date: Date, latitude: number): { dyy: number; daysInYear: number } {
-  const year = date.getFullYear();
+  // Normalise first, then read UTC components: after normalisation the UTC components ARE
+  // the calendar day. Reading local components instead made the seasonal index land a day
+  // early on hosts at UTC+13 and UTC+14, shifting Fajr by ~7 seconds purely because of
+  // where the machine happened to be.
+  const civ = toCivilDate(date);
+  const year = civ.getUTCFullYear();
   const daysInYear = isLeapYear(year) ? 366 : 365;
 
   // Reference solstice: Dec 21 for Northern, Jun 21 for Southern
   const refMonth = latitude >= 0 ? 11 : 5; // Dec = 11, Jun = 5
   const refDay = 21;
 
-  const zeroDate = new Date(year, refMonth, refDay);
   let diffDays = Math.floor(
-    (Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()) -
-      Date.UTC(zeroDate.getFullYear(), zeroDate.getMonth(), zeroDate.getDate())) /
+    (Date.UTC(year, civ.getUTCMonth(), civ.getUTCDate()) -
+      Date.UTC(year, refMonth, refDay)) /
       86400000,
   );
   if (diffDays < 0) diffDays += daysInYear;

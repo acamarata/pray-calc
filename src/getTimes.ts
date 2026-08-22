@@ -12,6 +12,8 @@ import { getAsr } from "./getAsr.js";
 import { getQiyam } from "./getQiyam.js";
 import { getMidnight } from "./getMidnight.js";
 import { validateInputs } from "./validate.js";
+import { toCivilDate, defaultTimezone } from "./civilDate.js";
+import type { CivilDateInput } from "./civilDate.js";
 import { DHUHR_OFFSET_MINUTES } from "./constants.js";
 import { applyHighLatitudeRule } from "./highLatitude.js";
 import type { HighLatitudeRule } from "./highLatitude.js";
@@ -45,10 +47,10 @@ import type { PrayerTimes } from "./types.js";
  * @throws {RangeError} if lat, lng, tz, or elevation are out of valid range
  */
 export function getTimes(
-  date: Date,
+  date: CivilDateInput,
   lat: number,
   lng: number,
-  tz: number = -date.getTimezoneOffset() / 60,
+  tz: number = defaultTimezone(date),
   elevation = 0,
   temperature = 15,
   pressure = 1013.25,
@@ -57,9 +59,14 @@ export function getTimes(
 ): PrayerTimes {
   validateInputs(lat, lng, tz, elevation);
 
+  // Prayer times belong to a calendar date, not to an instant. Pin the caller's date to
+  // UTC noon of the day they expressed so the result stops depending on the host timezone
+  // and on what time of day the question was asked. See ./civilDate.ts.
+  const civDate = toCivilDate(date);
+
   // 1. Compute dynamic twilight angles and reuse solar declination.
   const { fajrAngle, ishaAngle, decl } = computeAngles(
-    date,
+    civDate,
     lat,
     lng,
     elevation,
@@ -74,7 +81,7 @@ export function getTimes(
 
   // 3. Run SPA for solar position + custom twilight times.
   const spaOpts = { elevation, temperature, pressure };
-  const spaData = getSpa(date, lat, lng, tz, spaOpts, [fajrZenith, ishaZenith]);
+  const spaData = getSpa(civDate, lat, lng, tz, spaOpts, [fajrZenith, ishaZenith]);
 
   // Non-null assertions: getSpa was called with exactly [fajrZenith, ishaZenith], so
   // index 0 and 1 are always defined.
@@ -97,7 +104,7 @@ export function getTimes(
   const highLat = applyHighLatitudeRule(
     {
       rule: highLatitudeRule,
-      date,
+      date: civDate,
       lat,
       lng,
       fajrAngle,

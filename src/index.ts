@@ -24,6 +24,8 @@ export { getAngles } from "./getAngles.js";
 export { getAsr } from "./getAsr.js";
 export { getQiyam } from "./getQiyam.js";
 export { getMidnight } from "./getMidnight.js";
+export { toCivilDate } from "./civilDate.js";
+export type { CivilDateInput } from "./civilDate.js";
 export { getMscFajr, getMscIsha } from "./getMSC.js";
 export { solarEphemeris, toJulianDate } from "./getSolarEphemeris.js";
 export { DHUHR_OFFSET_MINUTES, ANGLE_MIN, ANGLE_MAX } from "./constants.js";
